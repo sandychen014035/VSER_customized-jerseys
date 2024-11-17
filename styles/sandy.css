@@ -1,0 +1,2734 @@
+/* 所有文字區統整大小 */
+
+h1 {
+    font-family: ROGFonts, sans-serif;
+    font-size: 5vw;
+    letter-spacing: .2rem;
+    line-height: 5vw;
+
+}
+
+h2 {
+    font-family: ROGFonts, sans-serif;
+    color: #ffffff;
+    font-size: 3.5vw;
+    letter-spacing: .2rem;
+    line-height: 4vw;
+}
+
+h3 {
+    font-family: ROGFonts, sans-serif;
+    color: #ffffff;
+    font-size: 2.35vw;
+    letter-spacing: .2rem;
+    line-height: 2.5vw;
+}
+
+h4 {
+    font-family: ROGFonts, sans-serif;
+    color: #ffffff;
+    font-size: 1.5vw;
+    letter-spacing: .1rem;
+    line-height: 1.5vw;
+}
+
+h5 {
+    font-size: 1vw;
+    letter-spacing: .08rem;
+    color: #ffffff;
+
+}
+
+p {
+    font-family: ROGFonts, sans-serif;
+    color: #ffffff;
+    font-size: 1.25vw;
+    letter-spacing: 0.08rem;
+}
+
+a {
+    font-family: ROGFonts, sans-serif;
+    font-size: 1.25vw;
+    letter-spacing: 0.08rem;
+}
+
+.BC_button p {
+    color: var(--Darkblue);
+}
+
+body {
+    font-size: 1.25vw;
+}
+
+@media (max-width:640px) and (height > 0px),
+(width < 840px) {
+    h2 {
+        font-size: 45px;
+        line-height: 1.1;
+    }
+
+    h3 {
+        font-size: 30px;
+        line-height: 1.2;
+    }
+
+    h4 {
+        font-size: 20px;
+    }
+
+    h5 {
+        font-size: 16px;
+    }
+
+    p {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 640px) {
+    h2 {
+        font-size: 30px;
+    }
+
+    h3 {
+        font-size: 25px;
+    }
+}
+
+
+
+/* 品牌理念 */
+
+/* 上半部 */
+#banner {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-top: 80px;
+    /*背景圖片置中剪裁*/
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+/* 上半部標題內容 */
+#banner .textArea {
+    flex: 1;
+    margin: 0 0 0 50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 82%
+}
+
+/* vser LOGO */
+.brandName {
+    width: 90%;
+    margin-right: 10px;
+    -webkit-animation: slide-in-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: slide-in-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    filter: drop-shadow(0px 0px 10px var(--Darkblue));
+
+}
+
+/* .brandName 由左滑入右 */
+@-webkit-keyframes slide-in-left {
+    0% {
+        -webkit-transform: translateX(-1000px);
+        transform: translateX(-1000px);
+        opacity: 0;
+    }
+
+    100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-in-left {
+    0% {
+        -webkit-transform: translateX(-1000px);
+        transform: translateX(-1000px);
+        opacity: 0;
+    }
+
+    100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* vser 意涵 */
+.sloganNbtn {
+    width: fit-content;
+    white-space: nowrap
+        /*文字不換行*/
+}
+
+.sloganNbtn h3 {
+    margin: 15px;
+    -webkit-animation: slide-in-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: slide-in-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation-delay: .5s;
+    text-shadow: 0.1em 0.1em 0.1em var(--Darkblue);
+    font-family: 'ROGFONTS';
+}
+
+/* 下半部 */
+#content {
+    width: 100%;
+    height: 155%;
+    background-image: linear-gradient(to right, var(--ToRight-Blue-Darkblue));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+#content .title {
+    position: relative;
+    width: 900px;
+    height: 13vw;
+    /* background-color: #FC8D00; */
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+#content .title .titleBig {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: fit-content;
+    width: max-content;
+    z-index: 990;
+}
+
+.IntroductionArea {
+    width: 100%;
+    height: 100%;
+}
+
+.IntroductionArea .box__list {
+    /* 水平排 */
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin: 15px 0 0 0;
+}
+
+.IntroductionArea .box__list .item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 10px;
+    width: 26%;
+    color: #ffffff;
+}
+
+.item img {
+    border: solid 2px transparent;
+    border-radius: 0 20px 0 0;
+    background-image: linear-gradient(rgb(255, 255, 255), rgb(252, 250, 250, .0)),
+        linear-gradient(to bottom, var(--Lightblue-Lightblue));
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    box-shadow: 0px -20px 20px #000E2B;
+
+}
+
+.item .content {
+    margin: 15px 0 0 0;
+    text-align: center;
+}
+
+.jerseyIntroduction {
+    position: relative;
+    margin-top: 50px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.copyWriting {
+    position: absolute;
+    width: 29vw;
+    height: 12.5vw;
+    right: 0;
+    margin-top: 40px;
+}
+
+.copyWriting .title-2 {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 990;
+    background-image: linear-gradient(to right, var(--Blue-Darkblue));
+    box-shadow: 11px 11px 24px #000E2B;
+}
+
+.textTitle {
+    position: absolute;
+    z-index: 990;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+}
+
+
+
+.bevel {
+    background: linear-gradient(120deg, transparent 25px, var(--Orange-Darkblue) 0)top right;
+    width: fit-content;
+    position: absolute;
+}
+
+.bevel h4 {
+    white-space: nowrap;
+    padding: 5px 40px 7px 50px;
+}
+
+.title .bevel {
+    right: 8%;
+    top: 66%;
+}
+
+.title-2 .bevel {
+    right: -4%;
+    bottom: 12%
+}
+
+
+.jerseyIntroduction .content {
+    display: flex;
+    border-right: #ffffff solid 2px;
+    border-bottom: #ffffff solid 2px;
+    margin: 140px 80px 0 0;
+    width: 320px;
+    height: fit-content;
+}
+
+.jerseyIntroduction .content p {
+    background-image: linear-gradient(to right, var(--White-White));
+    padding: 90px 35px 40px 35px;
+    line-height: 30px
+}
+
+
+.bigPicture {
+    left: 0;
+    width: 140%;
+    z-index: 888;
+    max-height: 850px;
+}
+
+
+
+.bigPicture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: bottom 70% right 50%;
+}
+
+.Test {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.jerseyIntroduction .buttonBOX {
+    position: absolute;
+    z-index: 990;
+    right: 26%;
+    top: 64%;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.jerseyIntroduction a {
+    width: fit-content;
+    height: fit-content;
+    padding: 12px 40px 12px 40px;
+    /* margin: 20px 0; */
+    color: var(--Darkblue);
+}
+
+.titleBig h2 {
+    width: fit-content;
+    padding: 40px 0 30px 0;
+    font-family: 'ROGFONTS';
+}
+
+.textTitle h3 {
+    line-height: 3.5vw;
+    padding-top: 10px;
+    padding-left: 30px;
+    font-family: 'ROGFONTS';
+    /* background-image: linear-gradient(to right, var(--ToRight-Blue-Darkblue)); */
+}
+
+
+
+@media (min-width:1920px) {
+    .bigPicture {
+        width: 110%;
+    }
+
+    .title .bevel {
+        right: -12%;
+    }
+
+    .bevel h4 {
+        padding: 10px 50px 10px 60px;
+    }
+
+    .title-2 .bevel {
+        right: 4%;
+    }
+
+    .jerseyIntroduction .content p {
+        padding: 180px 30px 40px 40px;
+        line-height: 50px;
+    }
+
+    .jerseyIntroduction .buttonBOX {
+        right: 21%;
+        top: 66%;
+    }
+}
+
+@media (max-width:1024px) {
+    .jerseyIntroduction .content {
+        margin: 140px 40px 0 0;
+    }
+
+    .title .bevel {
+        right: 15%;
+    }
+
+    .title-2 .bevel {
+        right: -10%;
+        bottom: 10%;
+    }
+
+    .jerseyIntroduction .content p {
+        padding: 48px 35px 20px 40px
+    }
+
+}
+
+@media (max-width:640px),
+(width < 840px) {
+
+    .vserTestbox {
+        width: 100%;
+        padding: 0;
+        justify-content: center
+    }
+
+    .vserTest {
+        width: 50%;
+        top: auto;
+        right: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .brandName {
+        width: 100%;
+        margin-right: auto;
+    }
+
+    .sloganNbtn {
+        text-align: center;
+    }
+
+    #content .title .titleBig {
+        width: 100%;
+    }
+
+    #content .title {
+        width: 707px;
+        height: 230px;
+    }
+
+    .bevel {
+        background: linear-gradient(112deg, transparent 25px, var(--Orange-Darkblue) 0) top right;
+    }
+
+    .title .bevel {
+        right: -5%;
+
+        top: 56%;
+    }
+
+    .bevel h4 {
+        white-space: normal;
+        line-height: 1.4;
+    }
+
+    .IntroductionArea .box__list {
+        /* flex-direction: column;
+        align-items: center; */
+        margin: 0;
+        position: relative;
+        height: 50vh;
+        justify-content: flex-start;
+
+    }
+
+    .IntroductionArea .box__list .item {
+        width: 50%;
+        max-width: 700px;
+        position: absolute;
+        margin: 0 10px 30px;
+    }
+
+    .IntroductionArea .box__list .item:nth-child(1) {
+        left: 60px;
+        top: 0%;
+    }
+
+    .IntroductionArea .box__list .item:nth-child(2) {
+        right: 60px;
+        top: 30%;
+    }
+
+    .IntroductionArea .box__list .item:nth-child(3) {
+        left: 60px;
+        top: 50%;
+    }
+
+    .item .content {
+        position: absolute;
+        /* right: 50%;
+    transform: translateX(50%); */
+        bottom: 6%;
+    }
+
+    .item:nth-child(1) .content {
+        left: 20%;
+    }
+
+    .item:nth-child(2) .content {
+        right: 20%;
+    }
+
+    .item:nth-child(3) .content {
+        right: 50%;
+        transform: translateX(50%);
+    }
+
+    .item .content p {
+        font-size: 18px;
+        white-space: nowrap;
+    }
+
+    .textTitle br {
+        display: none;
+    }
+
+    .copyWriting {
+        width: 520px;
+        height: 122px;
+    }
+
+    .textTitle h3 {
+        line-height: 1.4;
+        padding-top: 21px;
+    }
+
+    .title-2 .bevel {
+        right: 9%;
+        bottom: 48%;
+    }
+
+    .jerseyIntroduction {
+        margin-top: 40px;
+        overflow: visible;
+    }
+
+    .jerseyIntroduction .content {
+        position: absolute;
+        z-index: 889;
+        bottom: 0%;
+        margin: 0;
+        width: 520px;
+        height: 112px;
+        background-image: linear-gradient(to left, var(--Orange-Darkblue-2));
+        justify-content: center;
+        align-items: center;
+        border-bottom: none;
+        border-right: none;
+        box-shadow: 0px -11px 24px #000E2B;
+        right: 50%;
+        transform: translateX(50%);
+    }
+
+    .jerseyIntroduction .content p {
+        padding: 0 30px 0 30px;
+        background-image: none;
+        font-size: 18px;
+    }
+
+    .bigPicture {
+        width: 100%;
+        height: 50vh;
+    }
+
+    .copyWriting {
+        margin-top: 0px;
+        top: -7%;
+    }
+
+    .jerseyIntroduction .buttonBOX {
+        flex-direction: row;
+        right: 50%;
+        transform: translateX(50%);
+        top: 68%;
+    }
+
+    .BC_button p {
+        font-size: 18px;
+        white-space: nowrap;
+    }
+    .Test{
+        overflow: hidden;
+    }
+    .arrowNav {
+        display: none;
+    }
+}
+
+@media (max-width:640px) and (height > 0px) {
+    #content .title {
+        height: 200px;
+        width: 100%;
+    }
+
+    .itemImg {
+        height: 20%;
+    }
+
+    #content .title .titleBig {
+        width: 259px;
+        text-align: left;
+    }
+
+    .title .bevel {
+        right: 0%;
+        top: 52%;
+        transform: none;
+    }
+
+    .titleBig h2 {
+        padding: 0 0 0 0;
+    }
+
+    .bevel {
+        width: 197px;
+    }
+
+    .IntroductionArea .box__list .item {
+        position: relative;
+    }
+
+    .IntroductionArea .box__list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .IntroductionArea .box__list .item {
+        width: 100%;
+        padding: 0 10%;
+    }
+
+    .IntroductionArea .box__list {
+        height: 68%;
+    }
+
+    .IntroductionArea .box__list .item:nth-child(1),
+    .IntroductionArea .box__list .item:nth-child(3) {
+        left: 0px;
+    }
+
+    .IntroductionArea .box__list .item:nth-child(2) {
+        right: 0px;
+    }
+
+    .item:nth-child(1) .content {
+        left: 0;
+        right: 50%;
+        transform: translateX(50%);
+    }
+
+    .item:nth-child(2) .content {
+        right: 50%;
+        transform: translateX(50%);
+    }
+
+    .textTitle br {
+        display: flex;
+    }
+
+    .copyWriting {
+        right: auto;
+        height: 114px;
+        width: 290px;
+    }
+
+    .textTitle h3 {
+        padding-top: 4px;
+    }
+
+    .title-2 .bevel {
+        width: fit-content;
+        right: -80px;
+        bottom: -8px;
+    }
+
+    .jerseyIntroduction .content {
+        position: static;
+        transform: none;
+        width: 100%;
+    }
+
+    .jerseyIntroduction .buttonBOX {
+        top: 65%
+    }
+
+    .Test {
+        flex-direction: column;
+
+    }
+
+    .bigPicture {
+        width: 100%;
+        height: 60vh;
+    }
+
+    .jerseyIntroduction a {
+        padding: 8px 20px 8px 20px;
+    }
+}
+
+
+/* 專案成果 */
+/* 上半部 */
+#projectBanner {
+    position: relative;
+    background-image: linear-gradient(to right, var(--ToRight-Blue-Darkblue));
+    width: 100%;
+    height: 100vh;
+}
+
+/* 背景藍色色塊 */
+.blueBlock {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 700;
+    width: 33.5%;
+    height: 100%;
+    background-color: #013B63;
+    z-index: 1;
+}
+
+#projectBanner .arrow {
+    position: absolute;
+    background-image: url(../images/pojectResults-arrow.svg);
+    width: 50px;
+    height: 20px;
+    z-index: 999;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+    right: 2%;
+    bottom: 18%;
+    -webkit-animation: slide-bottom 2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    /* 添加 infinite 以使动画重复 */
+    animation: slide-bottom 2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    /* 添加 infinite 以使动画重复 */
+}
+
+#projectBanner .arrow:hover {
+    opacity: 1;
+}
+
+@-webkit-keyframes slide-bottom {
+    0% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+
+    100% {
+        -webkit-transform: translateY(100px);
+        transform: translateY(100px);
+    }
+}
+
+@keyframes slide-bottom {
+    0% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+
+    100% {
+        -webkit-transform: translateY(100px);
+        transform: translateY(100px);
+    }
+}
+
+/* 長方形選單 */
+.rectangularMenu {
+    display: flex;
+    position: absolute;
+    right: 80px;
+    top: 68%;
+    z-index: 5;
+    width: 58%;
+    height: 22%;
+    /* background-color: #e11212; */
+    z-index: 5;
+    -webkit-animation: fade-in-top 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation: fade-in-top 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation-delay: 1.5s;
+    /* 设置动画延迟 */
+}
+
+/* 動畫 由上往下載入 */
+@-webkit-keyframes fade-in-top {
+    0% {
+        -webkit-transform: translateY(-50px);
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in-top {
+    0% {
+        -webkit-transform: translateY(-50px);
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* 長方形小選單 */
+.rectangularMenu .menu-1,
+.rectangularMenu .menu-2 {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin-left: 15px;
+    color: #000E2B;
+    opacity: 0.8;
+}
+
+
+.rectangularMenu .menu-1:hover,
+.rectangularMenu .menu-2:hover {
+    opacity: 1;
+    transition: 0.5s;
+
+}
+
+
+.rectangularMenu .menu-2 .figure,
+.rectangularMenu .menu-1 .figure {
+    width: 50%;
+    height: 100%;
+    background-position: center;
+    /*下面四張圖置中裁切*/
+    background-size: cover;
+    /*縮放到適合位置*/
+}
+
+.rectangularMenu .menu-2 .figure {
+    background-image: url(../images/projectResults_rectangleThumbnail2.png);
+}
+
+.rectangularMenu .menu-1 .figure {
+    background-image: url(../images/projectResults_rectangleThumbnail1.png);
+}
+
+.rectangularMenu .word {
+    width: 50%;
+    height: 100%;
+    background-color: var(--Orange);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.rectangularMenu .word h4 {
+    padding: 0px 0 0 14px;
+}
+
+.rectangularMenu .word p {
+    position: static;
+    letter-spacing: normal;
+    font-weight: 550;
+    right: 20px;
+    padding: 7px 14px 0 0;
+    text-align: right;
+    color: var(--Darkblue);
+}
+
+/* 圖文開始 */
+.contentArea {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding-top: 80px;
+    /* border:1px solid #e11212; */
+    z-index: 3;
+}
+
+/* 主圖 */
+.projectTheme1,
+.projectTheme2,
+.projectTheme {
+    width: 100%;
+    height: 65%;
+    background-position: center;
+    /*下面四張圖置中裁切*/
+    background-size: cover;
+    /*縮放到適合位置*/
+    position: absolute;
+    top: 80px;
+    left: 0;
+    animation: swing-in-top-fwd 1s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+}
+
+@keyframes swing-in-top-fwd {
+    0% {
+        transform: rotateX(-100deg);
+        transform-origin: top;
+        opacity: 0;
+    }
+
+    100% {
+        transform: rotateX(0deg);
+        transform-origin: top;
+        opacity: 1;
+    }
+}
+
+
+.projectTheme {
+    background-image: url(../images/pojectResults-projectTheme-01.png);
+}
+
+.projectTheme1 {
+    background-image: url(../images/pojectResults-projectTheme-1.png);
+}
+
+.projectTheme2 {
+    background-image: url(../images/pojectResults-projectTheme-3.png);
+}
+
+
+/* 主圖下方文字 */
+.projectContent {
+    width: 100%;
+    height: 23%;
+    /* background-color: #e11212; */
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    position: absolute;
+    bottom: 0%;
+}
+
+/* 左邊文字區塊 */
+.pjTitle {
+    position: relative;
+    width: 33%;
+    height: 100%;
+    /* background-color: #e11212; */
+}
+
+/* 浮水印 */
+.textWatermark,
+.textWatermark1,
+.textWatermark2 {
+    position: absolute;
+    left: -20px;
+    width: fit-content;
+    height: fit-content;
+    top: 48%;
+    transform: translate(0, -50%);
+}
+
+.textWatermark h1,
+.textWatermark1 h1,
+.textWatermark2 h1 {
+    font-family: ROGFonts, sans-serif;
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(255, 255, 255, 0.2);
+    -webkit-animation: fade-in-fwd .5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation: fade-in-fwd .5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    z-index: 4;
+
+}
+
+.textWatermark2 h1 {
+    -webkit-animation: fade-in-fwd 1s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation: fade-in-fwd 1s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation-delay: 1s;
+
+}
+
+/* 文字標題 */
+.pjTitle .Title {
+    position: absolute;
+    z-index: 5;
+    right: 0px;
+    width: fit-content;
+    height: fit-content;
+    top: 50%;
+    transform: translate(0, -50%);
+    padding-right: 40px;
+
+}
+
+.pjTitle .Title::after {
+    content: "";
+    position: absolute;
+    bottom: 84%;
+    left: -7%;
+    width: 14px;
+    height: 24px;
+    border: 1.5px solid var(--Orange);
+    z-index: 5;
+    -webkit-animation: fade-in-fwd 1s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation: fade-in-fwd 1s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation-delay: 1s;
+}
+
+.pjTitle .Title::before {
+    content: "";
+    position: absolute;
+    bottom: -3%;
+    left: 86%;
+    height: 14px;
+    width: 24px;
+    background-color: var(--Orange);
+    transform: skewX(-30deg);
+    z-index: 5;
+    -webkit-animation: fade-in-fwd 1s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation: fade-in-fwd 1s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation-delay: 1s;
+}
+
+.pjTitle .Title h2,
+.pbTitle h2 {
+    font-family: ROGFonts, sans-serif;
+    -webkit-animation: fade-in-fwd 1s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation: fade-in-fwd 1s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation-delay: 0.5s;
+}
+
+/* 右邊小字處 */
+.pjWord,
+.pjWord1,
+.pjWord2 {
+    position: absolute;
+    right: 80px;
+    width: 57%;
+    height: 100%;
+    -webkit-animation: fade-in-fwd .5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation: fade-in-fwd .5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+.pjWord2 {
+    -webkit-animation: fade-in-fwd 1s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation: fade-in-fwd 1s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation-delay: 2s;
+
+}
+
+.pjWord p,
+.pjWord1 p,
+.pjWord2 p {
+    position: absolute;
+    z-index: 4;
+    top: 65%;
+    text-align: center;
+    /*文字置中*/
+    width: 100%;
+}
+
+.pbText p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 下半部 */
+#projectjJersey {
+    position: relative;
+    background-image: linear-gradient(to right, var(--ToRight-Blue-Darkblue));
+    width: 100%;
+    height: 66vh;
+}
+
+.pjBox__list {
+    display: flex;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    /* background-color: #FC8D00; */
+    width: 90%;
+    height: 100%;
+    z-index: 2;
+    justify-content: space-around;
+}
+
+.svc-1 {
+    background-image: url(../images/projectResults_pjshape2.png);
+}
+
+.svc-2 {
+    background-image: url(../images/projectResults_pjshape3.png);
+}
+
+.svc-3 {
+    background-image: url(../images/projectResults_pjshape4.png);
+}
+
+.svc-4 {
+    background-image: url(../images/projectResults1_pjshape1.png);
+}
+
+.svc-5 {
+    background-image: url(../images/projectResults1_pjshape2.png);
+}
+
+.svc-6 {
+    background-image: url(../images/projectResults1_pjshape3.png);
+}
+
+
+
+.pjshape {
+    /* margin: 0 10px 0 0 ; */
+    /* background-color: aqua; */
+    width: 30%;
+    height: 95%;
+    background-position: center;
+    /*下面四張圖置中裁切*/
+    background-size: contain;
+    background-repeat: no-repeat;
+    /*縮放到適合位置*/
+    -webkit-animation: fade-in-fwd 1.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation: fade-in-fwd 1.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation-delay: 0.5s;
+}
+
+
+@media (max-width:1024px) {
+
+    .pjWord,
+    .pjWord1,
+    .pjWord2 {
+        right: 40px;
+        width: 60.5%;
+    }
+
+    .pjWord p,
+    .pjWord1 p,
+    .pjWord2 p {
+        top: 57%;
+    }
+
+    #projectjJersey {
+        height: 49vh;
+    }
+
+    .rectangularMenu {
+        height: 20%;
+        width: 62%;
+        right: 40px;
+    }
+}
+
+
+
+@media (min-width:1920px) {
+    .pjTitle .Title {
+        top: 0%;
+        transform: translate(0, 0%);
+    }
+
+    .textWatermark,
+    .textWatermark1,
+    .textWatermark2 {
+        top: 32%
+    }
+}
+
+@media (max-width:640px),
+(width < 840px) {
+    .contentArea {
+        padding-top: 0px;
+    }
+
+    .projectTheme1,
+    .projectTheme2,
+    .projectTheme {
+        top: 0px;
+    }
+
+    #projectBanner {
+        overflow: hidden;
+        height: 110vh;
+    }
+
+    .blueBlock {
+        display: none;
+    }
+
+    .projectContent {
+        height: 42%;
+        justify-content: center
+    }
+
+    .pjTitle .Title {
+        top: 2%;
+        right: 50%;
+        transform: translateX(50%);
+    }
+
+    .pjTitle .Title::before {
+        left: 96%;
+    }
+
+    .pjTitle .Title::after {
+        left: -5%;
+    }
+
+    .pjTitle .Title br {
+        display: none;
+    }
+
+    .textWatermark,
+    .textWatermark1,
+    .textWatermark2 {
+        top: 0;
+        z-index: 999;
+        right: 50%;
+        transform: translateX(50%);
+        white-space: nowrap;
+        left: auto;
+    }
+
+    .textWatermark h1,
+    .textWatermark1 h1,
+    .textWatermark2 h1 {
+        font-size: 100px;
+    }
+
+    .pjTitle {
+        width: 100%;
+        position: absolute;
+    }
+
+    .rectangularMenu .menu-1,
+    .rectangularMenu .menu-2 {
+        margin-left: 0px;
+        margin: 0 0 15px;
+    }
+
+    .rectangularMenu {
+        right: auto;
+        width: 100%;
+        flex-direction: column;
+        padding: 0 10%;
+        top: 67%;
+        height: 26%;
+    }
+
+    .rectangularMenu .menu-2 .figure,
+    .rectangularMenu .menu-1 .figure {
+        width: 30%;
+    }
+
+    .rectangularMenu .word {
+        width: 70%;
+    }
+
+    .pjWord,
+    .pjWord1,
+    .pjWord2 {
+        right: auto;
+        width: 75%;
+
+
+    }
+
+    .pjWord p,
+    .pjWord1 p,
+    .pjWord2 p {
+        top: 84%;
+    }
+
+    #projectjJersey {
+        height: 43vh;
+    }
+
+    .pjshape {
+        position: absolute;
+        width: 44%;
+    }
+
+    .pjshape:nth-child(1) {
+        left: 35px;
+    }
+
+    .pjshape:nth-child(2) {
+        z-index: 999;
+    }
+
+    .pjshape:nth-child(3) {
+        right: 35px;
+    }
+
+    .rectangularMenu .word h4 {
+        width: 60%;
+        line-height: 2.5vw;
+    }
+}
+
+@media (max-width:640px) and (height > 0px) {
+    #projectBanner{
+        height: 800px;
+    }
+    .projectContent {
+        height: 58%;
+    }
+
+    .textWatermark,
+    .textWatermark1,
+    .textWatermark2 {
+        white-space: normal;
+        top: -17%;
+    }
+
+    .textWatermark h1,
+    .textWatermark1 h1,
+    .textWatermark2 h1 {
+        font-size: 70px;
+        line-height: .9;
+    }
+
+    .rectangularMenu {
+        top: 50%;
+        height: 30%;
+    }
+
+    .pjTitle .Title {
+        padding-right: 0px;
+        top: 4%;
+    }
+
+    .pjTitle .Title::before {
+        bottom: 92%;
+        height: 10px;
+        width: 20px;
+    }
+
+    .pjTitle .Title::after {
+        bottom: -34%;
+        width: 10px;
+        height: 20px;
+    }
+
+    .rectangularMenu .word {
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: stretch;
+        padding: 10px 0 10px 0;
+        width: 60%;
+    }
+
+    .rectangularMenu .word h4 {
+        line-height: 1;
+    }
+
+    .rectangularMenu .menu-2 .figure,
+    .rectangularMenu .menu-1 .figure {
+        width: 40%;
+    }
+
+    .pjWord p,
+    .pjWord1 p,
+    .pjWord2 p {
+        top: 77%
+    }
+
+    #projectjJersey {
+        height: 30vh;
+    }
+
+    .pjshape {
+        width: 49%;
+    }
+
+    .pjshape:nth-child(1) {
+        left: 2%;
+    }
+
+    .pjshape:nth-child(3) {
+        right: 2%;
+    }
+
+    .pjBox__list {
+        top: -8%
+    }
+
+
+
+}
+
+
+
+/* 商品瀏覽 */
+#productBrowsing {
+    position: relative;
+    padding-top: 80px;
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(to right, var(--ToRight-Blue-Darkblue));
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    justify-content: center;
+
+}
+
+/* 背景底圖 */
+.backgroundBasemap {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 92vh;
+    background-position: top;
+    /*下面四張圖置中裁切*/
+    background-size: cover;
+    /*縮放到適合位置*/
+    mix-blend-mode: overlay;
+    opacity: .7;
+    animation: slide-in-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.bgsvc_1 {
+    background-image: url(../images/productBrowsing_backgroundBasemap1.png);
+}
+
+.bgsvc_2 {
+    background-image: url(../images/productBrowsing_backgroundBasemap2.png);
+}
+
+.bgsvc_3 {
+    background-image: url(../images/productBrowsing_backgroundBasemap3.png);
+}
+
+/**
+   * ----------------------------------------
+   * animation swing-in-right-fwd
+   * ----------------------------------------
+   */
+@keyframes slide-in-right {
+    0% {
+        transform: translateX(1000px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.productBrowsing {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    /* height: 88vh; */
+    display: flex;
+    flex-direction: column;
+    max-width: 1620px;
+
+}
+
+.pbTitleMenu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 30%;
+    animation: slide-in-top 0.75s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@keyframes slide-in-top {
+    0% {
+        transform: translateY(-1000px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* 標題 */
+.pbTitle {
+    padding-left: 80px;
+    padding-bottom: 20px;
+}
+
+/* 選單 */
+.pbMenu {
+    padding-left: 80px;
+}
+
+/* 平行四邊選單 */
+.pbItem {
+    position: relative;
+    width: fit-content;
+    z-index: 0;
+    content: '';
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 2px solid;
+    border-image-source: linear-gradient(to right, #55c9ea, #ffffff);
+    border-image-slice: 1;
+    transform: skew(-30deg);
+}
+
+/* 平行四邊選單垂直排 */
+.pbItem ul {
+    display: flex;
+}
+
+/* 平行四邊選單右邊間隔線 */
+.pbItem ul li {
+    padding: 7px 60px 7px 60px;
+    border-right: solid 2px #ffffff;
+}
+
+/* 平行四邊選單最後間隔線取消 */
+.pbItem ul li:last-child {
+    border-right: none;
+}
+
+/* 平行四邊選單文字取消請斜 */
+.pbItem a {
+    display: block;
+    transform: skew(30deg);
+}
+
+.pbItem ul li a:hover {
+
+    color: var(--Orange);
+    transition: 0.5s;
+    /* border-bottom: solid 1px var(--Orange); */
+}
+
+/* 款式 */
+.carousel-wrapper #templates {
+    animation: slide-in-bottom 2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@keyframes slide-in-bottom {
+    0% {
+        transform: translateY(1000px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.pbCommodity {
+    padding: 40px 80px 15px 80px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 70%;
+    /* border: 2px solid #8600fc; */
+    overflow: hidden;
+    position: relative;
+}
+
+.arrowGroup {
+    display: flex;
+    position: absolute;
+    z-index: 999;
+    justify-content: space-between;
+    width: 60px;
+    height: 50px;
+    top: 22.5%;
+    right: 93px;
+    animation: fade-in-fwd 1s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation-delay: 2s;
+}
+
+@keyframes fade-in-fwd {
+    0% {
+        transform: translateZ(-80px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateZ(0);
+        opacity: 1;
+    }
+}
+
+.arrow1,
+.arrow2 {
+    width: 35px;
+    height: 40px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: 0.35s;
+}
+
+
+.arrow1 {
+    background-image: url(../images/productBrowsing_icon_1.svg);
+
+
+}
+
+.arrow2 {
+    background-image: url(../images/productBrowsing_icon_2.svg);
+
+}
+
+
+
+.arrow1:hover {
+    background-image: url(../images/productBrowsing_icon_1-1.svg);
+
+}
+
+.arrow2:hover {
+    background-image: url(../images/productBrowsing_icon_2-1.svg);
+}
+
+li.pbShape {
+    position: relative;
+    width: 353.6px;
+    height: 100%;
+    /* height: 80%; */
+    /* border: 1px solid #FFFFFF; */
+    margin-right: 20px;
+    overflow: hidden;
+}
+
+/* 滑過變色 */
+.pbShape:hover .frame {
+    /* 底與框 */
+    border: 3px solid transparent;
+    border-radius: 15px 0 15px 0;
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    background-image: linear-gradient(-45deg, var(--Blue-Darkblue-Blue)),
+        linear-gradient(-45deg, var(--Orange-Lightblue-Orange));
+    transition: 0.5s;
+}
+
+
+.pbShape:hover .pbBescribe {
+
+    bottom: 0;
+    height: 45%;
+    background-image: linear-gradient(180deg, var(--Darkblue-Blue)), linear-gradient(45deg, var(--Orange-Lightblue-Orange));
+    /* mix-blend-mode: multiply; */
+    opacity: .8;
+    transition: 0.5s;
+}
+
+.pbShape .pbBescribe .pbText {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 5px;
+    mix-blend-mode: normal;
+    opacity: normal;
+}
+
+.pbShape .pbBescribe .pbTBtn {
+    margin-top: 15px;
+    width: 60%;
+    height: 43px;
+    border: 2px solid #ffffff;
+    border-radius: 99px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    mix-blend-mode: normal;
+    opacity: normal;
+    transition: 0.35s;
+    letter-spacing: 0.08rem;
+    font-size: 1.25vw;
+    padding: 0 0 2px 0;
+}
+
+.pbShape .pbBescribe .pbTBtn:hover {
+    border: 2px solid var(--Orange);
+    background-color: var(--Orange);
+    color: var(--Darkblue);
+    font-weight: 500;
+
+}
+
+
+
+
+.pbShape:last-child {
+    margin-right: unset;
+    /* 承上 menu 按鈕間的線最後一個刪除 */
+}
+
+/* 透明淺藍框 */
+.frame {
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    width: 100%;
+    height: 90%;
+    border: 3px solid var(--Lightblue_04);
+    border-radius: 15px 0 15px 0;
+
+}
+
+/* 小方框 */
+.smallBox {
+    position: absolute;
+    z-index: 990;
+    top: 10%;
+    right: 0;
+    width: 45px;
+    height: 45px;
+    background-color: var(--Lightblue_04);
+}
+
+.smallBoxIcon {
+    position: absolute;
+    display: flex;
+    background-image: url(../images/productBrowsing_love.svg);
+    width: 30px;
+    opacity: .8;
+    height: 25.5px;
+    background-position: center;
+    /*下面四張圖置中裁切*/
+    background-size: contain;
+    /*縮放到適合位置*/
+    top: 50%;
+    left: 46%;
+    transform: translate(-50%, -46%);
+    transition: 0.35s;
+}
+
+.smallBoxIcon:hover {
+    background-image: url(../images/productBrowsing_love_1.svg);
+    opacity: 0.7;
+
+}
+
+/* 商品圖片區 */
+.pbShape .pbshapeimg {
+    position: absolute;
+    top: -12px;
+    width: 100%;
+    height: 79%;
+    /* background-color: #df7e1d; */
+}
+
+/* 圖片區開始*/
+.pbShape .pbshapeimg .pbImage {
+    position: absolute;
+    width: 60%;
+    height: 100%;
+    background-position: center;
+    /*下面四張圖置中裁切*/
+    background-size: cover;
+    /*縮放到適合位置*/
+}
+
+.pbShape .pbshapeimg .pbImageShort {
+    position: absolute;
+    width: 75%;
+    height: 100%;
+    background-position: center;
+    /*下面四張圖置中裁切*/
+    background-size: cover;
+    /*縮放到適合位置*/
+}
+
+/* 圖片(前) */
+.pbShape .pbshapeimg .A {
+    /* background-color: #770f16; */
+    position: absolute;
+    z-index: 3;
+    left: 20px;
+    bottom: 3%;
+    background-position: center;
+    /*下面四張圖置中裁切*/
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* 圖片(後) */
+.pbShape .pbshapeimg .B {
+    /* background-color: #2e0f77; */
+    z-index: 2;
+    right: 20px;
+    bottom: 3%;
+    background-position: center;
+    /*下面四張圖置中裁切*/
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.pbShape .pbshapeimg .AShort {
+    /* background-color: #770f16; */
+    position: absolute;
+    z-index: 3;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    bottom: 5%;
+    background-position: center;
+    /*下面四張圖置中裁切*/
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+
+
+/* 塞圖片 */
+
+.svcA-1 {
+    background-image: url(../images/productBrowsing_pbShapeA_1.png);
+}
+
+.svcA-1-back {
+    background-image: url(../images/productBrowsing_pbShapeA_1_back.png);
+}
+
+.svcA-2 {
+    background-image: url(../images/productBrowsing_pbShapeA_2.png);
+}
+
+.svcA-2-back {
+    background-image: url(../images/productBrowsing_pbShapeA_2_back.png);
+}
+
+.svcA-3 {
+    background-image: url(../images/productBrowsing_pbShapeA_3.png);
+}
+
+.svcA-3-back {
+    background-image: url(../images/productBrowsing_pbShapeA_3_back.png);
+}
+
+.svcA-4 {
+    background-image: url(../images/productBrowsing_pbShapeA_4.png);
+}
+
+.svcA-4-back {
+    background-image: url(../images/productBrowsing_pbShapeA_4_back.png);
+}
+
+.svcA-5 {
+    background-image: url(../images/productBrowsing_pbShapeA_5.png);
+}
+
+.svcA-5-back {
+    background-image: url(../images/productBrowsing_pbShapeA_5_back.png);
+}
+
+.svcA-6 {
+    background-image: url(../images/productBrowsing_pbShapeA_6.png);
+}
+
+.svcA-6-back {
+    background-image: url(../images/productBrowsing_pbShapeA_6_back.png);
+}
+
+.svcA-7 {
+    background-image: url(../images/productBrowsing_pbShapeA_7.png);
+}
+
+.svcA-7-back {
+    background-image: url(../images/productBrowsing_pbShapeA_7_back.png);
+}
+
+.svcA-8 {
+    background-image: url(../images/productBrowsing_pbShapeA_8.png);
+}
+
+.svcA-8-back {
+    background-image: url(../images/productBrowsing_pbShapeA_8_back.png);
+}
+
+.svcB-1-1 {
+    background-image: url(../images/productBrowsing_pbShapeB_1.png);
+}
+
+.svcB-1-2 {
+    background-image: url(../images/productBrowsing_pbShapeB_2.png);
+}
+
+.svcB-1-3 {
+    background-image: url(../images/productBrowsing_pbShapeB_1-1.png);
+}
+
+.svcB-1-4 {
+    background-image: url(../images/productBrowsing_pbShapeB_2-2.png);
+}
+
+.svcB-2-1 {
+    background-image: url(../images/productBrowsing_pbShapeB_3.png);
+}
+
+.svcB-2-2 {
+    background-image: url(../images/productBrowsing_pbShapeB_4.png);
+}
+
+.svcB-2-3 {
+    background-image: url(../images/productBrowsing_pbShapeB_3-1.png);
+}
+
+.svcB-2-4 {
+    background-image: url(../images/productBrowsing_pbShapeB_4-1.png);
+}
+
+.svcB-3-1 {
+    background-image: url(../images/productBrowsing_pbShapeB_5.png);
+}
+
+.svcB-3-2 {
+    background-image: url(../images/productBrowsing_pbShapeB_6.png);
+}
+
+.svcB-3-3 {
+    background-image: url(../images/productBrowsing_pbShapeB_5-1.png);
+}
+
+.svcB-3-4 {
+    background-image: url(../images/productBrowsing_pbShapeB_6-1.png);
+}
+
+.svcC-1 {
+    background-image: url(../images/productBrowsing_pbShapeC_1.png);
+}
+
+.svcC-1-2 {
+    background-image: url(../images/productBrowsing_pbShapeC_1_1.png);
+}
+
+.svcC-2 {
+    background-image: url(../images/productBrowsing_pbShapeC_2.png);
+}
+
+.svcC-2-1 {
+    background-image: url(../images/productBrowsing_pbShapeC_2_1.png);
+}
+
+.svcC-3 {
+    background-image: url(../images/productBrowsing_pbShapeC_3.png);
+}
+
+.svcC-3-1 {
+    background-image: url(../images/productBrowsing_pbShapeC_3_1.png);
+}
+
+/* 商品文案區 */
+.pbShape .pbBescribe {
+    position: absolute;
+    z-index: 3;
+    bottom: -52px;
+    width: 100%;
+    color: #fff;
+    padding: 10px 30px 20px 30px;
+    height: 45%;
+    /* background-image: linear-gradient(180deg, var(--Darkblue-Blue)), linear-gradient(45deg, var(--Orange-Lightblue-Orange)); */
+    border: 3px solid transparent;
+    border-radius: 0 0 15px 0;
+    background-clip: padding-box;
+    background-origin: padding-box, border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+@media (max-width:1024px) {
+    .pbTitle {
+        padding-left: 40px
+    }
+
+    .pbMenu {
+        padding-left: 40px;
+    }
+
+    .pbCommodity {
+        padding: 40px 0 15px 0;
+    }
+
+    .pbShape .pbshapeimg .A {
+        left: 0px;
+    }
+
+    .pbShape .pbshapeimg .B {
+        display: none;
+    }
+
+    .pbShape .pbshapeimg {
+        height: 84%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .pbShape .pbshapeimg .pbImage {
+        width: 100%
+    }
+
+    .pbText p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 155px
+    }
+
+    .arrowGroup {
+        right: 40px
+    }
+}
+@media (width<1025px) {
+    .pbCommodity{
+        overflow: auto;
+    }
+    .arrowGroup {
+        display: none;
+    }
+}
+
+@media (max-width:640px) and (height > 0px),
+(width < 840px) {
+    #productBrowsing {
+        padding-top: 0px;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .productBrowsing {
+        padding: 0px 0 0 0;
+        margin: 0 0 40px 0;
+    }
+
+    .backgroundBasemap {
+        height: 100vh;
+    }
+
+    .pbCommodity {
+        padding: 0px 60px 0px 60px;
+        height: 712px;
+        overflow: auto;
+        top: 40px;
+    }
+
+    .pbShape .pbshapeimg .pbImage {
+        width: 70%;
+    }
+
+    .pbShape .pbshapeimg .A {
+        left: 10px;
+    }
+
+    .pbShape .pbshapeimg .B {
+        display: block;
+        right: 10px;
+    }
+
+    li.pbShape {
+        margin: 0 10px 30px 10px;
+    }
+
+    .pbTitle,
+    .pbMenu {
+        padding-left: 70px;
+    }
+
+    .arrowGroup {
+        display: none;
+    }
+
+    .pbShape .pbBescribe .pbTBtn {
+        font-size: 18px;
+    }
+
+    .pbText p {
+        width: 250px;
+    }
+
+    .pbShape .pbBescribe {
+        padding: 10px 30px 0px 30px;
+    }
+}
+
+@media (max-width:640px) and (height > 0px) {
+    .pbCommodity {
+        padding: 0px;
+        height: 75%;
+        top: 20px;
+    }
+
+    .container {
+        padding: 0 10% 0 10%;
+        height: 400px;
+    }
+
+    .pbItem ul li {
+        padding: 5px;
+    }
+
+    .productBrowsing {
+        height: 100%;
+    }
+
+    .pbTitle,
+    .pbMenu {
+        padding-left: 0px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .pbItem ul li {
+        padding: 5px 15px;
+    }
+
+    .productBrowsing {
+        margin: 0px;
+    }
+
+    .pbTitleMenu {
+        height: 25%;
+        justify-content: flex-end;
+    }
+
+    .carousel-wrapper #templates {
+        padding: 0 0 25px;
+    }
+}
+
+
+/* 商品內頁 */
+#introduction {
+    height: 100%;
+    background-color: var(--Blue);
+    padding: 120px 80px 0 80px;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.mainPicture {
+    width: 50%;
+    height: 100%;
+    /* background-color: #2eb02a; */
+    margin: 0 40px 0 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.pictureArea {
+    display: flex;
+}
+
+.mainPicture .bigPicture {
+    width: 80%;
+    height: 440px;
+    background-color: rgba(255, 255, 255, .1);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.smallPicture {
+    width: 20%;
+    height: 440px;
+    /* background-color: #55c9ea; */
+    margin: 0 15px 0 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.smallPicture .small {
+    width: 100%;
+    height: 31%;
+    background-color: rgba(255, 255, 255, .1);
+    margin-bottom: 15px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+
+
+.smallPicture .small:last-child {
+    margin-bottom: 0;
+    /* 移除最後一個 .small 元素的 margin-bottom */
+}
+
+.reminderText {
+    margin-top: 15px;
+    background-color: rgb(255, 255, 255, .1);
+    width: 100%;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFFFFF;
+}
+
+.reminderText small {
+    width: fit-content;
+}
+
+
+.productCopywriting {
+    width: 50%;
+    height: 100%;
+    /* border: 1px solid #FFFFFF; */
+}
+
+.productBox {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin: 10px 0 10px 0;
+}
+
+.productContent {
+    width: 100%;
+    height: 100%;
+    margin: 30px 0 0 0;
+    font-size: 1.25vw;
+    letter-spacing: 0.08rem;
+
+}
+
+
+
+.contentDetails {
+    margin: 20px 0 0 0;
+    width: 100%;
+    color: #fff;
+}
+
+.detailsSize {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.sizeBox {
+    display: flex;
+}
+
+.contentDetails .size,
+.contentDetails .color {
+    height: 2.25vw;
+    border: 1px solid #ffffff;
+    margin: 1vw 1vw 0 0;
+    color: #fff;
+    text-align: center;
+}
+
+.contentDetails .color {
+    width: 10vw;
+
+}
+
+.contentDetails .size {
+    width: 4.5vw;
+}
+
+.detailsText {
+    display: flex;
+    align-items: center;
+}
+
+.noteBox {
+    margin: 0 0 15px 0;
+}
+
+.detailsText p {
+    margin: 0 10px 0 0;
+}
+
+.detailsText small,
+.noteTitle {
+    letter-spacing: 0.05rem;
+    border-bottom: 1px solid #FFFFFF;
+    width: fit-content;
+}
+
+.productRemark .notetext {
+    letter-spacing: 0.05rem;
+    line-height: 1.5vw;
+    margin: 5px 0 0 0;
+    color: #FFFFFF;
+    font-size: 1vw;
+}
+
+#quantity {
+    width: 115px;
+    height: 50px;
+    text-align: center;
+    border: 1px solid #FFFFFF;
+    background-color: var(--Blue);
+    color: #FFFFFF;
+}
+
+#otherProducts {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: center; */
+    width: 100%;
+    height: 100%;
+    background-color: var(--Blue);
+    padding: 30px 80px 60px 80px;
+    overflow: hidden;
+}
+
+.buttomitem {
+    margin: 0 1vw 40px 0;
+    width: 15.25vw;
+    height: 4vw;
+    border-radius: 5px;
+
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+.quantity {
+    /* margin: 15px 0 0 0 ; */
+    width: 21vw;
+    height: 6vw;
+    /* border: 1px solid #FFFFFF; */
+    display: flex;
+    justify-content: space-evenly;
+    margin: none;
+    align-items: center;
+}
+
+
+@media (min-width:1920px) {
+    #introduction {
+        padding: 120px 15% 0 15%;
+    }
+
+    #otherProducts {
+        padding: 30px 15% 60px 15%;
+    }
+}
+
+@media (max-width:1024px) {
+    #introduction {
+        padding: 120px 40px 0 40px;
+    }
+
+    #otherProducts {
+        padding: 30px 40px 60px 40px;
+    }
+}
+@media (width<1025px){
+    .contentDetails .size,
+    .contentDetails .color{
+        width: 100px;
+        height: 40px;
+        margin: 20px 20px 0 0;
+        padding: 8px;
+    }
+    .sizeBox{
+        flex-wrap: wrap;
+    }
+    .buttomitem{
+        width: 220px;
+        height: 60px;
+    }
+    .quantity {
+        width: 220px;
+    }
+}
+
+#otherProducts .word {
+    display: flex;
+    margin: 40px 0 30px 0;
+    color: #FFFFFF;
+    flex-direction: column
+}
+
+.recommend {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+
+#btn_1 {
+    background-image: url(../images/commodity_arrow_reduce.svg);
+}
+
+#btn1 {
+    background-image: url(../images/commodity_arrow_add.svg);
+}
+
+#btn_1,
+#btn1 {
+    background-color: transparent;
+    cursor: pointer;
+}
+
+#quantityNum {
+    width: 5vw;
+    height: 5vw;
+    border: 1px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quantityBtn {
+    height: 4vw;
+    width: 4vw;
+    border: 1px solid transparent;
+}
+
+.productButtom {
+    margin: 30px 0 30px 0;
+    width: 100%;
+    height: 100%;
+    font-size: 22px;
+}
+
+.productButtom p {
+    color: var(--Blue);
+}
+
+.productButtom button {
+    font-size: 1.25vw;
+}
+
+
+.buttomitem:hover {
+    background-color: #FEB75D;
+}
+
+#introduction small,
+.detailsText small {
+    letter-spacing: 0.05rem;
+    font-size: 1vw;
+}
+
+@media (max-width:640px) and (height > 0px),
+(width < 840px) {
+    #introduction {
+        padding: 80px 0px 0 0px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .mainPicture {
+        width: 60%;
+        margin: 0px;
+    }
+
+    .productCopywriting {
+        width: 80%;
+        padding: 30px 0 0 0;
+    }
+
+    .contentDetails .size {
+        width: 100px;
+        padding: 5px;
+    }
+
+    .contentDetails .size,
+    .contentDetails .color {
+        height: 40px;
+        margin: 20px 20px 0 0;
+    }
+
+    .sizeBox {
+        flex-wrap: wrap;
+    }
+
+    .contentDetails .color {
+        width: 100px;
+        padding: 5px;
+    }
+
+    .productContent {
+        font-size: 18px;
+    }
+
+    .buttomitem {
+        margin: 0 10px 40px 10px;
+        width: 200px;
+        height: 80px;
+    }
+
+    .productButtom {
+        display: flex;
+        justify-content: center;
+        border-bottom: 1px solid;
+        margin: 60px 0 30px 0;
+    }
+
+    .productButtom hr {
+        display: none;
+    }
+
+    .productRemark br {
+        display: none;
+    }
+
+    #otherProducts {
+        padding: 30px 00px 40px 0px;
+        align-items: center
+    }
+
+    #otherProducts hr {
+        width: 80%;
+    }
+
+    #otherProducts .word {
+        width: 80%;
+    }
+
+    #otherProducts li.pbShape:nth-child(3) {
+        display: none;
+    }
+
+    .quantity {
+        width: 340px;
+        height: 80px;
+    }
+
+    #quantityNum {
+        width: 100px;
+        height: 80px;
+    }
+
+    .quantityBtn {
+        height: 60px;
+        width: 60px;
+    }
+
+
+    .productRemark .notetext {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    #introduction small,
+    .detailsText small {
+        font-size: 16px;
+    }
+
+}
+
+@media (max-width:640px) and (height > 0px) {
+    #introduction {
+        padding: 60px 0 0 0;
+    }
+
+    .mainPicture {
+        width: 70%;
+    }
+
+    .smallPicture {
+        height: 300px;
+    }
+
+    .mainPicture .bigPicture {
+        height: 300px;
+    }
+
+    .productCopywriting {
+        width: 100%;
+        padding: 30px 10% 0 10%;
+    }
+
+    .contentDetails .size,
+    .contentDetails .color {
+        width: 130px;
+    }
+
+    .contentDetails .size,
+    .contentDetails .color {
+        margin: 20px 10px 0 10px;
+    }
+
+    .sizeBox {
+        justify-content: center;
+    }
+
+    .buttomitem {
+        height: 60px;
+    }
+
+    .contentDetails p {
+        padding: 0 0 0 15px;
+    }
+
+    .quantity {
+        width: 100%;
+        justify-content: center
+    }
+
+    .quantityBtn {
+        margin: 0 5px;
+    }
+
+    .productButtom {
+        margin: 30px 0;
+    }
+
+    #otherProducts {
+        padding: 30px 10% 40px 10%;
+    }
+
+    #otherProducts hr {
+        width: 100%;
+    }
+
+    #otherProducts .word {
+        width: 100%;
+    }
+
+    #otherProducts .word {
+        margin: 30px 0 20px 0;
+    }
+
+    .reminderText {
+        padding: 6px 10px;
+        height: 100%;
+    }
+
+    
+}
+
+/* 文字區 */
+
+
+
+
+.word h4 {
+    font-family: ROGFonts, sans-serif;
+    color: var(--Darkblue);
+}
+
+.productTitle h4 {
+    text-align: right;
+    font-weight: 500;
+}
+
+.productTitle p {
+    color: #FFFFFF;
+    margin: 0 0 30px 0;
+
+}
+
+/* footer區 */
+footer {
+    background-color: var(--Darkblue);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 80px;
+    width: 100%;
+    height: 170px;
+
+}
+
+.footerList {
+    display: flex;
+
+}
+
+.footerItem {
+    padding-right: 80px;
+    font-size: 18px;
+}
+
+.footerItem li {
+    padding-top: 8px;
+    font-size: 12px;
+}
+
+.footerItem li:first-child {
+    padding-top: 24px;
+}
+
+footer div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+footer div img {
+    width: 217px;
+}
+
+footer div small {
+    padding-top: 12px;
+    width: fit-content;
+}
+@media (width < 840px)  {
+    .footerList li{
+        font-size: 20px;
+        letter-spacing: 0.06rem;
+    }
+    .footerItem li{
+        font-size: 16px;
+        letter-spacing: 0.06rem;
+    }
+    
+}
