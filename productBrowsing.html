@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- 載入react -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>VSER</title>
+    <link rel="icon" href="./favicon.ico">
+    <link rel="stylesheet" href="./styles/sandy_popup.css">
+    <link rel="stylesheet" href="./styles/sandy.css">
+    <link rel="stylesheet" href="./styles/pbCarousel.css">
+    <link rel="stylesheet" href="./styles/headNfooter.css">
+    <script type="text/babel" src="https://aria-hawa.github.io/customizeJersey/jsx/Header.jsx"></script>
+    <script type="text/babel" src="https://aria-hawa.github.io/customizeJersey/jsx/Footer.jsx"></script>
+</head>
+
+<body>
+    <!-- 首頁區 -->
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // 商品元件
+        function PbShape(props) {
+            // 滑鼠滑入pbShape才會顯示pbTBtn
+            const [isHovered, setIsHovered] = useState(false);
+            return <>
+                <li className="pbShape"
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}>
+                    <div className="frame"></div>
+                    <div className="smallBox">
+                    <div className="smallBoxIcon collection"></div>
+                    </div>
+                    <div className="pbshapeimg">
+                        <div className={props.svcA}></div>
+                        <div className={props.svcB}></div>
+                    </div>
+                    <div className="pbBescribe">
+                        <div className="pbText">
+                            <h4>{props.shape}</h4>
+                            <h5>{props.price}</h5>
+                        </div>
+                        <div className="pbText">
+                            <p>{props.introduce}</p>
+                            <h5>{props.star}</h5>
+                        </div>
+                        <div id={props.pbNum} className="pbTBtn" data-product={props.dataNum} style={{ display: isHovered ? 'flex' : 'none' }}>
+                            詳細介紹
+                        </div>
+                    </div>
+                </li>
+            </>
+        }
+
+        function App() {
+            useEffect(() => {
+                
+                $(document).ready(function () {
+                    // 輪播
+                    $('#carousel-left').click(function () {
+                        slideCarousel("left");
+                    });
+
+                    $('#carousel-right').click(function () {
+                        slideCarousel("right");
+                    });
+
+                    changeJersey();
+
+        // 後續改成用localStorage
+        function saveProductInfo(id) {
+            const productElement = $(`#${id}`).closest('.pbBescribe');
+            const shape = productElement.find('h4').text(); // 獲取 shape 的文字內容
+            const price = productElement.find('h5').first().text(); // 獲取 price 的文字內容
+            const introduce = productElement.find('p').text(); // 獲取 introduce 的文字內容
+            const star = productElement.find('h5').last().text(); // 獲取 star 的文字內容
+            
+            // 將文字內容保存到 localStorage
+            localStorage.setItem('shape', shape);
+            localStorage.setItem('price', price);
+            localStorage.setItem('introduce', introduce);
+            localStorage.setItem('star', star);
+        }
+
+        // 為每個按鈕添加點擊事件
+        $('#pb1, #pb2, #pb3, #pb4,#pb5,#pb6,#pb7,#pb8,#pb9,#pb10,#pb11,#pb12,#pb13,#pb14,#pb15,#pb16,#pb17,#pb18').click(function () {
+            saveProductInfo(this.id); // 使用通用函數保存信息
+        });
+       
+
+                    // 詳細介紹Btn
+                    $('.pbTBtn').click(function (e) {
+                        e.preventDefault();
+                        const productId = $(this).data('product'); // 獲取點擊商品的 data-product 屬性
+                        localStorage.setItem('selectedProduct', productId); // 將商品資訊保存到 localStorage
+                        window.location.href = './commodity_text.html'; // 跳轉到內頁
+                    });
+                    // 彈出視窗
+                    $('#collection').on('click', function () {
+                        $('#collectionWindow').fadeIn();
+
+                        //  視窗3秒自動關閉
+                        setTimeout(function () {
+                            $('#collectionWindow').fadeOut();
+                        }, 3000);
+                    });
+                });
+            })
+
+            return (<>
+                <Header classname='darkblue' />
+                <main>
+                    {/*背景大圖*/}
+                    <section id="productBrowsing">
+                        <div className="backgroundBasemap bgsvc_1"></div>
+                        <div className="backgroundBasemap bgsvc_2" style={{ display: "none" }}></div>
+                        <div className="backgroundBasemap bgsvc_3" style={{ display: "none" }}></div>
+                        <div className="productBrowsing">
+                            <div className="pbTitleMenu">
+                                <div className="pbTitle">
+                                    <h2>product</h2>
+                                </div>
+                                <div className="pbMenu">
+                                    <nav class="pbItem">
+                                        <ul>
+                                            <li><a href="#" onClick={changeJersey}>昇華球衣</a></li>
+                                            <li><a href="#" onClick={changeSweat}>排汗上衣</a></li>
+                                            <li><a href="#" onClick={changeShorts}>訓練短褲</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                            <div className="pbCommodity">
+                                <div className="container">
+                                    <div className="carousel-wrapper">
+                                        <ul id="templates" className="templatesA">
+                                            <PbShape
+                                                svcA="pbImage A svcA-1" svcB="pbImage B svcA-2" shape="更風烈影" price="NT$700"
+                                                introduce="動感十足的斜線設計，如同快速掠過的風影，象徵著迅捷與靈活。" star="★★★★" pbNum="pb1" dataNum="A1" />
+                                            <PbShape
+                                                svcA="pbImage A svcA-3" svcB="pbImage B svcA-4" shape="雷霆迅刃" price="NT$700"
+                                                introduce="流暢的線條與鋒利的幾何圖形相結合，宛如切割空氣的鋒刃，展現出無畏與突破的精神。" star="★★★★★" pbNum="pb2" dataNum="A2" />
+                                            <PbShape
+                                                svcA="pbImage A svcA-5" svcB="pbImage B svcA-6" shape="極速流星" price="NT$650"
+                                                introduce="鋒利的線條組成星辰般的圖案，如同流星般高速且精確，象徵著高效與穩定。" star="★★★" pbNum="pb3" dataNum="A3" />
+                                            <PbShape
+                                                svcA="pbImage A svcA-7" svcB="pbImage B svcA-8" shape="熾烈電光" price="NT$650"
+                                                introduce="動態感十足的線條搭配科技感的設計，如同閃電般的爆發力與無限能量。" star="★★★" pbNum="pb4" dataNum="A4" />
+                                            <PbShape
+                                                svcA="pbImage A svcA-1" svcB="pbImage B svcA-2" shape="疾風烈影" price="NT$700"
+                                                introduce="動感十足的斜線設計，如同快速掠過的風影，象徵著迅捷與靈活。" star="★★★★" pbNum="pb5" dataNum="A1" />
+                                            <PbShape
+                                                svcA="pbImage A svcA-3" svcB="pbImage B svcA-4" shape="雷霆迅刃" price="NT$700"
+                                                introduce="流暢的線條與鋒利的幾何圖形相結合，宛如切割空氣的鋒刃，展現出無畏與突破的精神。" star="★★★★★" pbNum="pb6" dataNum="A2" />
+                                        </ul>
+                                        <ul id="templates" className="templatesB" style={{ display: "none" }}>
+                                            <PbShape
+                                                svcA="pbImage A svcB-1-1" svcB="pbImage B svcB-1-2" shape="全棉圓領T" price="NT$400"
+                                                introduce="舒適全棉材質，透氣吸汗，日常穿搭首選。" star="★★★★" pbNum="pb7" dataNum="B1" />
+                                            <PbShape
+                                                svcA="pbImage A svcB-2-1" svcB="pbImage B svcB-2-2" shape="重磅全棉圓領T" price="NT$400"
+                                                introduce="厚實耐穿，重磅全棉質感，極致舒適體驗。" star="★★★★★" pbNum="pb8" dataNum="B2"/>
+                                            <PbShape
+                                                svcA="pbImage A svcB-3-1" svcB="pbImage B svcB-3-2" shape="圓領排汗運動T" price="NT$450"
+                                                introduce="輕盈透氣，快速排汗，運動訓練必備良品。" star="★★★" pbNum="pb9" dataNum="B3"/>
+                                                <PbShape
+                                                svcA="pbImage A  svcB-1-1" svcB="pbImage B svcB-1-2" shape="全棉圓領T" price="NT$400"
+                                                introduce="舒適全棉材質，透氣吸汗，日常穿搭首選。" star="★★★★" pbNum="pb10" dataNum="B1" />
+                                            <PbShape
+                                                svcA="pbImage A svcB-2-1" svcB="pbImage B svcB-2-2" shape="重磅全棉圓領T" price="NT$400"
+                                                introduce="厚實耐穿，重磅全棉質感，極致舒適體驗。" star="★★★★★" pbNum="pb11" dataNum="B2"/>
+                                            <PbShape
+                                                svcA="pbImage A svcB-3-1" svcB="pbImage B svcB-3-2" shape="圓領排汗運動T" price="NT$450"
+                                                introduce="輕盈透氣，快速排汗，運動訓練必備良品。" star="★★★" pbNum="pb12" dataNum="B3"/>
+                                        </ul>
+                                        <ul id="templates" className="templatesC" style={{ display: "none" }}>
+                                            <PbShape
+                                                svcA="pbImageShort AShort svcC-1" shape="休閒彈性短褲" price="NT$350"
+                                                introduce="高彈舒適，靈活自在，休閒運動兩相宜。" star="★★★★" pbNum="pb13" dataNum="C1"/>
+                                            <PbShape
+                                                svcA="pbImageShort AShort svcC-2" shape="機能運動短褲" price="NT$320"
+                                                introduce="輕便速乾，口袋防潑水設計，提升運動性能。" star="★★★★★" pbNum="pb14" dataNum="C2"/>
+                                            <PbShape
+                                                svcA="pbImageShort AShort svcC-3" shape="口袋訓練短褲" price="NT$350"
+                                                introduce="多功能口袋設計，輕鬆收納，訓練日常皆適用。" star="★★★"  pbNum="pb15" dataNum="C3"/>
+                                                <PbShape
+                                                svcA="pbImageShort AShort svcC-1" shape="休閒彈性短褲" price="NT$350"
+                                                introduce="高彈舒適，靈活自在，休閒運動兩相宜。" star="★★★★"   pbNum="pb16" dataNum="C1"/>
+                                            <PbShape
+                                                svcA="pbImageShort AShort svcC-2" shape="機能運動短褲" price="NT$320"
+                                                introduce="輕便速乾，口袋防潑水設計，提升運動性能。" star="★★★★★"    pbNum="pb17" dataNum="C2" />
+                                            <PbShape
+                                                svcA="pbImageShort AShort svcC-3" shape="口袋訓練短褲" price="NT$350"
+                                                introduce="多功能口袋設計，輕鬆收納，訓練日常皆適用。" star="★★★"    pbNum="pb18" dataNum="C3" />
+                                                
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="arrowGroup">
+                                <div className="arrow2" id="carousel-left">
+                                </div>
+                                <div className="arrow1 showing" id="carousel-right">
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+                <Footer />
+                <div id="collectionWindow" className="collectionWindow">
+                    <div className="collection-content">
+                        <img className="arrowSuccess" src="./images/commodity_arrow_love.svg" alt="" />
+                        <p>商品已成功加入收藏</p>
+                    </div>
+                </div>
+            </>)
+
+        }
+
+        ReactDOM
+            .createRoot(document.getElementById('root'))
+            .render(<App />);
+    </script>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src="./js/jsSandyProductBrowsing.js"></script>
+
+</body>
+
+
+</html>
