@@ -141,6 +141,11 @@
             }
         }
 
+        // 商品尺寸
+        const prodectSize = ["120", "130", "140", "XS"];
+        const prodectSize2 = ["S", "M", "L", "XL", "2L", "3L"];
+
+
 
 
         function App() {
@@ -151,11 +156,64 @@
 
             const [colors, setColors] = React.useState([]);
             const [imgs, setImgs] = React.useState([]);
-            const [bigPicture,setBigPicture]= React.useState("");
+            const [bigPicture, setBigPicture] = React.useState("");
+
+            const [select, setSelect] = React.useState("");
+            const [selectColor, setSelectColor] = React.useState("");
+            let shoppingSize = false;
+            let shoppingColor = false;
+            let changeSize = function (size) {
+                setSelect(size);
+                shoppingSize = true;
+            }
+            let changeColor = function (color, index) {
+                setSelectColor(color);
+                if (imgs[index]) {
+                    setBigPicture(imgs[index]); // 更新大圖
+                }
+                shoppingColor = true;
+            }
+
+            const [num, setNum] = React.useState(1);
+            const numRef = React.useRef(null);
+            let changeNum = function (symbol) {
+                switch (symbol) {
+                    case "reduce":
+                        if (num > 1) { setNum(pren => pren - 1); }
+                        break
+                    case "add":
+                        setNum(pren => pren + 1);
+                        break
+                }
+                numRef.current.style.backgroundColor = "var(--Orange)";
+                numRef.current.style.color = "var(--Blue)"
+            }
+
+            // 彈出視窗
+            const [windowSize, setWindowSize] = React.useState(false);
+            const [windowSuccess, setWindowSuccess] = React.useState(false);
+            const [windowfail, setWindowfail] = React.useState(false);
+            let w_Size = function () {
+                setWindowSize((prev) => !prev);
+            };
+            let w_Shopping = function () {
+                if (shoppingSize===true && shoppingColor===true) {
+                    setWindowSuccess(true);
+                    setTimeout(() => setWindowSuccess(false), 2000);;
+                }else{ 
+                    setWindowfail(true);
+                    setTimeout(() => setWindowfail(false), 2000);;
+                }
+
+            };
+            const closePopup = () => {
+                setWindowSize(false); // 關閉視窗
+            };
+
+
 
             // 底下三個商品,依照昇華/排汗/短褲而有不同 => 一開始誰都不選,空陣列
             const [currentProducts, setCurrentProducts] = React.useState([]);
-
             React.useEffect(function () {
                 // 一載入畫面就抓取localStorage的shape/introduce/price
                 const shapeValue = localStorage.getItem("shape");
@@ -184,27 +242,25 @@
                     // 如果 dataNum=A1 => [綠黃,丈青橘,,,]
                     const colorValues = Object.values(productColor[dataNum]);
                     setColors(colorValues);
-                    console.log(colorValues);
                 };
 
                 // 抓取dataNum中相對應的productImg
-                if(productImg[dataNum]){
+                if (productImg[dataNum]) {
                     setImgs(productImg[dataNum]);
                     // 一開始顯示的大圖
                     setBigPicture(productImg[dataNum][0]);
                 };
-                
-            }, [])
 
+            }, [])
             return <>
                 <Header classname='darkblue' />
                 <section id="introduction">
                     <div className="mainPicture">
                         <div className="pictureArea">
                             <div className="smallPicture">
-                                {imgs.map((className,index)=>(
-                                    <div key={index} className={`small ${className}`} 
-                                    onMouseEnter={()=>setBigPicture(className)}></div>
+                                {imgs.map((className, index) => (
+                                    <div key={index} className={`small ${className}`}
+                                        onMouseEnter={() => setBigPicture(className)}></div>
                                 ))}
                             </div>
                             <div id="picL" className={`bigPicture ${bigPicture}`}></div>
@@ -226,22 +282,30 @@
                             <ul className="contentDetails">
                                 <div className="detailsText">
                                     <p>尺寸</p>
-                                    <small id="showPopup">尺寸表</small>
+                                    <small id="showPopup" onClick={w_Size}>尺寸表</small>
                                 </div>
                                 <li className="detailsSize">
                                     <ul className="sizeBox">
-                                        <li className="size">120</li>
-                                        <li className="size">130</li>
-                                        <li className="size">140</li>
-                                        <li className="size">XS</li>
+                                        {prodectSize.map((size, index) =>
+                                            <li key={index} className="size"
+                                                // 點選改變顏色(尺寸)
+                                                onClick={() => changeSize(size)}
+                                                style={{
+                                                    // 如果被選中,就改變顏色
+                                                    color: size === select ? "var(--Blue)" : "white",
+                                                    backgroundColor: size === select ? "var(--Orange)" : "var(--Blue)",
+                                                    border: size === select ? "1px solid var(--Orange)" : "1px solid white",
+                                                }}>{size}</li>)}
                                     </ul>
                                     <ul className="sizeBox">
-                                        <li className="size">S</li>
-                                        <li className="size">M</li>
-                                        <li className="size">L</li>
-                                        <li className="size">XL</li>
-                                        <li className="size">2L</li>
-                                        <li className="size">3L</li>
+                                        {prodectSize2.map((size, index) =>
+                                            <li key={index} className="size"
+                                                onClick={() => changeSize(size)}
+                                                style={{
+                                                    color: size === select ? "var(--Blue)" : "white",
+                                                    backgroundColor: size === select ? "var(--Orange)" : "var(--Blue)",
+                                                    border: size === select ? "1px solid var(--Orange)" : "1px solid white",
+                                                }}>{size}</li>)}
                                     </ul>
                                 </li>
                             </ul>
@@ -252,8 +316,17 @@
                                     {colors.map((color, index) => (
                                         // color=綠黃 color=丈青橘 color=淺藍粉 ....
                                         // css更改,如果color=display:none => 隱藏該框
-                                        <li  key={index} className="color" style={{ display: color === "display:none" ? "none" : "block", }}>
-                                        {/* 顯示顏色文字 */}
+                                        <li key={index}
+                                            // 點選改變顏色(顏色)
+                                            onClick={() => changeColor(color, index)}
+                                            className="color"
+                                            style={{
+                                                color: color === selectColor ? "var(--Blue)" : "white",
+                                                backgroundColor: color === selectColor ? "var(--Orange)" : "var(--Blue)",
+                                                border: color === selectColor ? "1px solid var(--Orange)" : "1px solid white",
+                                                display: color === "display:none" ? "none" : "block",
+                                            }}>
+                                            {/* 顯示顏色文字 */}
                                             {color !== "display:none" && color}</li>
                                     ))}
                                 </ul>
@@ -261,17 +334,17 @@
                             <div className="contentDetails">
                                 <p>數量</p>
                                 <div className="quantity">
-                                    <button id="btn_1" className="quantityBtn"></button>
-                                    <span id="quantityNum">1</span>
-                                    <button id="btn1" className="quantityBtn"></button>
+                                    <button onClick={() => changeNum("reduce")} id="btn_1" className="quantityBtn"></button>
+                                    <span id="quantityNum" ref={numRef}>{num}</span>
+                                    <button onClick={() => changeNum("add")} id="btn1" className="quantityBtn"></button>
                                 </div>
                             </div>
                         </div>
                         <div className="productButtom">
-                            <button id="shoppingCart" className="buttomitem">
+                            <button id="shoppingCart" className="buttomitem" onClick={w_Shopping}>
                                 <p>加入購物車</p>
                             </button>
-                            <button id="buyNowBtn" className="buttomitem">
+                            <button id="buyNowBtn" className="buttomitem" >
                                 <p>直接購買</p>
                             </button>
                             <hr />
@@ -314,6 +387,104 @@
                             />
                         ))}
                     </ul>
+                    {/* 以下是彈出視窗 */}
+                    {/* 尺寸表 */}
+                    {windowSize && (
+                        <div id="popup" className="popup">
+                            <div className="popup-content">
+                                <div className="sizeTitle">
+                                    <p>商品尺碼對照</p>
+                                </div>
+                                <div id="tablebox">
+                                    <table>
+                                        <tr class="tr1">
+                                            <th>SIZE</th>
+                                            <td>120</td>
+                                            <td>130</td>
+                                            <td>140</td>
+                                            <td>XS</td>
+
+                                        </tr>
+                                        <tr class="tr2">
+                                            <th>衣寬</th>
+                                            <td>37</td>
+                                            <td>40</td>
+                                            <td>43</td>
+                                            <td>47</td>
+                                        </tr>
+                                        <tr class="tr2">
+                                            <th>衣長</th>
+                                            <td>45</td>
+                                            <td>50</td>
+                                            <td>56</td>
+                                            <td>61</td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr class="tr1">
+                                            <th>SIZE</th>
+                                            <td>S</td>
+                                            <td>M</td>
+                                            <td>L</td>
+                                            <td>XL</td>
+                                            <td>2L</td>
+                                            <td>3L</td>
+                                        </tr>
+                                        <tr class="tr2">
+                                            <th>衣寬</th>
+                                            <td>51</td>
+                                            <td>54</td>
+                                            <td>57</td>
+                                            <td>61</td>
+                                            <td>65</td>
+                                            <td>72</td>
+                                        </tr>
+                                        <tr class="tr2">
+                                            <th>衣長</th>
+                                            <td>65</td>
+                                            <td>68</td>
+                                            <td>71</td>
+                                            <td>73</td>
+                                            <td>76</td>
+                                            <td>78</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <small>《 注意事項 》<br />
+                                    <div className="smalltext">
+                                        <div><small>
+                                            ※ 尺寸表單位為公分(cm)。<br />
+                                            ※ 尺寸挑選建議以衣寬為標準。</small></div>
+                                        <div><small>
+                                            ※ 尺寸表標示為「商品平量尺寸」。<br />
+                                            ※ 衣服因車縫與衣板裁切，誤差1-2cm前後為正常誤差範圍。</small><br />
+                                        </div>
+                                    </div>
+                                </small>
+                                <button id="closePopup" onClick={closePopup}></button>
+                            </div>
+                        </div>)}
+                    {/* 購物車成功 */}
+                    {windowSuccess && (
+                        <div id="shoppingSuccess" class="shoppingSuccess"
+                        style={{
+          opacity: windowSuccess ? 1 : 0,
+          transition: "opacity 3s ease",}}>
+                            <div class="success-content">
+                                <img class="arrowSuccess" src="./images/commodity_arrow_success.svg" alt="" />
+                                <p>商品已成功加入購物車</p>
+                            </div>
+                        </div>
+                    )}
+                    {/* 購物車失敗 */}
+                    {windowfail &&(
+                        <div id="failWindow" class="failWindow">
+                        <div class="fail-content">
+                            <img class="arrowfail" src="./images/commodity_arrow_fail.svg" alt="" />
+                            <p>請選擇尺寸與顏色</p>
+                        </div>
+                    </div>)}
+                    
                 </section>
             </>
         }

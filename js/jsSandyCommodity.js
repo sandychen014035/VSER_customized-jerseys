@@ -312,7 +312,6 @@ $(document).ready(function () {
             }, 2000);
         }
     });
-
     $('#buyNowBtn').on('click', function () {
         // 检查是否同时选择了颜色和尺寸
         if (borderSelected && borderBSelected) {
