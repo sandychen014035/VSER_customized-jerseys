@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSER</title>
+    <link rel="icon" href="./favicon.ico">
+    <link rel="stylesheet" href="./styles/sandy.css">
+    <link rel="stylesheet" href="./styles/pbCarousel.css">
+    <link rel="stylesheet" href="./styles/sandy_popup.css">
+    <link rel="stylesheet" href="./styles/headNfooter.css">
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- 載入babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel" src="https://aria-hawa.github.io/customizeJersey/jsx/Header.jsx"></script>
+    <script type="text/babel" src="./js_e/PbShape.js"></script>
+</head>
+
+<body>
+    <!-- 9/9 add by Aria -->
+    <!-- 以下React -->
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+        // 商品物件
+        const productData = {
+            jersey: [{
+                svcA: "pbImage A svcA-1", svcB: "pbImage B svcA-2", shape: "更風烈影", price: "NT$700",
+                introduce: "動感十足的斜線設計，如同快速掠過的風影，象徵著迅捷與靈活。", star: "★★★★", pbNum: "pb1", dataNum: "A1"
+            },
+            {
+                svcA: "pbImage A svcA-3", svcB: "pbImage B svcA-4", shape: "雷霆迅刃", price: "NT$700",
+                introduce: "流暢的線條與鋒利的幾何圖形相結合，宛如切割空氣的鋒刃，展現出無畏與突破的精神。", star: "★★★★★", pbNum: "pb2", dataNum: "A2"
+            },
+            {
+                svcA: "pbImage A svcA-5", svcB: "pbImage B svcA-6", shape: "極速流星", price: "NT$650",
+                introduce: "鋒利的線條組成星辰般的圖案，如同流星般高速且精確，象徵著高效與穩定。", star: "★★★", pbNum: "pb3", dataNum: "A3"
+            }],
+            sweat: [{
+                svcA: "pbImage A svcB-1-1", svcB: "pbImage B svcB-1-2", shape: "全棉圓領T", price: "NT$400",
+                introduce: "舒適全棉材質，透氣吸汗，日常穿搭首選。", star: "★★★★", pbNum: "pb7", dataNum: "B1"
+            },
+            {
+                svcA: "pbImage A svcB-2-1", svcB: "pbImage B svcB-2-2", shape: "重磅全棉圓領T", price: "NT$400",
+                introduce: "舒適全棉材質，透氣吸汗，日常穿搭首選。", star: "★★★★★", pbNum: "pb8", dataNum: "B2"
+            },
+            {
+                svcA: "pbImage A svcB-3-1", svcB: "pbImage B svcB-3-2", shape: "圓領排汗運動T", price: "NT$450",
+                introduce: "舒適全棉材質，透氣吸汗，日常穿搭首選。", star: "★★★", pbNum: "pb9", dataNum: "B3"
+            }],
+            shorts: [{
+                svcA: "pbImageShort AShort svcC-1", shape: "休閒彈性短褲", price: "NT$350",
+                introduce: "高彈舒適，靈活自在，休閒運動兩相宜。", star: "★★★★", pbNum: "pb13", dataNum: "C1"
+            },
+            {
+                svcA: "pbImageShort AShort svcC-2", shape: "機能運動短褲", price: "NT$320",
+                introduce: "輕便速乾，口袋防潑水設計，提升運動性能。", star: "★★★★★", pbNum: "pb14", dataNum: "C2"
+            },
+            {
+                svcA: "pbImageShort AShort svcC-3", shape: "口袋訓練短褲", price: "NT$350",
+                introduce: "多功能口袋設計，輕鬆收納，訓練日常皆適用。", star: "★★★", pbNum: "pb15", dataNum: "C3"
+            },],
+        };
+        // 商品圖片 
+        const productImg = {
+            A1: ['svcA-1', 'svcA-2', 'svcA-2-back', 'svcA-1-back'],
+            A2: ['svcA-3', 'svcA-4', 'svcA-4-back', 'svcA-3-back'],
+            A3: ['svcA-5', 'svcA-6', 'svcA-6-back', 'svcA-5-back'],
+            A4: ['svcA-7', 'svcA-8', 'svcA-8-back', 'svcA-7-back'],
+            B1: ['svcB-1-1', 'svcB-1-2', 'svcB-1-3', 'svcB-1-4'],
+            B2: ['svcB-2-1', 'svcB-2-2', 'svcB-2-3', 'svcB-2-4'],
+            B3: ['svcB-3-1', 'svcB-3-2', 'svcB-3-3', 'svcB-3-4'],
+            C1: ['svcC-1', 'svcC-1-2'],
+            C2: ['svcC-2', 'svcC-2-1'],
+            C3: ['svcC-3', 'svcC-3-1'],
+        };
+        // 商品顏色
+        const productColor = {
+            A1: {
+                Color1: "綠黃",
+                Color2: "丈青橘",
+                Color3: "淺藍粉",
+                Color4: "display:none"
+            },
+            A2: {
+                Color1: "髒橘黃",
+                Color2: "暗紅黃",
+                Color3: "亮紫黃",
+                Color4: "display:none"
+            },
+            A3: {
+                Color1: "丈青橘",
+                Color2: "暗紫橘",
+                Color3: "深綠黃",
+                Color4: "display:none"
+            },
+            A4: {
+                Color1: "全身紅",
+                Color2: "純黑粉",
+                Color3: "深綠黃",
+                Color4: "display:none"
+            },
+            B1: {
+                Color1: "活力橘",
+                Color2: "爵士黑",
+                Color3: "海軍藍",
+                Color4: "森林綠",
+            },
+            B2: {
+                Color1: "戀愛粉",
+                Color2: "亮橘黃",
+                Color3: "神秘紫",
+                Color4: "螢光綠",
+            },
+            B3: {
+                Color1: "蘋果紅",
+                Color2: "薄荷藍",
+                Color3: "神秘灰",
+                Color4: "青草綠",
+            },
+            C1: {
+                Color1: "丈青藍",
+                Color2: "神秘黑",
+                Color3: "display:none",
+                Color4: "display:none",
+            },
+            C2: {
+                Color1: "深墨綠",
+                Color2: "海軍藍",
+                Color3: "display:none",
+                Color4: "display:none",
+            },
+            C3: {
+                Color1: "焦糖棕",
+                Color2: "神秘黑",
+                Color3: "display:none",
+                Color4: "display:none",
+            }
+        }
+
+
+
+        function App() {
+
+            const [shape, setShape] = React.useState("");
+            const [introduce, setIntroduce] = React.useState("");
+            const [price, setPrice] = React.useState("");
+
+            const [colors, setColors] = React.useState([]);
+            const [imgs, setImgs] = React.useState([]);
+            const [bigPicture,setBigPicture]= React.useState("");
+
+            // 底下三個商品,依照昇華/排汗/短褲而有不同 => 一開始誰都不選,空陣列
+            const [currentProducts, setCurrentProducts] = React.useState([]);
+
+            React.useEffect(function () {
+                // 一載入畫面就抓取localStorage的shape/introduce/price
+                const shapeValue = localStorage.getItem("shape");
+                const introduceValue = localStorage.getItem("introduce");
+                const priceValue = localStorage.getItem("price");
+                setShape(shapeValue);
+                setIntroduce(introduceValue);
+                setPrice(priceValue);
+
+                // 一載入畫面就抓取localStorage的dataNum判斷昇華/排汗/短褲
+                // 抓取localStorage中的dataNum => 下方三格商品列
+                const dataNum = localStorage.getItem("selectedProduct");
+                // 判斷dataNum
+                if (["A1", "A2", "A3", "A4"].includes(dataNum)) {
+                    setCurrentProducts(productData.jersey);
+                } else if (["B1", "B2", "B3"].includes(dataNum)) {
+                    setCurrentProducts(productData.sweat);
+                } else if (["C1", "C2", "C3"].includes(dataNum)) {
+                    setCurrentProducts(productData.shorts);
+                };
+
+                // 抓取dataNum中相對應的productColor
+                if (productColor[dataNum]) {
+                    // 將 productColor 對應的顏色存入狀態
+                    // Object.values() => 將物件中的值提取為陣列
+                    // 如果 dataNum=A1 => [綠黃,丈青橘,,,]
+                    const colorValues = Object.values(productColor[dataNum]);
+                    setColors(colorValues);
+                    console.log(colorValues);
+                };
+
+                // 抓取dataNum中相對應的productImg
+                if(productImg[dataNum]){
+                    setImgs(productImg[dataNum]);
+                    // 一開始顯示的大圖
+                    setBigPicture(productImg[dataNum][0]);
+                };
+                
+            }, [])
+
+            return <>
+                <Header classname='darkblue' />
+                <section id="introduction">
+                    <div className="mainPicture">
+                        <div className="pictureArea">
+                            <div className="smallPicture">
+                                {imgs.map((className,index)=>(
+                                    <div key={index} className={`small ${className}`} 
+                                    onMouseEnter={()=>setBigPicture(className)}></div>
+                                ))}
+                            </div>
+                            <div id="picL" className={`bigPicture ${bigPicture}`}></div>
+                        </div>
+                        <div className="reminderText">
+                            <small>商品會因為攝影打光或螢幕輸出而產生色差,選購時以實體為主</small>
+                        </div>
+                    </div>
+                    <div className="productCopywriting">
+                        <div className="productTitle">
+                            <div className="productBox">
+                                <h2 id="productName">{shape}</h2>
+                                <h4 id="productPrice">{price}</h4>
+                            </div>
+                            <p id="productIntroduction">{introduce}</p>
+                            <hr />
+                        </div>
+                        <div className="productContent">
+                            <ul className="contentDetails">
+                                <div className="detailsText">
+                                    <p>尺寸</p>
+                                    <small id="showPopup">尺寸表</small>
+                                </div>
+                                <li className="detailsSize">
+                                    <ul className="sizeBox">
+                                        <li className="size">120</li>
+                                        <li className="size">130</li>
+                                        <li className="size">140</li>
+                                        <li className="size">XS</li>
+                                    </ul>
+                                    <ul className="sizeBox">
+                                        <li className="size">S</li>
+                                        <li className="size">M</li>
+                                        <li className="size">L</li>
+                                        <li className="size">XL</li>
+                                        <li className="size">2L</li>
+                                        <li className="size">3L</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div className="contentDetails">
+                                <p>顏色</p>
+                                <ul className="sizeBox">
+                                    {/* colors為陣列的型態,逐一抓取陣列中的文字 放入<li></li> */}
+                                    {colors.map((color, index) => (
+                                        // color=綠黃 color=丈青橘 color=淺藍粉 ....
+                                        // css更改,如果color=display:none => 隱藏該框
+                                        <li  key={index} className="color" style={{ display: color === "display:none" ? "none" : "block", }}>
+                                        {/* 顯示顏色文字 */}
+                                            {color !== "display:none" && color}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div className="contentDetails">
+                                <p>數量</p>
+                                <div className="quantity">
+                                    <button id="btn_1" className="quantityBtn"></button>
+                                    <span id="quantityNum">1</span>
+                                    <button id="btn1" className="quantityBtn"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="productButtom">
+                            <button id="shoppingCart" className="buttomitem">
+                                <p>加入購物車</p>
+                            </button>
+                            <button id="buyNowBtn" className="buttomitem">
+                                <p>直接購買</p>
+                            </button>
+                            <hr />
+                        </div>
+                        <div className="productRemark">
+                            <div className="noteBox">
+                                <div className="noteTitle">購買須知</div>
+                                <div className="notetext">
+                                    該商品為客製化商品，下單後不可取消。敬請於下單前確認。<br />
+                                    待付費確認完成後，系統才會開始處理您的訂單，約7個工作天內出貨。
+                                </div>
+                            </div>
+                            <div className="noteBox"></div>
+                            <div className="noteTitle">洗滌方式</div>
+                            <div className="notetext">
+                                通風處陰乾即可.不可烘乾與燙熨。<br />
+                                放入洗衣袋中清洗，深淺色需分開，以避免染色問題。<br />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="otherProducts">
+                    <hr />
+                    <div className="word">
+                        <p>其他人也看了...</p>
+                    </div>
+                    <ul id="templates" className="templatesA" >
+                        {currentProducts.map((item, index) => (
+                            <PbShape
+                                // key 必須在 React 列表渲染時唯一。
+                                key={index}
+                                svcA={item.svcA}
+                                svcB={item.svcB}
+                                shape={item.shape}
+                                price={item.price}
+                                introduce={item.introduce}
+                                star={item.star}
+                                pbNum={item.pbNum}
+                                dataNum={item.dataNum}
+                            />
+                        ))}
+                    </ul>
+                </section>
+            </>
+        }
+        ReactDOM
+            .createRoot(document.getElementById('root'))
+            .render(<App />);
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+</body>
+
+</html>

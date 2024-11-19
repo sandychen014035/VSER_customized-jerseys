@@ -161,6 +161,48 @@
             };
 
 
+
+            useEffect(() => {
+                $(document).ready(function () {
+                    // 後續改成用localStorage
+                    function saveProductInfo(id) {
+                        const productElement = $(`#${id}`).closest('.pbBescribe');
+                        const shape = productElement.find('h4').text(); // 獲取 shape 的文字內容
+                        const price = productElement.find('h5').first().text(); // 獲取 price 的文字內容
+                        const introduce = productElement.find('p').text(); // 獲取 introduce 的文字內容
+                        const star = productElement.find('h5').last().text(); // 獲取 star 的文字內容
+
+                        // 將文字內容保存到 localStorage
+                        localStorage.setItem('shape', shape);
+                        localStorage.setItem('price', price);
+                        localStorage.setItem('introduce', introduce);
+                        localStorage.setItem('star', star);
+                    }
+
+                    // 為每個按鈕添加點擊事件
+                    $('#pb1, #pb2, #pb3, #pb4,#pb5,#pb6,#pb7,#pb8,#pb9,#pb10,#pb11,#pb12,#pb13,#pb14,#pb15,#pb16,#pb17,#pb18').click(function () {
+                        saveProductInfo(this.id); // 使用通用函數保存信息
+                    });
+
+
+                    // 詳細介紹Btn
+                    $('.pbTBtn').click(function (e) {
+                        e.preventDefault();
+                        const productId = $(this).data('product'); // 獲取點擊商品的 data-product 屬性
+                        localStorage.setItem('selectedProduct', productId); // 將商品資訊保存到 localStorage
+                        window.location.href = './commodity_text.html'; // 跳轉到內頁
+                    });
+                    // 彈出視窗
+                    $('#collection').on('click', function () {
+                        $('#collectionWindow').fadeIn();
+                        //  視窗3秒自動關閉
+                        setTimeout(function () {
+                            $('#collectionWindow').fadeOut();
+                        }, 3000);
+                    });
+                });
+            })
+
             return (<>
                 <Header classname='darkblue' />
                 <main>
@@ -197,7 +239,7 @@
                                             {/* item => 逐一檢查currentProducts中的元素 */}
                                             {currentProducts.map((item, index) => (
                                                 <PbShape
-                                                    // key 必須在 React 列表渲染時唯一。
+                                                // key 必須在 React 列表渲染時唯一。
                                                     key={index}
                                                     svcA={item.svcA}
                                                     svcB={item.svcB}

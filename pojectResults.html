@@ -83,6 +83,7 @@
             let change = function (letter) {
                 setIsVisible(true);
                 setIsArrowVisible(true);
+                setAnimationKey(prev => prev + 1);
                 switch (letter) {
                     case "1":
                         setWaterMark(["textWatermark", "Storm Knights"]);
@@ -90,14 +91,14 @@
 
                         setImg(["svc-1", "svc-2", "svc-3"]);
                         setZIndexValues({ one: 10, two: 9 });
-                        setAnimationKey(prev => prev + 1);
+                        
                         break;
                     case "2":
                         setWaterMark(["textWatermark1", "Thunder Lions"]);
                         setCopywriting(["pjWord1", "設計採用強烈的幾何線條構成，中央的'M'字形標誌宛如展翅的雙翼，象徵著勇往直前的精神。"]);
                         setImg(["svc-4", "svc-5", "svc-6"]);
                         setZIndexValues({ one: 9, two: 10 });
-                        setAnimationKey(prev => prev + 1);
+                        
                         break;
                 }
             }
