@@ -3,7 +3,7 @@
 // 讀取上一頁購物車資訊
 document.addEventListener('DOMContentLoaded', function () {
     // 從 localStorage 中讀取 selectedName 和 selectedColor
-    const selectedName = localStorage.getItem('selectedProductName');
+    const selectedName = localStorage.getItem('shape');
     const selectedColor = localStorage.getItem('selectedColor');
 
     // 組合成顯示字串，如果有值才顯示，否則顯示預設訊息

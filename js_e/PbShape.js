@@ -9,6 +9,8 @@ function PbShape(props) {
         localStorage.setItem("selectedProduct",props.dataNum);
         window.location.href = './commodity_New.html'; // 跳轉到內頁
     }
+
+    const [collect,setCollect]=useState(false);
     return <>
         <li 
             className="pbShape"
