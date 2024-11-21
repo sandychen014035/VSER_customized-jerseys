@@ -7,7 +7,7 @@ function PbShape(props) {
         localStorage.setItem("price",props.price);
         localStorage.setItem("introduce",props.introduce);
         localStorage.setItem("selectedProduct",props.dataNum);
-        window.location.href = './commodity_New.html'; // 跳轉到內頁
+        window.location.href = './commodity.html'; // 跳轉到內頁
     }
 
     const [collect,setCollect]=useState(false);

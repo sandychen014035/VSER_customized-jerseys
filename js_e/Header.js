@@ -21,18 +21,18 @@ function Header({ classname }) {
                 $('.hamburger').click(function () {
                     // 在.hamburger類別裡面 加入/刪除類別is-active
                     $(this).toggleClass('is-active');
-                    
+
                     // 檢查.navigation是否已顯示
                     if ($('.navigation').css('display') === 'none') {
                         // 顯示 navigation 並設置 display: flex
                         $('.navigation').css('display', 'flex').hide().fadeIn(350);
                     } else {
                         // 隱藏 navigation
-                        $('.navigation').fadeOut(350, function() {
+                        $('.navigation').fadeOut(350, function () {
                             $(this).css('display', 'none');
                         });
                     }
-            
+
                     // 切換 navbar 的背景顏色
                     $('.navbar').toggleClass('fillColor');
                 });
@@ -59,7 +59,7 @@ function Header({ classname }) {
                                 <a href="./priceplan.html" id="pricePlanBtn">價格方案</a>
                                 <a href="./customize-React.html" id="customizeBtn">球衣模擬</a>
                             </div>
-                            <a href="./chooseProject.html" className="cartBtn"></a>
+                            <a href="./chooseProject_NEW.html" className="cartBtn"></a>
                         </div>
                     </div>
                 </div>
@@ -89,7 +89,7 @@ function Header({ classname }) {
                                 <li><a href=""><img src="./images/icon-line.png" alt="" /></a></li>
                             </ul>
                             <div className="HLogo"><a href="./index.html"><img src="./images/logo.png" alt="VSER客製化球衣" /></a></div>
-                            
+
                         </nav>
                     </div>
                 </div>

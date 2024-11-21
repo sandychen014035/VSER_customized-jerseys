@@ -59,7 +59,7 @@ function Header({ classname }) {
                                 <a href="./priceplan.html" id="pricePlanBtn">價格方案</a>
                                 <a href="./customize-React.html" id="customizeBtn">球衣模擬</a>
                             </div>
-                            <a href="./chooseProject.html" className="cartBtn"></a>
+                            <a href="./chooseProject_NEW.html" className="cartBtn"></a>
                         </div>
                     </div>
                 </div>

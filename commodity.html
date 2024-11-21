@@ -197,21 +197,39 @@
             let w_Size = function () {
                 setWindowSize((prev) => !prev);
             };
+            // 儲存訂購
+            let PurchaseHistory=function(){
+                // 新增一個全域的key來重複儲存
+                // JSON.parse()=>轉變成JS物件
+                let BuyBox = JSON.parse(localStorage.getItem("BuyItems")) || [];
+                    let BuyText = {
+                        name:shape,
+                        img:bigPicture,
+                        size: select,
+                        color: selectColor,
+                        quantity:num,
+                        price:price,
+                    }
+                    BuyBox.push(BuyText);
+                    localStorage.setItem("BuyItems", JSON.stringify(BuyBox));
+            }
             let w_Shopping = function () {
                 if (shoppingSize && shoppingColor) {
                     setWindowSuccess(true);
                     setTimeout(() => setWindowSuccess(false), 2000);;
+                    console.log(`尺寸:${select} 顏色:${selectColor} 商品名稱${shape}`);
+                    PurchaseHistory();
                 } else {
                     setWindowfail(true);
                     setTimeout(() => setWindowfail(false), 2000);;
                 }
-
             };
-            
+
 
             let checkout = function () {
                 if (shoppingSize === true && shoppingColor === true) {
-                    window.location.href = './doubleCheck.html'; // 跳轉到內頁
+                    PurchaseHistory();
+                    window.location.href = './chooseProject_NEW.html'; // 跳轉到內頁
                 } else {
                     setWindowfail(true);
                     setTimeout(() => setWindowfail(false), 2000);;
@@ -264,7 +282,7 @@
             return <>
                 <Header classname='darkblue' />
                 <section id="introduction">
-                   <Picture bigPicture={bigPicture} imgs={imgs} setBigPicture={setBigPicture}/>
+                    <Picture bigPicture={bigPicture} imgs={imgs} setBigPicture={setBigPicture} />
                     <div className="productCopywriting">
                         <div className="productTitle">
                             <div className="productBox">
@@ -383,140 +401,140 @@
                             />
                         ))}
                     </ul>
-                    
-                    
+
+
                 </section>
-                <Windows 
-                windowSize={windowSize}
-                windowSuccess={windowSuccess}
-                windowfail={windowfail}
+                <Windows
+                    windowSize={windowSize}
+                    windowSuccess={windowSuccess}
+                    windowfail={windowfail}
                 />
                 <Footer />
             </>
         }
         // 切割
         // 小圖換大圖
-        function Picture(props){
-            const {bigPicture,imgs,setBigPicture}=props;
+        function Picture(props) {
+            const { bigPicture, imgs, setBigPicture } = props;
             return <>
-            <div className="mainPicture">
-                        <div className="pictureArea">
-                            <div className="smallPicture">
-                                {imgs.map((className, index) => (
-                                    <div key={index} className={`small ${className}`}
-                                        onMouseEnter={() => setBigPicture(className)}></div>
-                                ))}
-                            </div>
-                            <div id="picL" className={`bigPicture ${bigPicture}`}></div>
+                <div className="mainPicture">
+                    <div className="pictureArea">
+                        <div className="smallPicture">
+                            {imgs.map((className, index) => (
+                                <div key={index} className={`small ${className}`}
+                                    onMouseEnter={() => setBigPicture(className)}></div>
+                            ))}
                         </div>
-                        <div className="reminderText">
-                            <small>商品會因為攝影打光或螢幕輸出而產生色差,選購時以實體為主</small>
-                        </div>
+                        <div id="picL" className={`bigPicture ${bigPicture}`}></div>
                     </div>
+                    <div className="reminderText">
+                        <small>商品會因為攝影打光或螢幕輸出而產生色差,選購時以實體為主</small>
+                    </div>
+                </div>
             </>
         }
         // 彈跳視窗
-        function Windows(props){
+        function Windows(props) {
             const { windowSize, windowSuccess, windowfail, closePopup } = props;
             return <>
-            {/* 以下是彈出視窗 */}
-                    {/* 尺寸表 */}
-                    {windowSize && (
-                        <div id="popup" className="popup">
-                            <div className="popup-content">
-                                <div className="sizeTitle">
-                                    <p>商品尺碼對照</p>
-                                </div>
-                                <div id="tablebox">
-                                    <table>
-                                        <tr class="tr1">
-                                            <th>SIZE</th>
-                                            <td>120</td>
-                                            <td>130</td>
-                                            <td>140</td>
-                                            <td>XS</td>
+                {/* 以下是彈出視窗 */}
+                {/* 尺寸表 */}
+                {windowSize && (
+                    <div id="popup" className="popup">
+                        <div className="popup-content">
+                            <div className="sizeTitle">
+                                <p>商品尺碼對照</p>
+                            </div>
+                            <div id="tablebox">
+                                <table>
+                                    <tr class="tr1">
+                                        <th>SIZE</th>
+                                        <td>120</td>
+                                        <td>130</td>
+                                        <td>140</td>
+                                        <td>XS</td>
 
-                                        </tr>
-                                        <tr class="tr2">
-                                            <th>衣寬</th>
-                                            <td>37</td>
-                                            <td>40</td>
-                                            <td>43</td>
-                                            <td>47</td>
-                                        </tr>
-                                        <tr class="tr2">
-                                            <th>衣長</th>
-                                            <td>45</td>
-                                            <td>50</td>
-                                            <td>56</td>
-                                            <td>61</td>
-                                        </tr>
-                                    </table>
-                                    <table>
-                                        <tr class="tr1">
-                                            <th>SIZE</th>
-                                            <td>S</td>
-                                            <td>M</td>
-                                            <td>L</td>
-                                            <td>XL</td>
-                                            <td>2L</td>
-                                            <td>3L</td>
-                                        </tr>
-                                        <tr class="tr2">
-                                            <th>衣寬</th>
-                                            <td>51</td>
-                                            <td>54</td>
-                                            <td>57</td>
-                                            <td>61</td>
-                                            <td>65</td>
-                                            <td>72</td>
-                                        </tr>
-                                        <tr class="tr2">
-                                            <th>衣長</th>
-                                            <td>65</td>
-                                            <td>68</td>
-                                            <td>71</td>
-                                            <td>73</td>
-                                            <td>76</td>
-                                            <td>78</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <small>《 注意事項 》<br />
-                                    <div className="smalltext">
-                                        <div><small>
-                                            ※ 尺寸表單位為公分(cm)。<br />
-                                            ※ 尺寸挑選建議以衣寬為標準。</small></div>
-                                        <div><small>
-                                            ※ 尺寸表標示為「商品平量尺寸」。<br />
-                                            ※ 衣服因車縫與衣板裁切，誤差1-2cm前後為正常誤差範圍。</small><br />
-                                        </div>
+                                    </tr>
+                                    <tr class="tr2">
+                                        <th>衣寬</th>
+                                        <td>37</td>
+                                        <td>40</td>
+                                        <td>43</td>
+                                        <td>47</td>
+                                    </tr>
+                                    <tr class="tr2">
+                                        <th>衣長</th>
+                                        <td>45</td>
+                                        <td>50</td>
+                                        <td>56</td>
+                                        <td>61</td>
+                                    </tr>
+                                </table>
+                                <table>
+                                    <tr class="tr1">
+                                        <th>SIZE</th>
+                                        <td>S</td>
+                                        <td>M</td>
+                                        <td>L</td>
+                                        <td>XL</td>
+                                        <td>2L</td>
+                                        <td>3L</td>
+                                    </tr>
+                                    <tr class="tr2">
+                                        <th>衣寬</th>
+                                        <td>51</td>
+                                        <td>54</td>
+                                        <td>57</td>
+                                        <td>61</td>
+                                        <td>65</td>
+                                        <td>72</td>
+                                    </tr>
+                                    <tr class="tr2">
+                                        <th>衣長</th>
+                                        <td>65</td>
+                                        <td>68</td>
+                                        <td>71</td>
+                                        <td>73</td>
+                                        <td>76</td>
+                                        <td>78</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <small>《 注意事項 》<br />
+                                <div className="smalltext">
+                                    <div><small>
+                                        ※ 尺寸表單位為公分(cm)。<br />
+                                        ※ 尺寸挑選建議以衣寬為標準。</small></div>
+                                    <div><small>
+                                        ※ 尺寸表標示為「商品平量尺寸」。<br />
+                                        ※ 衣服因車縫與衣板裁切，誤差1-2cm前後為正常誤差範圍。</small><br />
                                     </div>
-                                </small>
-                                <button id="closePopup" onClick={closePopup}></button>
-                            </div>
-                        </div>)}
-                    {/* 購物車成功 */}
-                    {windowSuccess && (
-                        <div id="shoppingSuccess" class="shoppingSuccess"
-                            style={{
-                                opacity: windowSuccess ? 1 : 0,
-                                transition: "opacity 3s ease",
-                            }}>
-                            <div class="success-content">
-                                <img class="arrowSuccess" src="./images/commodity_arrow_success.svg" alt="" />
-                                <p>商品已成功加入購物車</p>
-                            </div>
+                                </div>
+                            </small>
+                            <button id="closePopup" onClick={closePopup}></button>
                         </div>
-                    )}
-                    {/* 購物車失敗 */}
-                    {windowfail && (
-                        <div id="failWindow" class="failWindow">
-                            <div class="fail-content">
-                                <img class="arrowfail" src="./images/commodity_arrow_fail.svg" alt="" />
-                                <p>請選擇尺寸與顏色</p>
-                            </div>
-                        </div>)}
+                    </div>)}
+                {/* 購物車成功 */}
+                {windowSuccess && (
+                    <div id="shoppingSuccess" class="shoppingSuccess"
+                        style={{
+                            opacity: windowSuccess ? 1 : 0,
+                            transition: "opacity 3s ease",
+                        }}>
+                        <div class="success-content">
+                            <img class="arrowSuccess" src="./images/commodity_arrow_success.svg" alt="" />
+                            <p>商品已成功加入購物車</p>
+                        </div>
+                    </div>
+                )}
+                {/* 購物車失敗 */}
+                {windowfail && (
+                    <div id="failWindow" class="failWindow">
+                        <div class="fail-content">
+                            <img class="arrowfail" src="./images/commodity_arrow_fail.svg" alt="" />
+                            <p>請選擇尺寸與顏色</p>
+                        </div>
+                    </div>)}
 
             </>
         }
