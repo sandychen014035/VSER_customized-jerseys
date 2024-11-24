@@ -25,16 +25,10 @@
     <div id="root"></div>
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
-
         function App() {
             // 一開始載入畫面就抓取localStorage的資訊
             // localStorage為字串,轉JS物件=>JSON.parse()
             const buyItems = JSON.parse(localStorage.getItem("BuyItems"));
-            console.log(buyItems.length);
-
-            // 訂購資訊行數=>一開始要有一列=>1
-
-            // 新增行數
 
             return <>
                 <Header />
@@ -44,9 +38,13 @@
                             <h3>PROJECT</h3>
                             <p>請點選您的球衣樣式,並填寫尺寸、號碼、姓名（如不需要請點選無）</p>
                         </div>
+                        {/* 訂購框 */}
+                        {/* 根據buyItems的陣列長度來新增.table */}
                         {buyItems.map((item, tableIndex) => (
                             <OrderBox
+                                key={item}
                                 tableIndex={tableIndex}
+                                // 傳下去購買明細給框
                                 buyItems={buyItems}
                             />))}
                         <div className="pageBottom">
@@ -79,33 +77,51 @@
         }
         // 訂購框
         function OrderBox(props) {
+
+            const { tableIndex, buyItems } = props;
+            // 提取出buyItems的屬性陣列 => map()
+            const name = buyItems.map(item => item.name);
+            const img = buyItems.map(item => item.img);
+            const size = buyItems.map(item => item.size);
+            const color = buyItems.map(item => item.color);
+            const price = buyItems.map(item => item.price);
+            const quantity = buyItems.map(item => item.quantity);
+            console.log(price);
+
+            // 訂購款式框 => 一進入就要有true
+            const [form, setForm] = useState(true);
+            // 訂購資訊行數 => 一開始要有一列=>1
             const [details, setDetails] = useState([1]);
-            // 訂購資訊框是否開起,一開始為關閉
+            // 訂購資訊框 => 一開始關閉
             const [detailsForm, setDetailsForm] = useState(false);
+            // 訂購資訊框函式
             const formSwitch = function () {
                 setDetailsForm(!detailsForm);
             }
-
+            // 新增行數
             let addDetails = function () {
                 // preDetails=>代表details,避免因為異步更新
+                // React中同個陣列無法操作,新增一個原來陣列
                 // [...preDetails,......]=>複製到新陣列
                 setDetails(preDetails => [...preDetails, preDetails.length + 1]);
-
             }
-            const { buyItems, tableIndex } = props;
             return <>
-                {/* 根據buyItems的陣列長度來新增.table */}
-                <div className="table">
+                <div className="table" style={{ display: form == false ? "none" : "block" }}>
                     <div className="tableCaption">
                         <div className="captionLeft">
-                            <figure></figure>
-                            <p></p>
+                            {/* 抓取name,img,size,color,price等陣列的對應次序 */}
+                            <figure className={`${img[tableIndex]}`}></figure>
+                            <p>{name[tableIndex]} - {color[tableIndex]}</p>
                         </div>
                         <div className="captionRight">
-                            <p className="unitPrice">單件價格: <span className="price"></span> </p>
-                            <a href="#" className="arrow" onClick={formSwitch}>
-                                <img src="./images/icon-arrow.svg" alt="" /></a>
+                            <div className="captionRightTOP">
+                                <p className="unitPrice">單件價格: <span className="price">NT${price[tableIndex]}</span> </p>
+                                <span className="arrow" onClick={formSwitch}>詳細尺寸</span>
+                            </div>
+                            <div className="delete">
+                            </div>
                         </div>
+
                     </div>
                     <table className="show" style={{ display: detailsForm == false ? "none" : "block" }}>
                         <thead>
@@ -122,12 +138,16 @@
                             {details.map((num, index) => (
                                 // 用key值來代表項次,但項次從1開始, ,所以index+1
                                 <Orderdetails
-                                    key={index}
+                                    key={num}
                                     num={index + 1}
                                     setDetails={setDetails}
                                     index={index}
                                     details={details}
-                                    setDetailsForm={setDetailsForm} />))}
+                                    setDetailsForm={setDetailsForm}
+                                    size={size[tableIndex]}
+                                    quantity={quantity[tableIndex]}
+                                    setForm={setForm}
+                                    name={name[tableIndex]} />))}
                         </tbody>
                         <tfoot>
                             <tr>
@@ -146,22 +166,38 @@
 
         // 訂購明細列
         function Orderdetails(props) {
-            const { num, details, setDetails, index, setDetailsForm } = props;
+            const { num, details, setDetails, index, setDetailsForm, size, quantity, setForm, name } = props;
+            // 行數刪除函式
             const deleteDetails = function () {
                 // 刪除到最後一行時提醒 
                 if (details.length == 1) {
-                    let confirmAns = confirm("這是最後一筆資料,確定刪除?");
+                    // 跳出一個提醒視窗
+                    let confirmAns = confirm(`您確定刪除${name}款式?`);
+                    // 選擇刪除
                     if (confirmAns == true) {
-                        // 刪除點選行
-                        // prevDetails=>代表details,避免異步更新
-                        // filter( _ , i => { } )=>建立新陣列,並且過濾掉不符合條件的元素
-                        // 有兩個參數,  _為每個元素的值,但不重要,   後者i為每個陣列值的位置
-                        setDetailsForm(false)
-                    } else { return; }
-
+                        // 直接關閉訂購框
+                        setForm(false)
+                    }
                 } else {
+                    // prevDetails=>代表details,避免異步更新
+                    // filter( _ , i => { } )=>建立新陣列,並且過濾掉不符合條件的元素
+                    // 有兩個參數,  _為每個元素的值,但不重要,   後者i為每個陣列值的位置
+                    // 新增一個除了被選擇刪除行的Details陣列
                     setDetails(prevDetails => prevDetails.filter((_, i) => i !== index));
                 }
+            }
+
+            // 設定尺寸
+            // 當num=1時,抓取上頁的尺寸與件數,用select的value
+            const [changeSize, setChangeSize] = useState(num === 1 ? size : "");
+            const numOnesize = (e) => {
+                setChangeSize(e.target.value);
+            }
+            const [changeQuantity, setChangeQuantity] = useState(num === 1 ? quantity : "1");
+            const numQuantity = (e) => {
+                const value = e.target.value;
+                setChangeQuantity(value);
+                // 更新數量陣列中的對應值
             }
             return <>
                 <tr>
@@ -169,21 +205,33 @@
                     <td><input type="text" name="" id="" title="輸入名字列表" placeholder={num === 1 ? 1 : ""} autoComplete="off" /></td>
                     <td><input type="text" name="" id="" title="輸入名字列表" placeholder={num === 1 ? "王大明" : ""} autoComplete="off" /></td>
                     <td>
-                        <select name="" id="" title="選擇尺寸列表">
+                        <select name="" id="" title="選擇尺寸列表"
+                            value={changeSize}
+                            onChange={numOnesize}>
                             <option value="">請選擇尺寸</option>
-                            <option value="">120cm</option>
-                            <option value="">130cm</option>
-                            <option value="">140cm</option>
-                            <option value="">XS</option>
-                            <option value="">S</option>
-                            <option value="">M</option>
-                            <option value="">L</option>
-                            <option value="">XL</option>
-                            <option value="">2L</option>
-                            <option value="">3L</option>
+                            <option value="120">120cm</option>
+                            <option value="130">130cm</option>
+                            <option value="140">140cm</option>
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="2L">2L</option>
+                            <option value="3L">3L</option>
                         </select>
                     </td>
-                    <td><input type="number" name="" id="" title="選擇數量列表" placeholder="1" min="1" autoComplete="off" />
+                    <td>
+                        <input
+                            type="number"
+                            name=""
+                            id=""
+                            title="選擇數量列表"
+                            value={changeQuantity}
+                            onChange={numQuantity}
+                            placeholder="1"
+                            min="1"
+                            autoComplete="off" />
                     </td>
                     <td className="delBtn" onClick={deleteDetails}>刪除</td>
                 </tr>

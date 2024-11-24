@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>React</title>
     <style>
-        main{
-            color:black
+        main {
+            color: black
         }
     </style>
 
@@ -22,24 +22,37 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        function Card({ children }) {
+        function App() {
+            // 使用 useState 設定預設選擇值
+            const [size1, setSize1] = useState("XS"); // 第一個 select 預設選擇 120cm
+            
+            // 處理第一個 select 的變更
+            const handleSizeChange1 = (event) => {
+                setSize1(event.target.value);
+            };
+
             return (
-                <div className="cardA">
-                    <p>文字</p>
-                    {children}
+                <div>
+                    <select
+
+                        title="選擇尺寸列表"
+                        value={size1} // 綁定到 state
+                        onChange={handleSizeChange1} // 當改變時，呼叫對應的處理函式
+                    >
+                        <option value="">請選擇尺寸</option>
+                        <option value="120cm">120cm</option>
+                        <option value="130cm">130cm</option>
+                        <option value="140cm">140cm</option>
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                        <option value="2L">2L</option>
+                        <option value="3L">3L</option>
+                    </select>
                 </div>
             );
-        }
-        function App() {
-
-            return <>
-            <main>
-                <Card>
-                    <h2>標題</h2>
-                    <p>這是卡片內的內容。</p>
-                </Card>
-            </main>
-            </>
         }
         ReactDOM
             .createRoot(document.getElementById("root"))

@@ -27,7 +27,7 @@ function PbShape(props) {
             <div className="pbBescribe">
                 <div className="pbText">
                     <h4>{props.shape}</h4>
-                    <h5>{props.price}</h5>
+                    <h5>NT${props.price}</h5>
                 </div>
                 <div className="pbText">
                     <p>{props.introduce}</p>
