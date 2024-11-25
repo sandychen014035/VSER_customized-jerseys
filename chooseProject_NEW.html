@@ -30,6 +30,20 @@
             // localStorage為字串,轉JS物件=>JSON.parse()
             const buyItems = JSON.parse(localStorage.getItem("BuyItems"));
 
+            // 整筆訂單總金額
+            const [orderTotal, setOrderTotal] = useState(() => {
+                // return回傳結果
+                // 一開始抓取buyItems裡面的quantity跟price相乘後相加
+                return buyItems.map(item => item.quantity * item.price)
+                    // 上方結果為陣列 => [總價1,總價2,總價3......]
+                    // .reduce => 將生成的新陣列中的所有數值累加
+                    // sum=>總和,起始值為0 value=>陣列中當前元素的值
+                    .reduce(function (sum, value) {
+                        return sum + value; // 累加總價
+                    }, 0);
+            });
+
+
             return <>
                 <Header />
                 <main>
@@ -39,20 +53,24 @@
                             <p>請點選您的球衣樣式,並填寫尺寸、號碼、姓名（如不需要請點選無）</p>
                         </div>
                         {/* 訂購框 */}
-                        {/* 根據buyItems的陣列長度來新增.table */}
+                        {/* 根據buyItems的陣列數量來新增.table */}
+                        {/* item => buyItems物件中的陣列 */}
+                        {/* tableIndex => 陣列的索引值 */}
                         {buyItems.map((item, tableIndex) => (
                             <OrderBox
-                                key={item}
+                                key={tableIndex}
                                 tableIndex={tableIndex}
                                 // 傳下去購買明細給框
                                 buyItems={buyItems}
+                                setOrderTotal={setOrderTotal}
                             />))}
                         <div className="pageBottom">
                             <a href="#" id="addStyle">
                                 <figure></figure>
                                 <p>Your Design</p>
                             </a>
-                            <a href="./doubleCheck.html" className="nextBtn">下一步</a>
+                            {/*<button className="nextBtn">下一步</button>*/}
+                            <a href="./doubleCheck_New.html" className="nextBtn" >下一步</a>
                         </div>
                         <div id="projectInfo">
                             <div>
@@ -60,7 +78,7 @@
                                     <img src="./images/icon-amount.svg" alt="" />
                                     <p>整筆總額</p>
                                 </div>
-                                <span>NT$ 10,090</span>
+                                <span>NT${orderTotal}</span>
                             </div>
                             <div>
                                 <div>
@@ -77,8 +95,7 @@
         }
         // 訂購框
         function OrderBox(props) {
-
-            const { tableIndex, buyItems } = props;
+            const { tableIndex, buyItems, setOrderTotal } = props;
             // 提取出buyItems的屬性陣列 => map()
             const name = buyItems.map(item => item.name);
             const img = buyItems.map(item => item.img);
@@ -86,7 +103,7 @@
             const color = buyItems.map(item => item.color);
             const price = buyItems.map(item => item.price);
             const quantity = buyItems.map(item => item.quantity);
-            console.log(price);
+            const imgSvg = buyItems.map(item => item.imgSvg);
 
             // 訂購款式框 => 一進入就要有true
             const [form, setForm] = useState(true);
@@ -105,20 +122,73 @@
                 // [...preDetails,......]=>複製到新陣列
                 setDetails(preDetails => [...preDetails, preDetails.length + 1]);
             }
+            // 刪除訂購框視窗
+            const deleteform = function () {
+                // 跳出提醒視窗 要回傳true或false =>confirm
+                let confirmAns = confirm(`您確定刪除${name[tableIndex]}款式?`);
+                // 選擇刪除會影響到總額orderTotal 
+                if (confirmAns == true) {
+                    // 計算刪除款式的總額
+                    const currentTotal = price[tableIndex] * buyDetailNum;
+                    // 更新總額
+                    setOrderTotal(prevTotal => prevTotal - currentTotal);
+                    // 直接關閉訂購框
+                    setForm(false)
+                }
+            };
+
+            // 新增buyDetails物件,為各款式的數量陣列,計算各款總數量
+            const buyDetails = {};
+            // 單款總數量 => 起始值為quantity
+            const [buyDetailNum, setBuyDetailNum] = useState(quantity[tableIndex])
+
+            // 儲存各款式的數量
+            const saveOrder = function () {
+                // 提取當前框的所有數量
+                const quantityArray = details.map((_, index) => {
+                    const inputElement = document.getElementById(`quantity-${tableIndex}-${index}`);
+                    return parseInt(inputElement.value, 10) || 0;
+                });
+                // 計算當前的總數量
+                const totalQuantity = quantityArray.reduce((sum, value) => sum + value, 0);
+
+                // 從 localStorage 讀取現有的 buyDetails
+                const buyDetails = JSON.parse(localStorage.getItem("buyDetails")) || {};
+
+                buyDetails[tableIndex] = 0;
+                // 累加當前框的總數量到現有的值
+                buyDetails[tableIndex] = (buyDetails[tableIndex] || 0) + totalQuantity;
+                // 儲存到 localStorage
+                localStorage.setItem("buyDetails", JSON.stringify(buyDetails));
+                alert(`${name[tableIndex]} 的累計數量是：${buyDetails[tableIndex]}`);
+                setBuyDetailNum(buyDetails[tableIndex])
+
+                const buyDetailsA = Object.values(buyDetails);
+
+                const total = price.slice(0, price.length)
+                    .map((p, i) => p * buyDetailsA[i]) // 將同位置數字相乘
+                    .reduce((sum, value) => sum + value, 0); // 將乘積加總
+                setOrderTotal(total)
+            };
+
             return <>
                 <div className="table" style={{ display: form == false ? "none" : "block" }}>
                     <div className="tableCaption">
                         <div className="captionLeft">
                             {/* 抓取name,img,size,color,price等陣列的對應次序 */}
                             <figure className={`${img[tableIndex]}`}></figure>
-                            <p>{name[tableIndex]} - {color[tableIndex]}</p>
+                            <div className="captionLefText">
+                                <p>{name[tableIndex]} - {color[tableIndex]}</p>
+                                <p className="unitPrice">單件: NT${price[tableIndex]}</p>
+                            </div>
                         </div>
                         <div className="captionRight">
                             <div className="captionRightTOP">
-                                <p className="unitPrice">單件價格: <span className="price">NT${price[tableIndex]}</span> </p>
+                                <p>此款訂購數 : {buyDetailNum} 件</p>
+
                                 <span className="arrow" onClick={formSwitch}>詳細尺寸</span>
                             </div>
-                            <div className="delete">
+                            <div className="delete" onClick={deleteform}>
                             </div>
                         </div>
 
@@ -126,12 +196,12 @@
                     <table className="show" style={{ display: detailsForm == false ? "none" : "block" }}>
                         <thead>
                             <tr>
-                                <th>項次</th>
+                                <th>排序</th>
                                 <th>球號</th>
                                 <th>名字</th>
                                 <th>尺寸</th>
                                 <th>數量</th>
-                                <th>編輯</th>
+                                <th>刪除</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -147,15 +217,26 @@
                                     size={size[tableIndex]}
                                     quantity={quantity[tableIndex]}
                                     setForm={setForm}
-                                    name={name[tableIndex]} />))}
+                                    name={name[tableIndex]}
+                                    tableIndex={tableIndex}
+                                    deleteform={deleteform}
+                                />))}
                         </tbody>
                         <tfoot>
                             <tr>
                                 <td colSpan="1000">
-                                    <a className="tableFoot" onClick={() => addDetails()}>
+                                    <snap className="tableFoot" onClick={() => addDetails()}>
                                         <figure className="addBtn"></figure>
                                         <p>新增件數</p>
-                                    </a>
+                                    </snap>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colSpan="1000">
+                                    <snap className="tableFoot" >
+                                        <figure className="addBtn newBTN" onClick={saveOrder}></figure>
+                                        <p>儲存此訂單</p>
+                                    </snap>
                                 </td>
                             </tr>
                         </tfoot>
@@ -166,18 +247,13 @@
 
         // 訂購明細列
         function Orderdetails(props) {
-            const { num, details, setDetails, index, setDetailsForm, size, quantity, setForm, name } = props;
+            const { num, details, setDetails, index, setDetailsForm, size, quantity, setForm, name, tableIndex, deleteform } = props;
             // 行數刪除函式
             const deleteDetails = function () {
                 // 刪除到最後一行時提醒 
                 if (details.length == 1) {
-                    // 跳出一個提醒視窗
-                    let confirmAns = confirm(`您確定刪除${name}款式?`);
-                    // 選擇刪除
-                    if (confirmAns == true) {
-                        // 直接關閉訂購框
-                        setForm(false)
-                    }
+                    // 刪除訂購框視窗
+                    deleteform()
                 } else {
                     // prevDetails=>代表details,避免異步更新
                     // filter( _ , i => { } )=>建立新陣列,並且過濾掉不符合條件的元素
@@ -206,12 +282,13 @@
                     <td><input type="text" name="" id="" title="輸入名字列表" placeholder={num === 1 ? "王大明" : ""} autoComplete="off" /></td>
                     <td>
                         <select name="" id="" title="選擇尺寸列表"
+                            style={{ color: "white" }}
                             value={changeSize}
                             onChange={numOnesize}>
                             <option value="">請選擇尺寸</option>
-                            <option value="120">120cm</option>
-                            <option value="130">130cm</option>
-                            <option value="140">140cm</option>
+                            <option value="120">120</option>
+                            <option value="130">130</option>
+                            <option value="140">140</option>
                             <option value="XS">XS</option>
                             <option value="S">S</option>
                             <option value="M">M</option>
@@ -225,7 +302,7 @@
                         <input
                             type="number"
                             name=""
-                            id=""
+                            id={`quantity-${tableIndex}-${index}`}
                             title="選擇數量列表"
                             value={changeQuantity}
                             onChange={numQuantity}
@@ -233,7 +310,9 @@
                             min="1"
                             autoComplete="off" />
                     </td>
-                    <td className="delBtn" onClick={deleteDetails}>刪除</td>
+
+                    <td>
+                        <div className="delBtn deleteBtn" onClick={deleteDetails} ></div></td>
                 </tr>
             </>
         }
@@ -242,8 +321,6 @@
             .createRoot(document.getElementById('root'))
             .render(<App />);
     </script>
-
-    <!-- 設定jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <!-- <script src="./js/jsAriaProject.js"></script> -->

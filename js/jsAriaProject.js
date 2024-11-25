@@ -125,7 +125,7 @@ $(function () {
     let orderItObject = JSON.parse(localStorage.getItem('orderItObj'));
     if (orderItObject != '') {
         let newordProject = $('#project').clone();
-        newordProject.find('.captionLeft figure').append(orderItObject.img);
+        newordProject.find('.captionLeft figure').append(orderItObject.imgSvg);
         newordProject.find('.captionLeft p').text(orderItObject.name);
         newordProject.find('.unitPrice').text(`單件價格: NT$ ${orderItObject.price}`);
         newordProject.attr('id', '').css('display', 'block');

@@ -401,8 +401,8 @@ $(function () {
 
 
     // 按下儲存按鈕 => localStorage.setItem
-    // 宣告一個全域的 svgArray 陣列來儲存多次的 SVG 資料
-    let svgArray = JSON.parse(localStorage.getItem('svgArray')) || [];
+    // 宣告一個全域的 BuyItems 陣列來儲存多次的 SVG 資料
+    let BuyItems = JSON.parse(localStorage.getItem('BuyItems')) || [];
     $('#saveOption').click(function () {
         let getBlockSvg = $(document).find('.KeyArea svg').filter((index, element) => {
             return element.style.display == 'block';
@@ -428,10 +428,10 @@ $(function () {
                         describe: svgDescribe,
                         price: svgPrice,
                     };
-                    // 將物件推入 svgArray
-                    svgArray.push(svgObject);
+                    // 將物件推入 BuyItems
+                    BuyItems.push(svgObject);
                     // 更新 localStorage
-                    localStorage.setItem('svgArray', JSON.stringify(svgArray));
+                    localStorage.setItem('BuyItems', JSON.stringify(BuyItems));
                     // 清空 input 和 textarea 欄位
                     $('#svgName').val('');
                     $('#svgDescribe').val('');

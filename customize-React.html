@@ -554,10 +554,15 @@
                                     let orderDescribe = $('#svgDescribe').val();
                                     let orderIt = {
                                         name: orderName,
-                                        img: orderSvg,
+                                        imgSvg: orderSvg,
                                         describe: orderDescribe,
                                         price: orderPrice,
+                                        quantity:1,
+                                        color:"客製化"
                                     };
+                                    const BuyItemsNew = JSON.parse(localStorage.getItem("BuyItems")) || [];
+                                    BuyItemsNew.push(orderIt);
+                                    localStorage.setItem("BuyItems", JSON.stringify(BuyItemsNew));
                                     localStorage.setItem('orderItObj', JSON.stringify(orderIt));
                                     $('#svgName').val('');
                                     $('#svgDescribe').val('');
