@@ -27,13 +27,7 @@
             // 抓取localStorage中的buyItems
             // localStorage都是字串,要轉成JS物件=> JSON.parse()
             const buyItems = JSON.parse(localStorage.getItem("BuyItems"));
-            console.log(buyItems);
-
-            const buyDetails = JSON.parse(localStorage.getItem("buyDetails"));
-            console.log(buyDetails[2])
-
-
-
+            const [rderTotal,setOrderTotal]=useState(0);
             return <>
                 <Header />
                 <main>
@@ -44,14 +38,13 @@
                         </div>
                         <div id="content">
                             <div id="order" className="inContentDiv">
-                            {/* 依照buyItems的陣列數量(lenght)來新增<ContentDiv/> */}
-                            {buyItems.map((item, index) =>
-                                <ContentDiv
-                                    key={index}
-                                    index={index}
-                                    buyItems={buyItems}
-                                    buyDetails={buyDetails} />)}
-                                </div>
+                                {/* 依照buyItems的陣列數量(lenght)來新增<ContentDiv/> */}
+                                {buyItems.map((item, index) =>
+                                    <ContentDiv
+                                        key={index}
+                                        index={index}
+                                        buyItems={buyItems} />)}
+                            </div>
                             <div id="payment" class="inContentDiv">
                                 <div class="paymentInfo">
                                     <div class="infoTitle">選擇送貨及付款方式</div>
@@ -81,16 +74,11 @@
                                 <div id="AllOrder" class="paymentInfo">
                                     <div class="infoTitle">選擇送貨及付款方式</div>
                                     <div id="orderInfo">
-                                        <div class="eachOrder">
-                                            <p class="quantity">2 x</p>
-                                            <p>球衣樣式名稱</p>
-                                            <div class="contentMoney">總價: NT$ 7,380</div>
-                                        </div>
-                                        <div class="eachOrder">
-                                            <p class="quantity">1 x</p>
-                                            <p>球衣樣式名稱</p>
-                                            <div class="contentMoney">總價: NT$ 1,000</div>
-                                        </div>
+                                        {buyItems.map((item, index) =>
+                                            <EachOrder
+                                                key={index}
+                                                index={index}
+                                                buyItems={buyItems} />)}
                                         <div>
                                             <div class="contentMoney">運費: NT$ 100</div>
                                             <div class="contentMoney">總價: <span>NT$ 8,380</span></div>
@@ -109,7 +97,7 @@
             </>
         }
         function ContentDiv(props) {
-            const { buyItems, key, index, buyDetails } = props
+            const { buyItems, key, index } = props
             // 提取出buyItems的屬性陣列 => map()
             const name = buyItems.map(item => item.name);
             const img = buyItems.map(item => item.img);
@@ -117,28 +105,40 @@
             const color = buyItems.map(item => item.color);
             const price = buyItems.map(item => item.price);
             const quantity = buyItems.map(item => item.quantity);
+            const total = buyItems.map(item => item.total);
 
             return <>
-                
-                    <div id="checkOrder" className="orderContent">
-                        <div className="tableCaption">
-                            <div className="captionLeft">
-                                <figure className={`${img[index]}`}></figure>
-                                <div>
-                                    <p>{name[index]}</p>
-                                    <a href="#">數量和尺寸</a>
-                                </div>
-                            </div>
-                            <div className="captionRight">
-                                <p>共{buyDetails[index]}件</p>
-                                <p className="unitPrice">單價 : NT${price[index]}</p>
+                <div id="checkOrder" className="orderContent">
+                    <div className="tableCaption">
+                        <div className="captionLeft">
+                            <figure className={`${img[index]}`}></figure>
+                            <div>
+                                <p>{name[index]}</p>
+                                <a href="#">數量和尺寸</a>
                             </div>
                         </div>
-                        <div className="contentMoney">總價: NT$ <span>{price[index] * buyDetails[index]}</span></div>
+                        <div className="captionRight">
+                            <p>共{total[index]}件</p>
+                            <p className="unitPrice">單價 : NT${price[index]}</p>
+                        </div>
                     </div>
-                </>
+                    <div className="contentMoney">總價: NT$ <span>{price[index] * total[index]}</span></div>
+                </div>
+            </>
         }
 
+        function EachOrder(props) {
+            const { buyItems, key, index } = props
+            const name = buyItems.map(item => item.name);
+            const price = buyItems.map(item => item.price);
+            const total = buyItems.map(item => item.total);
+            return <>
+                <div class="eachOrder">
+                    <p class="quantity">{total[index]} x</p>
+                    <p>{name[index]}</p>
+                    <div class="contentMoney">總價: NT$ <span>{price[index] * total[index]}</span></div>
+                </div></>
+        }
         ReactDOM
             .createRoot(document.getElementById('root'))
             .render(<App />);

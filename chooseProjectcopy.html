@@ -26,24 +26,44 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
         function App() {
-            // 一開始載入畫面就抓取localStorage的資訊
-            // localStorage為字串,轉JS物件=>JSON.parse()
-            const buyItems = JSON.parse(localStorage.getItem("BuyItems"));
+            // 整筆訂單總金額,設定為0,經過useEffect後會有第一筆金額
+            const [orderTotal, setOrderTotal] = useState(0);
+            // 訂單商品資訊,設定為空陣列
+            const [buyItems, setBuyItems] = useState([]);
+            // 初始化只執行一次
+            useEffect(() => {
+                // 一開始載入畫面就抓取localStorage的資訊
+                // localStorage為字串,轉JS物件=>JSON.parse()
+                const buyItems = JSON.parse(localStorage.getItem("BuyItems")) || [];
+                setBuyItems(buyItems);
 
-            // 整筆訂單總金額
-            const [orderTotal, setOrderTotal] = useState(() => {
-                // return回傳結果
-                // 一開始抓取buyItems裡面的quantity跟price相乘後相加
-                return buyItems.map(item => item.quantity * item.price)
+                // 第一筆總金額 => 抓取buyItems裡面的quantity跟price相乘後相加
+                const oneTotal = buyItems.map(item => item.price * item.quantity)
                     // 上方結果為陣列 => [總價1,總價2,總價3......]
                     // .reduce => 將生成的新陣列中的所有數值累加
                     // sum=>總和,起始值為0 value=>陣列中當前元素的值
                     .reduce(function (sum, value) {
                         return sum + value; // 累加總價
                     }, 0);
-            });
+                setOrderTotal(oneTotal)
 
-            
+
+                // 新增total屬性,起始值為quantity
+                const newBuyItems = buyItems.map((item, index) => {
+                    // 宣告新屬性
+                    const total = item.quantity; 
+                    return {
+                        ...item, // 原本的所有屬性
+                        total, // 新增 total 屬性
+                    };
+                });
+                // 更新狀態
+                setBuyItems(newBuyItems);
+                // 存入 localStorage
+                localStorage.setItem("BuyItems", JSON.stringify(newBuyItems));
+                // []只在初始化執行一次
+            }, []);
+
 
 
             return <>
@@ -56,7 +76,7 @@
                         </div>
                         {/* 訂購框 */}
                         {/* 根據buyItems的陣列數量來新增.table */}
-                        {/* item => buyItems物件中的陣列 */}
+                        {/* item => buyItems物件中的陣列 [],[],[] */}
                         {/* tableIndex => 陣列的索引值 */}
                         {buyItems.map((item, tableIndex) => (
                             <OrderBox
@@ -65,13 +85,14 @@
                                 // 傳下去購買明細給框
                                 buyItems={buyItems}
                                 setOrderTotal={setOrderTotal}
+                                setBuyItems={setBuyItems}
                             />))}
                         <div className="pageBottom">
                             <a href="#" id="addStyle">
                                 <figure></figure>
                                 <p>Your Design</p>
                             </a>
-                            {/*<button className="nextBtn">下一步</button>*/}
+                            <button className="nextBtn">下一步</button>
                             <a href="./doubleCheck_New.html" className="nextBtn" >下一步</a>
                         </div>
                         <div id="projectInfo">
@@ -97,7 +118,7 @@
         }
         // 訂購框
         function OrderBox(props) {
-            const { tableIndex, buyItems, setOrderTotal } = props;
+            const { tableIndex, buyItems, setOrderTotal, setBuyItems } = props;
             // 提取出buyItems的屬性陣列 => map()
             const name = buyItems.map(item => item.name);
             const img = buyItems.map(item => item.img);
@@ -106,23 +127,76 @@
             const price = buyItems.map(item => item.price);
             const quantity = buyItems.map(item => item.quantity);
             const imgSvg = buyItems.map(item => item.imgSvg);
+            const total = buyItems.map(item => item.total);
+
 
             // 訂購款式框 => 一進入就要有true
             const [form, setForm] = useState(true);
-            // 訂購資訊行數 => 一開始要有一列=>1
-            const [details, setDetails] = useState([1]);
             // 訂購資訊框 => 一開始關閉
             const [detailsForm, setDetailsForm] = useState(false);
+            // 訂購資訊行數量,將quantity[tableIndex]作為第一行初始值的數量
+            // 後續用陣列長度來做<Orderdetails>新增依據
+            const [details, setDetails] = useState([quantity[tableIndex]]);
+            // 單款總數量 => 起始值為quantity
+            const [buyDetailNum, setBuyDetailNum] = useState(quantity[tableIndex]);
+
             // 訂購資訊框函式
             const formSwitch = function () {
                 setDetailsForm(!detailsForm);
             }
-            // 新增行數
+            // 連動total到localStorage
+            const newtotal = function (num) {
+                const newBuyItems = buyItems.map((item, index) => {
+                    if (index === tableIndex) {
+                        return {
+                            ...item,
+                            total: buyDetailNum + num,
+                        };
+                    }
+                    return item;
+                });
+                setBuyItems(newBuyItems);
+                localStorage.setItem("BuyItems", JSON.stringify(newBuyItems));
+            }
+
+            // 新增行數 點擊新增<Orderdetails>
             let addDetails = function () {
                 // preDetails=>代表details,避免因為異步更新
                 // React中同個陣列無法操作,新增一個原來陣列
-                // [...preDetails,......]=>複製到新陣列
-                setDetails(preDetails => [...preDetails, preDetails.length + 1]);
+                setDetails(function (preDetails) {
+                    // newDetail => 原來的details陣列,在新增一個值
+                    const newDetails = [...preDetails, 1];
+                    return newDetails; // 新狀態回傳結果 newDetails=>setDetails
+                });
+            }
+
+            // 件數更改 =>1.
+            // index => details陣列的索引值
+            // value => 更新的值 也就是單行件數
+            const changeQuantity = function (index, value) {
+                // value本為字串,轉成數值parseInt(string, radix);
+                const parsedValue = parseInt(value, 10) || 0;
+                setDetails((prevDetails) => {
+                    // 複製一個陣列執行
+                    const newDetails = [...prevDetails];
+                    // 更新被點選的數量
+                    newDetails[index] = parsedValue;
+                    // 雷同add
+                    updateOneTotal(newDetails);
+                    return newDetails;
+                });
+            };
+            // 計算總金額
+            useEffect(()=>{
+
+            })
+            const updateOneTotal = function (newDetails) {
+                // oneTotal為新增的單款總額
+                const oneTotal = newDetails.reduce((sum, value) => sum + value * price[tableIndex], 0);
+                // console.log(oneTotal)
+                // 更新全款式金額
+                // 全款式金額=總金額+新增的單款總額-舊的單款總額
+                setOrderTotal((prevTotal) => prevTotal + oneTotal - details.reduce((sum, value) => sum + value * price[tableIndex], 0));
             }
             // 刪除訂購框視窗
             const deleteform = function () {
@@ -134,44 +208,26 @@
                     const currentTotal = price[tableIndex] * buyDetailNum;
                     // 更新總額
                     setOrderTotal(prevTotal => prevTotal - currentTotal);
+                    // 連動localStorage
+                    const newbuyItems = buyItems.filter(item => item!== buyItems[tableIndex]);
+                    localStorage.setItem("BuyItems", JSON.stringify(newbuyItems));
                     // 直接關閉訂購框
                     setForm(false)
                 }
             };
+            // 原本是addDetails/changeQuantity都重複 改用useEffect處理
+            // 只用details有變動,都須更新總金額或是單款數量
+            useEffect(()=>{
+                // 單款總數列
+                const totalQuantity=details.reduce((sum,value)=>sum+value,0);
+                setBuyDetailNum(totalQuantity)
+                newtotal(1);
+            },[details]);
 
-            // 新增buyDetails物件,為各款式的數量陣列,計算各款總數量
-            const buyDetails = {};
-            // 單款總數量 => 起始值為quantity
-            const [buyDetailNum, setBuyDetailNum] = useState(quantity[tableIndex])
-
-            // 儲存各款式的數量
-            const saveOrder = function () {
-                // 提取當前框的所有數量
-                const quantityArray = details.map((_, index) => {
-                    const inputElement = document.getElementById(`quantity-${tableIndex}-${index}`);
-                    return parseInt(inputElement.value, 10) || 0;
-                });
-                // 計算當前的總數量
-                const totalQuantity = quantityArray.reduce((sum, value) => sum + value, 0);
-
-                // 從 localStorage 讀取現有的 buyDetails
-                const buyDetails = JSON.parse(localStorage.getItem("buyDetails")) || {};
-
-                buyDetails[tableIndex] = 0;
-                // 累加當前框的總數量到現有的值
-                buyDetails[tableIndex] = (buyDetails[tableIndex] || 0) + totalQuantity;
-                // 儲存到 localStorage
-                localStorage.setItem("buyDetails", JSON.stringify(buyDetails));
-                alert(`${name[tableIndex]} 的累計數量是：${buyDetails[tableIndex]}`);
-                setBuyDetailNum(buyDetails[tableIndex])
-
-                const buyDetailsA = Object.values(buyDetails);
-
-                const total = price.slice(0, price.length)
-                    .map((p, i) => p * buyDetailsA[i]) // 將同位置數字相乘
-                    .reduce((sum, value) => sum + value, 0); // 將乘積加總
-                setOrderTotal(total)
-            };
+            // 新增/刪除/更新數量時OrderTotal須更新
+            useEffect(()=>{
+                console.log("測試A")
+            },[buyItems])
 
             return <>
                 <div className="table" style={{ display: form == false ? "none" : "block" }}>
@@ -187,7 +243,6 @@
                         <div className="captionRight">
                             <div className="captionRightTOP">
                                 <p>此款訂購數 : {buyDetailNum} 件</p>
-
                                 <span className="arrow" onClick={formSwitch}>詳細尺寸</span>
                             </div>
                             <div className="delete" onClick={deleteform}>
@@ -210,19 +265,22 @@
                             {details.map((num, index) => (
                                 // 用key值來代表項次,但項次從1開始, ,所以index+1
                                 <Orderdetails
-                                    key={num}
+                                    key={`${tableIndex}-${index}`}
                                     num={index + 1}
                                     setDetails={setDetails}
                                     index={index}
                                     details={details}
-                                    setDetailsForm={setDetailsForm}
                                     size={size[tableIndex]}
                                     quantity={quantity[tableIndex]}
-                                    setForm={setForm}
-                                    name={name[tableIndex]}
                                     tableIndex={tableIndex}
                                     deleteform={deleteform}
+                                    value={details[index]}
+                                    setBuyDetailNum={setBuyDetailNum}
+                                    onChange={(e) => changeQuantity(index, e.target.value)}
+                                    updateOneTotal={updateOneTotal}
+                                    newtotal={newtotal}
                                 />))}
+
                         </tbody>
                         <tfoot>
                             <tr>
@@ -233,23 +291,16 @@
                                     </snap>
                                 </td>
                             </tr>
-                            <tr>
-                                <td colSpan="1000">
-                                    <snap className="tableFoot" >
-                                        <figure className="addBtn newBTN" onClick={saveOrder}></figure>
-                                        <p>儲存此訂單</p>
-                                    </snap>
-                                </td>
-                            </tr>
+
                         </tfoot>
                     </table>
                 </div>
             </>
         }
 
-        // 訂購明細列
+        // 訂購明細列 Box
         function Orderdetails(props) {
-            const { num, details, setDetails, index, setDetailsForm, size, quantity, setForm, name, tableIndex, deleteform } = props;
+            const { num, details, setDetails, index, size, quantity, tableIndex, deleteform, updateOneTotal, onChange, value, setBuyDetailNum, newtotal } = props;
             // 行數刪除函式
             const deleteDetails = function () {
                 // 刪除到最後一行時提醒 
@@ -257,11 +308,15 @@
                     // 刪除訂購框視窗
                     deleteform()
                 } else {
-                    // prevDetails=>代表details,避免異步更新
-                    // filter( _ , i => { } )=>建立新陣列,並且過濾掉不符合條件的元素
-                    // 有兩個參數,  _為每個元素的值,但不重要,   後者i為每個陣列值的位置
-                    // 新增一個除了被選擇刪除行的Details陣列
-                    setDetails(prevDetails => prevDetails.filter((_, i) => i !== index));
+                    setDetails(
+                        (prevDetails) => {
+                            const valueToRemove = prevDetails[index]; // 紀錄要刪除的行數值
+                            const newDetails = prevDetails.filter((_, i) => i !== index); // 過濾掉被刪除的行
+                            setBuyDetailNum((prevTotal) => prevTotal - valueToRemove); // 更新總數量
+                            newtotal(valueToRemove * -1)
+                            updateOneTotal(newDetails); // 更新父層 orderTotal
+                            return newDetails;
+                        })
                 }
             }
 
@@ -271,12 +326,7 @@
             const numOnesize = (e) => {
                 setChangeSize(e.target.value);
             }
-            const [changeQuantity, setChangeQuantity] = useState(num === 1 ? quantity : "1");
-            const numQuantity = (e) => {
-                const value = e.target.value;
-                setChangeQuantity(value);
-                // 更新數量陣列中的對應值
-            }
+            console.log(changeSize)
             return <>
                 <tr>
                     <td className="itemNo">{num}</td>
@@ -306,8 +356,8 @@
                             name=""
                             id={`quantity-${tableIndex}-${index}`}
                             title="選擇數量列表"
-                            value={changeQuantity}
-                            onChange={numQuantity}
+                            value={value}
+                            onChange={onChange}
                             placeholder="1"
                             min="1"
                             autoComplete="off" />
