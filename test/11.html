@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        button{
+        button {
             color: black;
         }
-        body p{
+
+        body p {
             color: black;
         }
     </style>
@@ -17,24 +18,26 @@
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.development.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-color@2.19.3/lib/index.js"></script>
     <link rel="stylesheet" href="../styles/headNfooter.css">
 </head>
 
 <body>
     <div id="root"></div>
     <script type="text/babel">
-        const { useState } = React;
+        import { SketchPicker } from 'react-color';
 
         function App() {
-           const Hi =function(){
-            alert("嗨")
-           }
-            return<>
-            <p>頁面2</p>
-                    <button onClick={Hi}> - </button>
-                </>
+            const [color, setColor] = useState('#fff');
+            return (
+                <SketchPicker
+                    color={color}
+                    onChangeComplete={(newColor) => setColor(newColor.hex)}
+                />
+            );
         }
-
         ReactDOM
             .createRoot(document.getElementById("root"))
             .render(<App />)

@@ -36,6 +36,7 @@
                 // localStorage為字串,轉JS物件=>JSON.parse()
                 const buyItems = JSON.parse(localStorage.getItem("BuyItems")) || [];
                 setBuyItems(buyItems);
+
                 // 第一筆總金額 => 抓取buyItems裡面的quantity跟price相乘後相加
                 const oneTotal = buyItems.map(item => item.price * item.quantity)
                     // 上方結果為陣列 => [總價1,總價2,總價3......]
@@ -91,8 +92,7 @@
                                 <figure></figure>
                                 <p>Your Design</p>
                             </a>
-                            <button className="nextBtn">下一步</button>
-                            <a href="./doubleCheck_New.html" className="nextBtn" >下一步</a>
+                            <a href="./doubleCheck.html" className="nextBtn" >下一步</a>
                         </div>
                         <div id="projectInfo">
                             <div>
@@ -165,21 +165,8 @@
                 setDetails(function (preDetails) {
                     // newDetail => 原來的details陣列,在新增一個值
                     const newDetails = [...preDetails, 1];
-                    // 同步更新單款的總數
-                    setBuyDetailNum(newDetails.reduce((sum, value) => sum + value, 0));
-                    updateOneTotal(newDetails); // 新增函數總額也會變 呼叫總金額函式
-                    newtotal(1);
                     return newDetails; // 新狀態回傳結果 newDetails=>setDetails
                 });
-            }
-            // 計算總金額
-            const updateOneTotal = function (newDetails) {
-                // oneTotal為新增的單款總額
-                const oneTotal = newDetails.reduce((sum, value) => sum + value * price[tableIndex], 0);
-                // console.log(oneTotal)
-                // 更新全款式金額
-                // 全款式金額=總金額+新增的單款總額-舊的單款總額
-                setOrderTotal((prevTotal) => prevTotal + oneTotal - details.reduce((sum, value) => sum + value * price[tableIndex], 0));
             }
 
             // 件數更改 =>1.
@@ -194,13 +181,22 @@
                     // 更新被點選的數量
                     newDetails[index] = parsedValue;
                     // 雷同add
-                    setBuyDetailNum(newDetails.reduce((sum, value) => sum + value, 0));
-                    newtotal(1);
                     updateOneTotal(newDetails);
                     return newDetails;
                 });
             };
+            // 計算總金額
+            useEffect(()=>{
 
+            })
+            const updateOneTotal = function (newDetails) {
+                // oneTotal為新增的單款總額
+                const oneTotal = newDetails.reduce((sum, value) => sum + value * price[tableIndex], 0);
+                // console.log(oneTotal)
+                // 更新全款式金額
+                // 全款式金額=總金額+新增的單款總額-舊的單款總額
+                setOrderTotal((prevTotal) => prevTotal + oneTotal - details.reduce((sum, value) => sum + value * price[tableIndex], 0));
+            }
             // 刪除訂購框視窗
             const deleteform = function () {
                 // 跳出提醒視窗 要回傳true或false =>confirm
@@ -218,6 +214,19 @@
                     setForm(false)
                 }
             };
+            // 原本是addDetails/changeQuantity都重複 改用useEffect處理
+            // 只用details有變動,都須更新總金額或是單款數量
+            useEffect(()=>{
+                // 單款總數列
+                const totalQuantity=details.reduce((sum,value)=>sum+value,0);
+                setBuyDetailNum(totalQuantity)
+                newtotal(1);
+            },[details]);
+
+            // 新增/刪除/更新數量時OrderTotal須更新
+            useEffect(()=>{
+                console.log("測試A")
+            },[buyItems])
 
             return <>
                 <div className="table" style={{ display: form == false ? "none" : "block" }}>
