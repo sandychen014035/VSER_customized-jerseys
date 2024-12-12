@@ -93,6 +93,18 @@
                 return futureDate;
             });
 
+            // 側邊金額框
+            const [orderForm, setOrderForm] = useState(false);
+            const orderDetailsRef = useRef(null);
+            const orderDetails = function () {
+                // 筆電與桌機不做任何指令,只有手機平板執行
+                if (window.innerWidth <= 1024) {
+                    setOrderForm(!orderForm);
+                    // 抓取最新結果
+                    if(!orderForm===true){
+                        orderDetailsRef.current.style.top = "72.5vh"}
+                else{orderDetailsRef.current.style.top = "94vh"}}
+                           }
 
             return <>
                 <Header />
@@ -124,22 +136,22 @@
                             <button className="nextBtn" onClick={order}>下一步</button>
 
                         </div>
-                        <div id="projectInfo">
+                        <div id="projectInfo" onClick={orderDetails} ref={orderDetailsRef}>
                             <div className='projectItem'>
-                                <div>
+                                <div className='projectImg'>
                                     <img src="./images/icon-amount.svg" alt="" />
                                     <p>整筆總額</p>
                                 </div>
                                 <p className="itemText">NT${orderTotal}</p>
                             </div>
-                            <hr/>
-                            <div>
+                            <hr />
+                            <div className='projectItem'>
                                 <div>
                                     <img src="./images/icon-truck.svg" alt="" />
                                     <p>預計交貨日期</p>
                                 </div>
                                 <p className="itemText">{date.toLocaleDateString()}</p>
-                                <p style={{padding:"15px 0 0 0 "}}>(10個工作天後)</p>
+                                <p style={{ padding: "15px 0 0 0 " }}>(10個工作天後)</p>
                             </div>
                         </div>
                     </section>
@@ -159,7 +171,7 @@
             const quantity = buyItems.map(item => item.quantity);
             const imgSvg = buyItems.map(item => item.imgSvg);
             const total = buyItems.map(item => item.total);
-            const arrayName=buyItems.map(item => item.arrayName);
+            const arrayName = buyItems.map(item => item.arrayName);
 
             const [detailsList, setDetailsList] = useState(
                 buyItems[tableIndex]?.arrayQuantity.map((quantity, index) => ({

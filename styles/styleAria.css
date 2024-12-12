@@ -1185,8 +1185,7 @@ hr {
 }
 
 .pageTitle p,
-.tableCaption p
- {
+.tableCaption p {
     letter-spacing: 0.08rem;
 }
 
@@ -1196,10 +1195,11 @@ hr {
     text-align: center;
     padding: 0 310px 0 80px;
 }
+
 .tableCaption {
     width: 100%;
     height: 150px;
-    border:1.5px solid white;
+    border: 1.5px solid white;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1219,26 +1219,31 @@ hr {
     align-items: center;
     height: 100%;
 }
-.captionRight{
+
+.captionRight {
     display: flex;
-        align-items: center;
+    align-items: center;
 }
-.captionRightTOP{
+
+.captionRightTOP {
     display: flex;
     align-items: center;
     flex-direction: column;
     margin-right: 15px;
 }
-.captionRightTOP .arrow{
+
+.captionRightTOP .arrow {
     width: 140px;
 }
-.captionLefText .arrow{
+
+.captionLefText .arrow {
     width: 80px;
 }
+
 .captionRightTOP .arrow,
-.captionLefText .arrow{
+.captionLefText .arrow {
     margin-top: 10px;
-    padding: 1px 0 0 0 ;
+    padding: 1px 0 0 0;
     text-align: center;
     height: 30px;
     border: 1px solid white;
@@ -1247,13 +1252,15 @@ hr {
     letter-spacing: 0.08rem;
 
 }
+
 .captionRightTOP .arrow:hover,
 .captionRightTOP .arrow:focus,
 .captionLefText .arrow:hover,
-.captionLefText .arrow:focus{
+.captionLefText .arrow:focus {
     color: var(--Blue);
     background-color: var(--Orange);
-    border: 1px solid var(--Orange);;
+    border: 1px solid var(--Orange);
+    ;
 }
 
 .tableCaption figure {
@@ -1294,10 +1301,11 @@ td {
     border-collapse: collapse;
     width: 16%;
     border-left: none;
-    
+
 }
+
 th:nth-child(1),
-td:nth-child(1){
+td:nth-child(1) {
     border-left: none;
 }
 
@@ -1345,15 +1353,16 @@ td:nth-child(1){
     transition: 0.35s;
 }
 
-.tableFoot:hover .addBtn{
+.tableFoot:hover .addBtn {
     background-image: url(../images/addBtn_arrow_hover.svg);
 }
-.tableFoot:hover p{
-color: var(--Orange);
+
+.tableFoot:hover p {
+    color: var(--Orange);
 }
 
 .pageBottom {
-    margin: 24px 0 0 0 ;
+    margin: 24px 0 0 0;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -1464,17 +1473,18 @@ color: var(--Orange);
     top: 29.5vh;
     letter-spacing: 0.08rem;
     width: 16%;
-    box-shadow: 0 10px 10px var(--Darkblue_05); /* 添加阴影效果 */
+    box-shadow: 0 10px 10px var(--Darkblue_05);
+    /* 添加阴影效果 */
 }
 
-#projectInfo div {
+.projectItem {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
 
-#projectInfo div div {
+.projectItem div {
     width: fit-content;
     display: flex;
     justify-content: flex-start;
@@ -1487,7 +1497,7 @@ color: var(--Orange);
 }
 
 
-#projectInfo div img {
+.projectItem img {
     width: 40px;
     height: 40px;
     margin-right: 8px;
@@ -1705,7 +1715,8 @@ color: var(--Orange);
     display: flex;
     flex-direction: column;
 }
-#content .inContentDiv:nth-child(1){
+
+#content .inContentDiv:nth-child(1) {
     padding: 0 310px 0 80px;
 }
 
@@ -1773,39 +1784,43 @@ color: var(--Orange);
     font-size: 16px;
     letter-spacing: 0.08rem;
     padding: 0 10px;
-    outline: none; /* 去掉默認的外框 */
+    outline: none;
+    /* 去掉默認的外框 */
 
 }
 
 
 #personalForm option {
-    color:  var(--Blue);
+    color: var(--Blue);
     background-color: white;
-    
+
 
 }
 
 .eachOrder {
-    margin: 0px 0px 15px;;
+    margin: 0px 0px 15px;
+    ;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.eachOrder:last-of-type{
+
+.eachOrder:last-of-type {
     margin: 15px 0px 0px;
 }
 
 .eachOrder .quantity {
     border: 1px solid white;
-    padding: 0px 5px 1px;;
+    padding: 0px 5px 1px;
+    ;
     background-color: #d9d9d9;
     color: var(--Darkblue);
     display: flex;
     justify-content: space-between;
-width:  25%;
+    width: 25%;
 }
 
- >div:last-child {
+>div:last-child {
     padding: 15px 0px 0px;
     border-top: 1px solid white;
 }
@@ -2071,20 +2086,23 @@ footer div small {
         padding-top: 16px;
     }
 }
-@media (width < 840px)  {
-    .footerList li{
+
+@media (width < 840px) {
+    .footerList li {
         font-size: 20px;
         letter-spacing: 0.06rem;
     }
-    .footerItem li{
+
+    .footerItem li {
         font-size: 16px;
         letter-spacing: 0.06rem;
     }
+
     footer div figure img {
-      width: 100%;
-  }
-  }
-  
+        width: 100%;
+    }
+}
+
 /* index區 */
 @media (max-width:640px),
 (width < 840px) {
@@ -2479,15 +2497,17 @@ footer div small {
 
 /* sandy */
 .delete,
-.deleteBtn{
-    background-image:url(../images/delete_arrow.svg);
+.deleteBtn {
+    background-image: url(../images/delete_arrow.svg);
     transition: 0.35s;
 }
+
 .delete:hover,
-.deleteBtn:hover{
-    background-image:url(../images/delete_arrow_hover.svg);
+.deleteBtn:hover {
+    background-image: url(../images/delete_arrow_hover.svg);
 }
-.delete{
+
+.delete {
     width: 30px;
     height: 30px;
     margin: auto;
@@ -2495,32 +2515,38 @@ footer div small {
     right: 10px;
     top: 10px;
 }
-.deleteBtn{
+
+.deleteBtn {
     width: 30px;
     height: 30px;
     margin: auto;
 }
-.storeArrow{
-position: relative;
+
+.storeArrow {
+    position: relative;
     margin: auto;
     width: 100%;
     height: auto;
     white-space: nowrap;
 }
-.storeArrow p{
+
+.storeArrow p {
     position: absolute;
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
-.captionLefText{
+
+.captionLefText {
     display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
 }
-.captionLefText p{
+
+.captionLefText p {
     margin: 5px 0;
 }
+
 .imgSvg {
     width: 100%;
     padding: 10px 0 0 0;
@@ -2528,7 +2554,7 @@ position: relative;
 }
 
 /* double */
-.paymentFixed{
+.paymentFixed {
     padding: 20px 16px;
     position: fixed;
     right: 80px;
@@ -2538,86 +2564,114 @@ position: relative;
     border-radius: 15px;
     max-height: 60%;
     display: flex;
-    flex-direction: column; /* 讓子元素垂直排列 */
-    overflow: hidden; /* 避免外溢 */
+    flex-direction: column;
+    /* 讓子元素垂直排列 */
+    overflow: hidden;
+    /* 避免外溢 */
     box-shadow: 0 10px 10px var(--Darkblue_05);
 }
-.paymentFixed hr{
-    border:.75px solid white;
+
+.paymentFixed hr {
+    border: .75px solid white;
     margin: 20px 0 0;
 }
 
-.quantity p{
+.quantity p {
     margin: 0 1px;
 }
-  .eachOrder p{
+
+.eachOrder p {
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 65%;
     overflow: hidden;
 }
-.contentItem{
-    flex: 1; /* 填充剩餘空間 */
-    overflow-y: auto; /* 啟用垂直滾動 */
-    margin-right: -17px; /* 隱藏垂直捲軸 (17px 是捲軸的寬度，依瀏覽器而定) */
-    padding-right: 17px; /* 確保內容不被捲軸覆蓋 */
+
+.contentItem {
+    flex: 1;
+    /* 填充剩餘空間 */
+    overflow-y: auto;
+    /* 啟用垂直滾動 */
+    margin-right: -17px;
+    /* 隱藏垂直捲軸 (17px 是捲軸的寬度，依瀏覽器而定) */
+    padding-right: 17px;
+    /* 確保內容不被捲軸覆蓋 */
 }
+
 .contentItem::-webkit-scrollbar {
-    display: none; /* 隱藏捲軸 */
+    display: none;
+    /* 隱藏捲軸 */
 }
-.contentTotal{
+
+.contentTotal {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    flex-shrink: 0; /* 防止被壓縮，保持固定高度 */
-    height: auto; /* 保持內容高度 */
-    padding-top: 10px; /* 如果需要間距，可以設定適合的 padding */
+    flex-shrink: 0;
+    /* 防止被壓縮，保持固定高度 */
+    height: auto;
+    /* 保持內容高度 */
+    padding-top: 10px;
+    /* 如果需要間距，可以設定適合的 padding */
 }
-.personal{
+
+.personal {
     margin: 20px 0;
     width: 100%;
     border: 1.5px solid white;
 }
+
 article.personal p {
-    background-color: rgb(255, 255, 255,.1);
+    background-color: rgb(255, 255, 255, .1);
     line-height: 1;
     padding: 12px 0 12px 30px;
     border-bottom: 1.5px solid white;
 }
-#personalForm{
+
+#personalForm {
     padding: 15px 30px 15px 30px;
 }
-#personalForm input{
-    flex: 1; /* 填充剩餘空間 */
+
+#personalForm input {
+    flex: 1;
+    /* 填充剩餘空間 */
     height: 2rem;
     padding: 0 10px;
     background-color: transparent;
-border: 1px solid white;
-border-radius: 5px;
-color: white; ;
+    border: 1px solid white;
+    border-radius: 5px;
+    color: white;
+    ;
 }
-#personalForm label {
-    flex-shrink: 0; /* 防止被壓縮，保持固定高度 */
-    height: auto;
-    margin: 10px 10px 10px 0;}
 
-.form{
+#personalForm label {
+    flex-shrink: 0;
+    /* 防止被壓縮，保持固定高度 */
+    height: auto;
+    margin: 10px 10px 10px 0;
+}
+
+.form {
     display: flex;
 }
-.emptyCartMessage{
+
+.emptyCartMessage {
     padding: 20px 80px;
     letter-spacing: 0.08rem;
 }
-#projectInfo hr{
-margin: 20px 0 ;
+
+#projectInfo hr {
+    margin: 20px 0;
 }
-.itemText{
+
+.itemText {
     font-size: 23px;
     position: relative;
     z-index: 1;
     width: fit-content;
-    
+
 }
+
 .itemText::before {
     content: '';
     position: absolute;
@@ -2627,19 +2681,55 @@ margin: 20px 0 ;
     bottom: 0;
     margin: 10px -5px -5px;
     background-color: var(--Darkblue);
-    z-index: -1; /* 将背景置于文字下方 */
-  }
+    z-index: -1;
+    /* 将背景置于文字下方 */
+}
+
 #projectInfo p {
     margin: auto;
     line-height: 1;
 }
-.paymentTotal{
+
+.paymentTotal {
     display: flex;
     align-items: center;
 }
-.contentTotal p{
+
+.contentTotal p {
     line-height: 1;
 }
-.paymentTotal img{width: 40px;
+
+.paymentTotal img {
+    width: 40px;
     height: 40px;
-    margin-right: 8px;}
+    margin-right: 8px;
+}
+
+/* 購物車RWD */
+@media (width < 840px) {
+    #projectInfo {
+        top: 94vh;
+        right: 80px;
+        width: fit-content;
+        background-color: var(--Blue);
+        z-index: 2;
+    }
+
+    .table {
+        padding: 0 80px 0 80px;
+    }
+
+    .projectItem {
+        align-items: center;
+        margin: auto;
+
+    }
+    #projectInfo p {
+        margin: 0;
+    }
+
+    #projectInfo .delete {
+        right: 15px;
+    }
+   
+}
