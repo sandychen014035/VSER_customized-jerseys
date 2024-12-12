@@ -201,15 +201,14 @@
             </>
         }
         function DetailsForm(props) {
-            const { arrayName, index, arrayNum, arraySize, arrayQuantity } = props
-            console.log(typeof arrayName)
+            const { arrayName, indexNew, arrayNum, arraySize, arrayQuantity } = props
             return <>
                 <tr class="DetailsForm">
-                    <th>{index + 1}</th>
-                    <td>{arrayNum[0][index] === "" ? "/" : arrayNum[0][index]}</td>
-                    <td>{arrayName[0][index] === "" ? "/" : arrayName[0][index]}</td>
-                    <td>{arraySize[0][index]}</td>
-                    <td>{arrayQuantity[0][index]}</td>
+                    <th>{indexNew + 1}</th>
+                    <td>{arrayNum[indexNew]===""?"/":arrayNum[indexNew]}</td>
+                    <td>{arrayName[indexNew]===""?"/":arrayNum[arrayName]}</td>
+                    <td>{arraySize[indexNew]}</td>
+                    <td>{arrayQuantity[indexNew]}</td>
                 </tr>
             </>
         }
@@ -223,10 +222,12 @@
             const price = buyItems.map(item => item.price);
             const quantity = buyItems.map(item => item.quantity);
             const total = buyItems.map(item => item.total);
+            // 這裡有錯誤
             const arrayName = buyItems.map(item => item.arrayName);
+            const arraySize = buyItems.map(item => item.arraySize);
             const arrayNum = buyItems.map(item => item.arrayNum);
             const arrayQuantity = buyItems.map(item => item.arrayQuantity);
-            const arraySize = buyItems.map(item => item.arraySize);
+            console.log(arraySize[0]);
             const [windowDetails, setWindowDetails] = useState(false);
 
             const w_Details = function () {
@@ -235,8 +236,8 @@
 
             const closePopup = function () {
                 setWindowDetails(false);
+                
             }
-            console.log(arrayName)
             return <>
                 <div id="checkOrder" className="orderContent">
                     <div className="tableCaption">
@@ -268,14 +269,15 @@
                                         <td>數量</td>
 
                                     </tr>
-                                    {arrayName[index].map((_, index) => (
+                                    {arrayName[index].map((_, indexNew) => (
                                         <DetailsForm
-                                            key={index}
-                                            arrayName={arrayName}
-                                            arrayNum={arrayNum}
-                                            arraySize={arraySize}
-                                            arrayQuantity={arrayQuantity}
-                                            index={index} />
+                                            key={indexNew}
+                                            buyItems={buyItems}
+                                            arrayName={arrayName[index]}
+                                            arrayNum={arrayNum[index]}
+                                            arraySize={arraySize[index]}
+                                            arrayQuantity={arrayQuantity[index]}
+                                            indexNew={indexNew} />
                                     ))}
 
                                 </table>

@@ -2713,7 +2713,8 @@ article.personal p {
         width: fit-content;
         background-color: var(--Blue);
         z-index: 2;
-        padding: 15px 16px;;
+        padding: 15px 16px;
+        transition: top 0.3s ease, padding 0.3s ease;
     }
 
     .table ,
@@ -2739,6 +2740,7 @@ article.personal p {
         width: 25%;
         right: 60px;
         top: 94vh;
+        transition: top 0.3s ease, padding 0.3s ease;
 
     }
    
