@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="./styles/pbCarousel.css">
     <link rel="stylesheet" href="./styles/headNfooter.css">
     <script type="text/babel" src="./js_e/PbShape.js"></script>
+    <script type="text/babel" src="./js_e/AddToFavorites.js"></script>
     <script type="text/babel" src="https://aria-hawa.github.io/customizeJersey/jsx/Header.jsx"></script>
     <script type="text/babel" src="https://aria-hawa.github.io/customizeJersey/jsx/Footer.jsx"></script>
 </head>
@@ -160,6 +161,9 @@
                 }
             };
 
+            // 彈跳視窗
+            const [ windowLove,setWindowLove]=useState(false);
+
 
             return (<>
                 <Header classname='darkblue' />
@@ -207,6 +211,7 @@
                                                     star={item.star}
                                                     pbNum={item.pbNum}
                                                     dataNum={item.dataNum}
+                                                    setWindowLove={setWindowLove}
                                                 />
                                             ))}
                                         </ul>
@@ -223,12 +228,13 @@
                         </div>
                     </section>
                 </main>
+                {windowLove && (
+                    <AddToFavorites/>)}
                 <Footer />
             
             </>)
 
         }
-
         ReactDOM
             .createRoot(document.getElementById('root'))
             .render(<App />);

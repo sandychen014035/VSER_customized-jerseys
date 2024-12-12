@@ -32,7 +32,6 @@ function Header({ classname }) {
                             $(this).css('display', 'none');
                         });
                     }
-
                     // 切換 navbar 的背景顏色
                     $('.navbar').toggleClass('fillColor');
                 });

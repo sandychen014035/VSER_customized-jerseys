@@ -5,6 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VSER</title>
+    <style>
+        /* 確保數字調整按鈕始終可見 */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
     <link rel="icon" href="./favicon.ico">
     <link rel="stylesheet" href="./styles/styleAria.css">
     <link rel="stylesheet" href="./styles/headNfooter.css">
@@ -35,10 +43,26 @@
                 // 一開始載入畫面就抓取localStorage的資訊
                 // localStorage為字串,轉JS物件=>JSON.parse()
                 const buyItems = JSON.parse(localStorage.getItem("BuyItems")) || [];
-                setBuyItems(buyItems);
+
+                // 宣告新的屬性=>total,id
+                const newBuyItems = buyItems.map(
+                    function (item, index) {
+                        return {
+                            ...item,
+                            total: item.quantity,
+                            id: index,
+                            arraySize: [item.size],
+                            arrayQuantity: [item.quantity],
+                            arrayNum: [""],
+                            arrayName: [""],
+                        }
+                    }
+                );
+                // 一般購物車都是後加入在最上面,把陣列顛倒
+                setBuyItems(newBuyItems);
 
                 // 第一筆總金額 => 抓取buyItems裡面的quantity跟price相乘後相加
-                const oneTotal = buyItems.map(item => item.price * item.quantity)
+                const oneTotal = newBuyItems.map(item => item.price * item.quantity)
                     // 上方結果為陣列 => [總價1,總價2,總價3......]
                     // .reduce => 將生成的新陣列中的所有數值累加
                     // sum=>總和,起始值為0 value=>陣列中當前元素的值
@@ -46,24 +70,28 @@
                         return sum + value; // 累加總價
                     }, 0);
                 setOrderTotal(oneTotal)
-
-
-                // 新增total屬性,起始值為quantity
-                const newBuyItems = buyItems.map((item, index) => {
-                    // 宣告新屬性
-                    const total = item.quantity; 
-                    return {
-                        ...item, // 原本的所有屬性
-                        total, // 新增 total 屬性
-                    };
-                });
-                // 更新狀態
-                setBuyItems(newBuyItems);
-                // 存入 localStorage
+                // 連動localStorage
                 localStorage.setItem("BuyItems", JSON.stringify(newBuyItems));
-                // []只在初始化執行一次
             }, []);
 
+            useEffect(() => {
+                localStorage.setItem("BuyItems", JSON.stringify(buyItems));
+            }, [buyItems]);
+
+            // 購物車為0時,不可跳下一頁
+            let order = function () {
+                if (buyItems.length !== 0) {
+                    window.location.href = './doubleCheck.html'; // 跳轉
+                }
+            }
+
+            // 預計交貨日期
+            const [date, setData] = useState(() => {
+                const today = new Date();
+                const futureDate = new Date();
+                futureDate.setDate(today.getDate() + 14);
+                return futureDate;
+            });
 
 
             return <>
@@ -78,36 +106,40 @@
                         {/* 根據buyItems的陣列數量來新增.table */}
                         {/* item => buyItems物件中的陣列 [],[],[] */}
                         {/* tableIndex => 陣列的索引值 */}
-                        {buyItems.map((item, tableIndex) => (
-                            <OrderBox
-                                key={tableIndex}
-                                tableIndex={tableIndex}
-                                // 傳下去購買明細給框
-                                buyItems={buyItems}
-                                setOrderTotal={setOrderTotal}
-                                setBuyItems={setBuyItems}
-                            />))}
+                        {/* 檢查是否沒空陣列 */}
+                        {buyItems.length === 0 ? (
+                            <div className="emptyCartMessage">
+                                <p>你的購物車是空的</p>
+                            </div>) :
+                            (buyItems.map((item, tableIndex) => (
+                                <OrderBox
+                                    key={item.id}
+                                    tableIndex={buyItems.findIndex((buyItem) => buyItem.id === item.id)}
+                                    // 傳下去購買明細給框
+                                    buyItems={buyItems}
+                                    setOrderTotal={setOrderTotal}
+                                    setBuyItems={setBuyItems}
+                                />)))}
                         <div className="pageBottom">
-                            <a href="#" id="addStyle">
-                                <figure></figure>
-                                <p>Your Design</p>
-                            </a>
-                            <a href="./doubleCheck.html" className="nextBtn" >下一步</a>
+                            <button className="nextBtn" onClick={order}>下一步</button>
+
                         </div>
                         <div id="projectInfo">
-                            <div>
+                            <div className='projectItem'>
                                 <div>
                                     <img src="./images/icon-amount.svg" alt="" />
                                     <p>整筆總額</p>
                                 </div>
-                                <span>NT${orderTotal}</span>
+                                <p className="itemText">NT${orderTotal}</p>
                             </div>
+                            <hr/>
                             <div>
                                 <div>
                                     <img src="./images/icon-truck.svg" alt="" />
                                     <p>預計交貨日期</p>
                                 </div>
-                                <p>2024年10月25~28日</p>
+                                <p className="itemText">{date.toLocaleDateString()}</p>
+                                <p style={{padding:"15px 0 0 0 "}}>(10個工作天後)</p>
                             </div>
                         </div>
                     </section>
@@ -127,6 +159,17 @@
             const quantity = buyItems.map(item => item.quantity);
             const imgSvg = buyItems.map(item => item.imgSvg);
             const total = buyItems.map(item => item.total);
+            const arrayName=buyItems.map(item => item.arrayName);
+
+            const [detailsList, setDetailsList] = useState(
+                buyItems[tableIndex]?.arrayQuantity.map((quantity, index) => ({
+                    id: `${tableIndex}-${index}`,
+                    size: buyItems[tableIndex]?.arraySize[index] || "",
+                    quantity: quantity || 1,
+                    num: buyItems[tableIndex]?.arrayNum[index] || "",
+                    name: buyItems[tableIndex]?.arrayName[index] || "",
+                })) || []
+            );
 
 
             // 訂購款式框 => 一進入就要有true
@@ -143,20 +186,6 @@
             const formSwitch = function () {
                 setDetailsForm(!detailsForm);
             }
-            // 連動total到localStorage
-            const newtotal = function (num) {
-                const newBuyItems = buyItems.map((item, index) => {
-                    if (index === tableIndex) {
-                        return {
-                            ...item,
-                            total: buyDetailNum + num,
-                        };
-                    }
-                    return item;
-                });
-                setBuyItems(newBuyItems);
-                localStorage.setItem("BuyItems", JSON.stringify(newBuyItems));
-            }
 
             // 新增行數 點擊新增<Orderdetails>
             let addDetails = function () {
@@ -166,6 +195,29 @@
                     // newDetail => 原來的details陣列,在新增一個值
                     const newDetails = [...preDetails, 1];
                     return newDetails; // 新狀態回傳結果 newDetails=>setDetails
+                });
+                // 
+                setBuyItems((prevItems) => {
+                    const updatedItems = prevItems.map((item, idx) => {
+                        const newQuantity = 1;
+                        const newSize = "";
+                        const newNum = '';
+                        const nameNum = '';
+                        if (idx === tableIndex) {
+                            return {
+                                ...item,
+                                total: item.total + 1,
+                                arrayQuantity: [...item.arrayQuantity, newQuantity],
+                                arraySize: [...item.arraySize, newSize],
+                                arrayNum: [...item.arrayNum, newNum],
+                                arrayName: [...item.arrayName, nameNum],
+                            };
+                        }
+                        return item;
+                    });
+                    // 讓useEffect一起處一起處理
+                    // localStorage.setItem("BuyItems", JSON.stringify(updatedItems));
+                    return updatedItems;
                 });
             }
 
@@ -181,22 +233,25 @@
                     // 更新被點選的數量
                     newDetails[index] = parsedValue;
                     // 雷同add
-                    updateOneTotal(newDetails);
                     return newDetails;
                 });
-            };
-            // 計算總金額
-            useEffect(()=>{
+                const newQuantity = value;
+                setBuyItems((prevItems) => {
+                    return prevItems.map((item, idx) => {
+                        if (idx === tableIndex) {
+                            const newArrayQuantity = [...item.arrayQuantity];
+                            newArrayQuantity[index] = newQuantity; // 將新尺寸更新到對應位置
+                            return {
+                                ...item,
+                                arrayQuantity: newArrayQuantity,
+                            };
+                        }
+                        return item;
+                    });
+                });
 
-            })
-            const updateOneTotal = function (newDetails) {
-                // oneTotal為新增的單款總額
-                const oneTotal = newDetails.reduce((sum, value) => sum + value * price[tableIndex], 0);
-                // console.log(oneTotal)
-                // 更新全款式金額
-                // 全款式金額=總金額+新增的單款總額-舊的單款總額
-                setOrderTotal((prevTotal) => prevTotal + oneTotal - details.reduce((sum, value) => sum + value * price[tableIndex], 0));
-            }
+            };
+
             // 刪除訂購框視窗
             const deleteform = function () {
                 // 跳出提醒視窗 要回傳true或false =>confirm
@@ -208,32 +263,61 @@
                     // 更新總額
                     setOrderTotal(prevTotal => prevTotal - currentTotal);
                     // 連動localStorage
-                    const newbuyItems = buyItems.filter(item => item!== buyItems[tableIndex]);
-                    localStorage.setItem("BuyItems", JSON.stringify(newbuyItems));
+                    setBuyItems((prevItems) => {
+                        const updatedItems = prevItems.filter((_, idx) => idx !== tableIndex);
+                        return updatedItems;
+                    });
                     // 直接關閉訂購框
                     setForm(false)
                 }
             };
+            // 以下為副作用
             // 原本是addDetails/changeQuantity都重複 改用useEffect處理
             // 只用details有變動,都須更新總金額或是單款數量
-            useEffect(()=>{
+            useEffect(() => {
                 // 單款總數列
-                const totalQuantity=details.reduce((sum,value)=>sum+value,0);
+                const totalQuantity = details.reduce((sum, value) => sum + value, 0);
                 setBuyDetailNum(totalQuantity)
-                newtotal(1);
-            },[details]);
+            }, [details]);
+            // total更新
+            useEffect(() => {
+                const newBuyItems = buyItems.map((item, index) => {
+                    if (index === tableIndex) {
+                        return {
+                            ...item,
+                            total: buyDetailNum,
+                        };
+                    }
+                    return item;
+                });
+                setBuyItems(newBuyItems);
+                localStorage.setItem("BuyItems", JSON.stringify(newBuyItems));
+            },
+                [buyDetailNum]);
 
-            // 新增/刪除/更新數量時OrderTotal須更新
-            useEffect(()=>{
-                console.log("測試A")
-            },[buyItems])
+            useEffect(() => {
+                // 重新計算整筆訂單的總額
+                const newOrderTotal = buyItems.reduce((sum, item) => {
+                    // 單款式所有行數的總和
+                    const itemTotal = item.arrayQuantity.reduce((itemSum, qty, index) => itemSum + qty * item.price, 0);
+                    return sum + itemTotal;
+                }, 0);
+
+                // 更新 orderTotal
+                setOrderTotal(newOrderTotal);
+            }, [buyDetailNum, buyItems]);
 
             return <>
                 <div className="table" style={{ display: form == false ? "none" : "block" }}>
                     <div className="tableCaption">
                         <div className="captionLeft">
                             {/* 抓取name,img,size,color,price等陣列的對應次序 */}
-                            <figure className={`${img[tableIndex]}`}></figure>
+                            <figure className={`${img[tableIndex]}`}>
+                                <div className="imgSvg"
+                                    dangerouslySetInnerHTML={{
+                                        __html: imgSvg[tableIndex],
+                                    }}
+                                /></figure>
                             <div className="captionLefText">
                                 <p>{name[tableIndex]} - {color[tableIndex]}</p>
                                 <p className="unitPrice">單件: NT${price[tableIndex]}</p>
@@ -244,10 +328,8 @@
                                 <p>此款訂購數 : {buyDetailNum} 件</p>
                                 <span className="arrow" onClick={formSwitch}>詳細尺寸</span>
                             </div>
-                            <div className="delete" onClick={deleteform}>
-                            </div>
                         </div>
-
+                        <div className="delete" onClick={deleteform}></div>
                     </div>
                     <table className="show" style={{ display: detailsForm == false ? "none" : "block" }}>
                         <thead>
@@ -276,18 +358,22 @@
                                     value={details[index]}
                                     setBuyDetailNum={setBuyDetailNum}
                                     onChange={(e) => changeQuantity(index, e.target.value)}
-                                    updateOneTotal={updateOneTotal}
-                                    newtotal={newtotal}
+                                    setBuyItems={setBuyItems}
+                                    setOrderTotal={setOrderTotal}
+                                    buyDetailNum={buyDetailNum}
+                                    price={price}
+                                    buyItems={buyItems}
+
                                 />))}
 
                         </tbody>
                         <tfoot>
                             <tr>
                                 <td colSpan="1000">
-                                    <snap className="tableFoot" onClick={() => addDetails()}>
+                                    <span className="tableFoot" onClick={() => addDetails()}>
                                         <figure className="addBtn"></figure>
                                         <p>新增件數</p>
-                                    </snap>
+                                    </span>
                                 </td>
                             </tr>
 
@@ -299,43 +385,147 @@
 
         // 訂購明細列 Box
         function Orderdetails(props) {
-            const { num, details, setDetails, index, size, quantity, tableIndex, deleteform, updateOneTotal, onChange, value, setBuyDetailNum, newtotal } = props;
+            const { buyItems, setOrderTotal, price, buyDetailNum, num, details, setDetails, index, size, quantity, tableIndex, deleteform, onChange, value, setBuyDetailNum, setBuyItems } = props;
+
             // 行數刪除函式
             const deleteDetails = function () {
-                // 刪除到最後一行時提醒 
-                if (details.length == 1) {
-                    // 刪除訂購框視窗
-                    deleteform()
+                if (details.length === 1) {
+                    deleteform();
                 } else {
-                    setDetails(
-                        (prevDetails) => {
-                            const valueToRemove = prevDetails[index]; // 紀錄要刪除的行數值
-                            const newDetails = prevDetails.filter((_, i) => i !== index); // 過濾掉被刪除的行
-                            setBuyDetailNum((prevTotal) => prevTotal - valueToRemove); // 更新總數量
-                            newtotal(valueToRemove * -1)
-                            updateOneTotal(newDetails); // 更新父層 orderTotal
-                            return newDetails;
-                        })
-                }
-            }
+                    // 使用局部變量保存最新數據，確保同步處理
+                    const updatedDetails = details.filter((_, i) => i !== index); // 刪除選中行
+                    const updatedBuyDetailNum = updatedDetails.reduce((sum, value) => sum + value, 0);
 
+                    const updatedBuyItems = buyItems.map((item, idx) => {
+                        if (idx === tableIndex) {
+                            const updatedArrayQuantity = [...item.arrayQuantity];
+                            const updatedArraySize = [...item.arraySize];
+                            const updatedArrayNum = [...item.arrayNum];
+                            const updatedArrayName = [...item.arrayName];
+
+                            updatedArrayQuantity.splice(index, 1); // 移除選中行的數量
+                            updatedArraySize.splice(index, 1); // 移除選中行的尺寸
+                            updatedArrayNum.splice(index, 1); // 移除選中行的號碼
+                            updatedArrayName.splice(index, 1); // 移除選中行的名字
+
+                            return {
+                                ...item,
+                                arrayQuantity: updatedArrayQuantity,
+                                arraySize: updatedArraySize,
+                                arrayNum: updatedArrayNum,
+                                arrayName: updatedArrayName,
+                            };
+                        }
+                        return item;
+                    });
+
+                    // 重新計算 orderTotal
+                    const updatedOrderTotal = updatedBuyItems.reduce((sum, item) => {
+                        const itemTotal = item.arrayQuantity.reduce(
+                            (itemSum, qty) => itemSum + qty * item.price,
+                            0
+                        );
+                        return sum + itemTotal;
+                    }, 0);
+
+                    // 使用批量更新，保證狀態同步
+                    setDetails(updatedDetails);
+                    setBuyDetailNum(updatedBuyDetailNum);
+                    setBuyItems(updatedBuyItems);
+                    setOrderTotal(updatedOrderTotal);
+                }
+            };
             // 設定尺寸
             // 當num=1時,抓取上頁的尺寸與件數,用select的value
             const [changeSize, setChangeSize] = useState(num === 1 ? size : "");
-            const numOnesize = (e) => {
-                setChangeSize(e.target.value);
-            }
-            console.log(changeSize)
+            // const numOnesize = (e) => {
+            //     setChangeSize(e.target.value);
+            //     const newSize = e.target.value;
+            //     setBuyItems((prevItems) => {
+            //         return prevItems.map((item, idx) => {
+            //             if (idx === tableIndex) {
+            //                 const newArraySize = [...item.arraySize];
+            //                 newArraySize[index] = newSize; // 將新尺寸更新到對應位置
+            //                 return {
+            //                     ...item,
+            //                     arraySize: newArraySize,
+            //                 };
+            //             }
+            //             return item;
+            //         });
+            //     });
+            // }
+            // 球衣號碼
+            const [jerseyNum, setJerseyNum] = useState("");
+            // let changeJerseyNum = function (e) {
+            //     setJerseyNum(e.target.value);
+            //     const newJerseyNum = e.target.value;
+            //     setBuyItems((prevItems) => {
+            //         return prevItems.map((item, idx) => {
+            //             if (idx === tableIndex) {
+            //                 const newArrayNum = [...item.arrayNum];
+            //                 newArrayNum[index] = newJerseyNum; // 將新尺寸更新到對應位置
+            //                 return {
+            //                     ...item,
+            //                     arrayNum: newArrayNum,
+            //                 };
+            //             }
+            //             return item;
+            //         });
+            //     });
+            // }
+            // 背後名字
+            const [jerseyName, setJerseyName] = useState("");
+            // let changeJerseyName = function (e) {
+            //     setJerseyName(e.target.value);
+            //     const newJerseyName = e.target.value;
+            //     setBuyItems((prevItems) => {
+            //         return prevItems.map((item, idx) => {
+            //             if (idx === tableIndex) {
+            //                 const newArrayName = [...item.arrayName];
+            //                 newArrayName[index] = newJerseyName; // 將新尺寸更新到對應位置
+            //                 return {
+            //                     ...item,
+            //                     arrayName: newArrayName,
+            //                 };
+            //             }
+            //             return item;
+            //         });
+            //     });
+            // }
+            useEffect(() => {
+                setBuyItems((prevItems) => {
+                    return prevItems.map((item, idx) => {
+                        if (idx === tableIndex) {
+                            // 確保每個陣列屬性存在，如果不存在就初始化為空陣列
+                            const newArraySize = [...(item.arraySize || [])];
+                            newArraySize[index] = changeSize; // 更新尺寸
+                            const newArrayNum = [...(item.arrayNum || [])];
+                            newArrayNum[index] = jerseyNum; // 更新球衣號碼
+                            const newArrayName = [...(item.arrayName || [])];
+                            newArrayName[index] = jerseyName; // 更新背後名字
+
+                            return {
+                                ...item,
+                                arraySize: newArraySize,
+                                arrayNum: newArrayNum,
+                                arrayName: newArrayName,
+                            };
+                        }
+                        return item;
+                    });
+                });
+            }, [changeSize, jerseyNum, jerseyName, index, tableIndex, setBuyItems]);
             return <>
                 <tr>
                     <td className="itemNo">{num}</td>
-                    <td><input type="text" name="" id="" title="輸入名字列表" placeholder={num === 1 ? 1 : ""} autoComplete="off" /></td>
-                    <td><input type="text" name="" id="" title="輸入名字列表" placeholder={num === 1 ? "王大明" : ""} autoComplete="off" /></td>
+                    <td><input type="text" name="" id="" title="輸入球號列表" placeholder={num === 1 ? "1" : ""} autoComplete="off" value={jerseyNum} onChange={(e) => setJerseyNum(e.target.value)} /></td>
+                    <td><input type="text" name="" id="" title="輸入背後文字列表" placeholder={num === 1 ? "王大明" : ""} autoComplete="off" value={jerseyName} onChange={(e) => setJerseyName(e.target.value)} /></td>
                     <td>
                         <select name="" id="" title="選擇尺寸列表"
                             style={{ color: "white" }}
                             value={changeSize}
-                            onChange={numOnesize}>
+                            onChange={(e) => setChangeSize(e.target.value)}>
                             <option value="">請選擇尺寸</option>
                             <option value="120">120</option>
                             <option value="130">130</option>
@@ -361,9 +551,9 @@
                             min="1"
                             autoComplete="off" />
                     </td>
-
                     <td>
-                        <div className="delBtn deleteBtn" onClick={deleteDetails} ></div></td>
+                        <div className="delBtn deleteBtn" onClick={deleteDetails} ></div>
+                    </td>
                 </tr>
             </>
         }

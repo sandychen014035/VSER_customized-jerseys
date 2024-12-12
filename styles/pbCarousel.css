@@ -4,9 +4,13 @@
   box-sizing: border-box;
 } */
 .container {
-  overflow: hidden;
+  overflow: scroll;
   width: 100%;
-
+  scrollbar-width: none; /* 適用於 Firefox */
+  -ms-overflow-style: none; /* 適用於 IE */
+}
+.scrollableDiv::-webkit-scrollbar {
+  display: none; /* 隱藏滾動條，適用於 WebKit 瀏覽器（如 Chrome、Safari） */
 }
 ul#templates {
   display: flex;
