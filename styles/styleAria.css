@@ -2785,4 +2785,10 @@ article.personal p {
         margin-left: 75px;
         padding: 1px 0 0 5px;
     }
+    #projectInfo{
+        top: 91vh;
+        right: 50%;
+    transform: translateX(50%);
+    }
+    
 }

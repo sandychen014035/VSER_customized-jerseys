@@ -100,7 +100,7 @@
             const orderDetailsRef = useRef(null);
             const orderDetails = function () {
                 // 筆電與桌機不做任何指令,只有手機平板執行
-                if (window.innerWidth <= 1024) {
+                if (window.innerWidth <= 1024 && window.innerWidth > 650) {
                     setOrderForm(!orderForm);
                     // 抓取最新結果
                     if (!orderForm === true) {
@@ -109,6 +109,17 @@
                     }
                     else {
                         orderDetailsRef.current.style.top = "94vh";
+                        orderDetailsRef.current.style.padding = "15px 16px";
+                    }
+                } else if (window.innerWidth <= 640) {
+                    setOrderForm(!orderForm);
+                    // 抓取最新結果
+                    if (!orderForm === true) {
+                        orderDetailsRef.current.style.top = "60vh";
+                        orderDetailsRef.current.style.padding = "20px 16px";
+                    }
+                    else {
+                        orderDetailsRef.current.style.top = "91vh";
                         orderDetailsRef.current.style.padding = "15px 16px";
                     }
                 }
@@ -358,7 +369,7 @@
                     </div>
                     <table className="show" style={{ display: detailsForm == false ? "none" : "block" }}>
                         <thead>
-                            <tr>
+                            <tr >
                                 <th>排序</th>
                                 <th>球號</th>
                                 <th>名字</th>
