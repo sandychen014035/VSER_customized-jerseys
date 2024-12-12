@@ -36,6 +36,7 @@
     flex-direction: column;
     align-items: center;
     color: black;
+    z-index: 999;
   }
   .size-content{
     position: fixed;

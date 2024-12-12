@@ -94,7 +94,9 @@
             });
 
             // 側邊金額框
+            // 是否點擊金額框
             const [orderForm, setOrderForm] = useState(false);
+            // 抓取金額框
             const orderDetailsRef = useRef(null);
             const orderDetails = function () {
                 // 筆電與桌機不做任何指令,只有手機平板執行
@@ -102,8 +104,11 @@
                     setOrderForm(!orderForm);
                     // 抓取最新結果
                     if(!orderForm===true){
-                        orderDetailsRef.current.style.top = "72.5vh"}
-                else{orderDetailsRef.current.style.top = "94vh"}}
+                        orderDetailsRef.current.style.top = "72.5vh";
+                        orderDetailsRef.current.style.padding = "20px 16px";}
+                else{orderDetailsRef.current.style.top = "94vh";
+                orderDetailsRef.current.style.padding = "15px 16px";
+                }}
                            }
 
             return <>

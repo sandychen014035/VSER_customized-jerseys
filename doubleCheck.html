@@ -99,7 +99,22 @@
                 }
                 else { setPickUp(false) }
             }
+            const AllOrderRef=useRef(null);
+            const [orderForm, setOrderForm] = useState(false);
+            // 抓取金額框
+            const orderDetails = function () {
+                // 筆電與桌機不做任何指令,只有手機平板執行
+                if (window.innerWidth <= 1024) {
+                    setOrderForm(!orderForm);
+                    // 抓取最新結果
+                    if(!orderForm===true){
+                        AllOrderRef.current.style.top = "30vh";
+                        AllOrderRef.current.style.padding = "20px 16px";}
+                else{AllOrderRef.current.style.top = "94vh";
+                AllOrderRef.current.style.padding = "15px 16px";
+                }}
 
+            }
 
             return <>
                 <Header />
@@ -154,7 +169,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="AllOrder" className="paymentFixed">
+                            <div id="AllOrder" className="paymentFixed" ref={AllOrderRef} onClick={orderDetails}>
                                 <div style={{ padding: "0 0 10px 0 " }} className="paymentTotal">
                                     <img src="./images/icon-amount.svg" alt="" />
                                     <p>訂單明細</p>

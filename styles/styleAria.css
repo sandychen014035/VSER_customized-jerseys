@@ -2709,13 +2709,15 @@ article.personal p {
 @media (width < 840px) {
     #projectInfo {
         top: 94vh;
-        right: 80px;
+        right: 60px;
         width: fit-content;
         background-color: var(--Blue);
         z-index: 2;
+        padding: 15px 16px;;
     }
 
-    .table {
+    .table ,
+    #content .inContentDiv:nth-child(1) {
         padding: 0 80px 0 80px;
     }
 
@@ -2730,6 +2732,14 @@ article.personal p {
 
     #projectInfo .delete {
         right: 15px;
+    }
+
+    /* 第二頁 */
+    .paymentFixed {
+        width: 25%;
+        right: 60px;
+        top: 94vh;
+
     }
    
 }
