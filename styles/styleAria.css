@@ -2743,5 +2743,8 @@ article.personal p {
         transition: top 0.3s ease, padding 0.3s ease;
 
     }
+    .PDbtn a{
+        margin: 0 20px;
+    }
    
 }
