@@ -2704,6 +2704,9 @@ article.personal p {
     height: 40px;
     margin-right: 8px;
 }
+.captionRightTOP_Text{
+    display: none;
+}
 
 /* 購物車RWD */
 @media (width < 840px) {
@@ -2746,5 +2749,40 @@ article.personal p {
     .PDbtn a{
         margin: 0 20px;
     }
-   
+    
+}
+@media (width < 640px){
+    #projectPlace .pageTitle,
+    .table
+    {
+        padding: 0 10%;
+    }
+    .captionRightTOP{
+        display: none;
+    }
+    .captionRightTOP_Text{
+        display: flex;
+    }
+    .tableCaption {
+        padding-right: 0;
+    }
+    .tableCaption figure {
+        width: 120px;
+        margin-right: 20px;
+    }
+    .captionLefText .text{
+        width: 135px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .captionLefText p{
+        margin: 2px;
+    }
+    .captionLefText .arrow{
+        margin-top: 5px;
+        margin-left: 75px;
+        padding: 1px 0 0 5px;
+    }
 }

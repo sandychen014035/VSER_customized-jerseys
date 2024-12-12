@@ -69,7 +69,7 @@
                     .reduce(function (sum, value) {
                         return sum + value; // 累加總價
                     }, 0);
-                setOrderTotal(Total+freight)
+                setOrderTotal(Total + freight)
             }, [])
 
 
@@ -99,7 +99,7 @@
                 }
                 else { setPickUp(false) }
             }
-            const AllOrderRef=useRef(null);
+            const AllOrderRef = useRef(null);
             const [orderForm, setOrderForm] = useState(false);
             // 抓取金額框
             const orderDetails = function () {
@@ -107,12 +107,15 @@
                 if (window.innerWidth <= 1024) {
                     setOrderForm(!orderForm);
                     // 抓取最新結果
-                    if(!orderForm===true){
+                    if (!orderForm === true) {
                         AllOrderRef.current.style.top = "30vh";
-                        AllOrderRef.current.style.padding = "20px 16px";}
-                else{AllOrderRef.current.style.top = "94vh";
-                AllOrderRef.current.style.padding = "15px 16px";
-                }}
+                        AllOrderRef.current.style.padding = "20px 16px";
+                    }
+                    else {
+                        AllOrderRef.current.style.top = "94vh";
+                        AllOrderRef.current.style.padding = "15px 16px";
+                    }
+                }
 
             }
 
@@ -205,8 +208,8 @@
             return <>
                 <tr class="DetailsForm">
                     <th>{indexNew + 1}</th>
-                    <td>{arrayNum[indexNew]===""?"/":arrayNum[indexNew]}</td>
-                    <td>{arrayName[indexNew]===""?"/":arrayNum[arrayName]}</td>
+                    <td>{arrayNum[indexNew] === "" ? "/" : arrayNum[indexNew]}</td>
+                    <td>{arrayName[indexNew] === "" ? "/" : arrayNum[arrayName]}</td>
                     <td>{arraySize[indexNew]}</td>
                     <td>{arrayQuantity[indexNew]}</td>
                 </tr>
@@ -236,7 +239,7 @@
 
             const closePopup = function () {
                 setWindowDetails(false);
-                
+
             }
             return <>
                 <div id="checkOrder" className="orderContent">
@@ -246,6 +249,10 @@
                             <div className="captionLefText">
                                 <p>{name[index]}</p>
                                 <p className="unitPrice">單件: NT${price[index]}</p>
+                            </div>
+                            <div className="captionLefTOP_Text">
+                                <p>此款訂購數 : {total[index]}件</p>
+                                <span className="arrow" onClick={w_Details}>訂單明細</span>
                             </div>
                         </div>
                         <div className="captionRightTOP">
