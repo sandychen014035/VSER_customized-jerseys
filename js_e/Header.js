@@ -58,7 +58,7 @@ function Header({ classname }) {
                                 <a href="./priceplan.html" id="pricePlanBtn">價格方案</a>
                                 <a href="./customize-React.html" id="customizeBtn">球衣模擬</a>
                             </div>
-                            <a href="./chooseProject_NEW.html" className="cartBtn"></a>
+                            <a href="./chooseProject.html" className="cartBtn"></a>
                         </div>
                     </div>
                 </div>
@@ -66,6 +66,7 @@ function Header({ classname }) {
                     {/* 三條槓漢堡按鈕 */}
                     <div className="navbar">
                         <div className="navbarBtn">
+                            <a href="./chooseProject.html" className="cartBtn"></a>
                             <button className="hamburger">
                                 <span></span>
                                 <span></span>
@@ -80,7 +81,7 @@ function Header({ classname }) {
                                 <li><a href="./productBrowsing.html">商品瀏覽</a></li>
                                 <li><a href="./Customization_process.html">訂購說明</a></li>
                                 <li><a href="./priceplan.html">價格方案</a></li>
-                                <li><a href="./customize-React.html">球衣模擬</a></li>
+                                <li><a href="./customize-React.html"></a></li>
                             </ul>
                             <ul className="bottomIcon inNavbar">
                                 <li><a href=""><img src="./images/icon-fb.png" alt="" /></a></li>

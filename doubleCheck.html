@@ -160,16 +160,16 @@
                                 <OrderDetails
                                     contentOne={<>{buyItems.map((item, index) =>
                                         <EachOrder key={index} index={index} buyItems={buyItems.reverse()} />)}</>}
-                                    contentFreight={<p class="contentMoney" style={{ lineHeight: "1" }}>運費: {freight}</p>}
-                                    contentTwo={<p class="itemText">NT${orderTotal}</p>}
+                                    contentFreight={<p className="contentMoney" style={{ lineHeight: "1" }}>運費: {freight}</p>}
+                                    contentTwo={<p className="itemText">NT${orderTotal}</p>}
                                     title="訂單明細"
                                     pagenum="pageTwo"
                                     contentOneClass="contentItem"
                                 />
                             </div>
                             <div className="PDbtn">
-                                <a href="./chooseProject.html" class="lastBtn">上一步</a>
-                                <a href="./basicInformation.html" class="nextBtn">下一步</a>
+                                <a href="./chooseProject.html" className="lastBtn">上一步</a>
+                                <a href="./basicInformation.html" className="nextBtn">下一步</a>
                             </div>
                         </section>
                     </main>
@@ -210,8 +210,8 @@
                     <div className="contentMoney" style={{ padding: "5px 20px" }}>小計: NT$ <span>{price[itemsIndex] * total[itemsIndex]}</span></div>
                 </div>
                 {windowDetails && (
-                    <div id="sizeWindow" class="sizeWindow">
-                        <div class="size-content">
+                    <div id="sizeWindow" className="sizeWindow">
+                        <div className="size-content">
                             <div id="tablebox">
                                 <p style={{ margin: "0 0 10px 0" }}>『 {name[itemsIndex]} 』 訂單明細</p>
                                 <table className="size">
@@ -246,7 +246,7 @@
         function DetailsForm(props) {
             const { arrayName, indexNew, arrayNum, arraySize, arrayQuantity } = props
             return <>
-                <tr class="DetailsForm">
+                <tr className="DetailsForm">
                     <th>{indexNew + 1}</th>
                     <td>{arrayNum[indexNew] === "" ? "/" : arrayNum[indexNew]}</td>
                     <td>{arrayName[indexNew] === "" ? "/" : arrayName[indexNew]}</td>
@@ -263,9 +263,9 @@
             const price = buyItems.map(item => item.price);
             const total = buyItems.map(item => item.total);
             return <>
-                <div class="eachOrder" >
+                <div className="eachOrder" >
                     <p>{name[index]}</p>
-                    <div class="quantity"><p>x </p><p>{total[index]}</p></div>
+                    <div className="quantity"><p>x </p><p>{total[index]}</p></div>
                 </div></>
         }
         // 下拉式選單

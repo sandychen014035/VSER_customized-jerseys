@@ -113,7 +113,7 @@ input::placeholder{
     color:rgb(255, 255, 255, .5);
 }
 @media (width < 840px) {
-    p {
+    input::placeholder{
         font-size: 18px;
     }
 }

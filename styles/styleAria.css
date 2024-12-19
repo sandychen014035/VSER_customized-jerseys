@@ -2942,4 +2942,19 @@ input[type="checkbox"] {
     #basicInformation {
         padding: 50px 10%;
     }
+    #pageTwoForm label,
+    #pageThreeForm label {
+        width: 26%;
+        white-space: nowrap;
+    }
+    .formDropDown{
+        width: 74%;
+    }
+    .formDropDown div,
+    .formText select {
+        width: 26%;
+    }
+    #pageTwoForm, #pageThreeForm {
+        padding: 10px 20px ;
+    }
 }
