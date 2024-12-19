@@ -24,6 +24,11 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel" src="https://aria-hawa.github.io/customizeJersey/jsx/Header.jsx"></script>
     <script type="text/babel" src="https://aria-hawa.github.io/customizeJersey/jsx/Footer.jsx"></script>
+    <!-- 元件 -->
+    <script type="text/babel" src="./js_e/BuyItems.js"></script>
+    <script type="text/babel" src="./js_e/OrderDetails.js"></script>
+    <script type="text/babel" src="./js_e/OrderForm.js"></script>
+    <script type="text/babel" src="./js_e/DropDown.js"></script>
 
 </head>
 
@@ -31,48 +36,55 @@
     <!-- 以下React -->
     <div id="root"></div>
     <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+        const { useState, useEffect, useRef, createContext, useContext } = React;
+        // 用useContext進行全域管理
+        const BuyItemsContext = createContext();
         function App() {
+            // 購物車的商品
             const [buyItems, setBuyItems] = useState([]);
-            const [orderTotal, setOrderTotal] = useState(0);
-            // 禁用自取
-            const [pickUp, setPickUp] = useState(false);
-
             // 總金額
+            const [orderTotal, setOrderTotal] = useState(0);
+            // 鎖死
+            const [pickUp, setPickUp] = useState(false);
+            // 一進入頁面就操作 
             useEffect(() => {
-                // 一開始抓取localStorage的資訊
+                // 1.將商品陣列做整理,同款同色的合併
                 const buyItems = JSON.parse(localStorage.getItem("BuyItems"));
-                const mergedItems = buyItems.reduce((acc, current) => {
-                    // 查找是否已有相同 name 和 color 的对象
-                    const existing = acc.find(item => item.name === current.name && item.color === current.color);
-
-                    if (existing) {
-                        // 合并 arrayName、arrayNum、arrayQuantity、arraySize
-                        existing.arrayName = [...existing.arrayName, ...current.arrayName];
-                        existing.arrayNum = [...existing.arrayNum, ...current.arrayNum];
-                        existing.arrayQuantity = [...existing.arrayQuantity, ...current.arrayQuantity];
-                        existing.arraySize = [...existing.arraySize, ...current.arraySize];
-
-                        // 更新 total 和 quantity
-                        existing.total += current.total;
-                        existing.quantity += current.quantity;
+                // reduce => 合併陣列,與累加總金額
+                // acc => 商品的陣列(合併)
+                // current => buyItems被處理的當前元素
+                // console.log(buyItems);
+                const newBuyItems = buyItems.reduce((acc, current) => {
+                    // 用find遍歷acc找出同色同款的
+                    // 宣告sameProject為同樣商品的變數
+                    const sameProject = acc.find(
+                        // item => acc陣列中的每一個元素
+                        item => item.name === current.name && item.color === current.color);
+                    // 相同的name跟color
+                    if (sameProject) {
+                        // 合併陣列
+                        sameProject.arrayName = [...sameProject.arrayName, ...current.arrayName];
+                        sameProject.arrayNum = [...sameProject.arrayNum, ...current.arrayNum];
+                        sameProject.arrayQuantity = [...sameProject.arrayQuantity, ...current.arrayQuantity];
+                        sameProject.arraySize = [...sameProject.arraySize, ...current.arraySize];
+                        // 更新total 和 quantity
+                        sameProject.total += current.total;
+                        sameProject.quantity += current.quantity;
                     } else {
-                        // 如果没有相同的对象，直接添加
+                        // 沒有重複的,直接加入
                         acc.push({ ...current });
                     }
                     return acc;
                 }, []);
-
-
-                setBuyItems(mergedItems)
-                const Total = mergedItems.map(item => item.total * item.price)
-                    .reduce(function (sum, value) {
-                        return sum + value; // 累加總價
+                setBuyItems(newBuyItems)
+                // 先用map瀝變total跟price 然後相乘
+                const Total = newBuyItems.map(item => item.total * item.price)
+                    // reduce找出最大值
+                    .reduce((acc, current) => {
+                        return acc + current; // 累加總價
                     }, 0);
                 setOrderTotal(Total + freight)
             }, [])
-
-
             // 運費
             const [freight, setFreight] = useState(100)
             // 送貨方式
@@ -99,174 +111,109 @@
                 }
                 else { setPickUp(false) }
             }
-            const AllOrderRef = useRef(null);
-            const [orderForm, setOrderForm] = useState(false);
-            // 抓取金額框
-            const orderDetails = function () {
-                // 筆電與桌機不做任何指令,只有手機平板執行
-                if (window.innerWidth <= 1024) {
-                    setOrderForm(!orderForm);
-                    // 抓取最新結果
-                    if (!orderForm === true) {
-                        AllOrderRef.current.style.top = "30vh";
-                        AllOrderRef.current.style.padding = "20px 16px";
-                    }
-                    else {
-                        AllOrderRef.current.style.top = "94vh";
-                        AllOrderRef.current.style.padding = "15px 16px";
-                    }
-                }
-
-            }
 
             return <>
-                <Header />
-                <main>
-                    <section id="doubleCheck">
-                        <div className="pageTitle">
-                            <h3 style={{lineHeight: "1.1"}}>DOUBLE CHECK</h3>
-                            <p>請再次確認整筆訂單內容</p>
-                        </div>
-                        <div id="content">
-                            <div id="order" className="inContentDiv">
-                                {/* 依照buyItems的陣列數量(lenght)來新增<ContentDiv/> */}
-                                {buyItems.map((item, index) =>
-                                    <ContentDiv
-                                        key={index}
-                                        index={index}
-                                        buyItems={buyItems.reverse()}
+                <BuyItemsContext.Provider value={{ buyItems }}>
+                    <Header />
+                    <main>
+                        <section id="doubleCheck">
+                            <div className="pageTitle">
+                                <h3 >DOUBLE CHECK</h3>
+                                <p>請再次確認整筆訂單內容</p>
+                            </div>
+                            <div id="content">
+                                <div id="order" className="inContentDiv">
+                                    {/* 依照buyItems的陣列數量(lenght)來新增<ContentDiv/> */}
+                                    {buyItems.map((item, itemsIndex) =>
+                                        <ContentDiv
+                                            key={itemsIndex}
+                                            itemsIndex={itemsIndex}
 
-                                    />)}
-                                <div class="">
-                                    <div className="form">
-                                        <article className="personal">
-                                            <p>選擇送貨及付款方式</p>
-                                            <form action="" method="post" name="paymentForm" id="personalForm" title="送貨及付款方式表單">
-
-                                                <div>
-                                                    <label htmlFor="destination">送貨地點</label>
-                                                    <select name="destination" id="destination" onClick={changePlace}>
-                                                        <option value="台灣">台灣</option>
-                                                        <option value="外島">外島</option>
-                                                        <option value="港澳">港澳</option>
-                                                    </select>
-                                                </div>
-                                                <div>
-                                                    <label htmlFor="shippingMethod">送貨方式</label>
-                                                    <select name="shippingMethod" id="shippingMethod" onClick={changeFreight} disabled={pickUp}>
+                                        />)}
+                                    <div>
+                                        <OrderForm
+                                        formName="pageTwoForm"
+                                        title="選擇送貨及付款方式"
+                                            content={<><DropDown title="送貨地點" titleName="destination" order={changePlace}
+                                                content={<>
+                                                    <option value="台灣">台灣</option>
+                                                    <option value="外島">外島</option>
+                                                    <option value="港澳">港澳</option>
+                                                </>}
+                                            />
+                                                <DropDown
+                                                    title="送貨方式" titleName="shippingMethod" order={changeFreight} disabled={pickUp}
+                                                    content={<>
                                                         <option value="宅配">宅配</option>
                                                         <option value="自取">自取</option>
-                                                    </select>
-                                                </div>
-
-                                                <div>
-                                                    <label for="destination">付款方式</label>
-                                                    <select name="" id="">
+                                                    </>}
+                                                />
+                                                <DropDown title="付款方式" titleName="destination"
+                                                    content={<>
                                                         <option value="銀行轉帳/ATM">銀行轉帳/ATM</option>
                                                         <option value="貨到付款">貨到付款</option>
                                                         <option value="貨到付款">信用卡刷卡</option>
-                                                    </select>
-                                                </div>
-                                            </form>
-                                        </article>
+                                                    </>}
+                                                /></>} />
                                     </div>
                                 </div>
+                                <OrderDetails
+                                    contentOne={<>{buyItems.map((item, index) =>
+                                        <EachOrder key={index} index={index} buyItems={buyItems.reverse()} />)}</>}
+                                    contentFreight={<p class="contentMoney" style={{ lineHeight: "1" }}>運費: {freight}</p>}
+                                    contentTwo={<p class="itemText">NT${orderTotal}</p>}
+                                    title="訂單明細"
+                                    pagenum="pageTwo"
+                                    contentOneClass="contentItem"
+                                />
                             </div>
-                            <div id="AllOrder" className="paymentFixed" ref={AllOrderRef} onClick={orderDetails}>
-                                <div className="paymentTotal">
-                                    <img src="./images/icon-amount.svg" alt="" />
-                                    <p>訂單明細</p>
-                                </div>
-                                <div className="contentItem">
-
-                                    {buyItems.map((item, index) =>
-                                        <EachOrder
-                                            key={index}
-                                            index={index}
-                                            buyItems={buyItems.reverse()} />)}
-                                </div>
-                                <hr />
-                                <div className="contentTotal">
-                                    <p class="contentMoney">運費: {freight}</p>
-                                    <p class="itemText">NT${orderTotal}</p>
-                                </div>
+                            <div className="PDbtn">
+                                <a href="./chooseProject.html" class="lastBtn">上一步</a>
+                                <a href="./basicInformation.html" class="nextBtn">下一步</a>
                             </div>
-                        </div>
-
-                        <div className="PDbtn">
-                            <a href="./chooseProject.html" class="lastBtn">上一步</a>
-                            <a href="./basicInformation.html" class="nextBtn">下一步</a>
-                        </div>
-                    </section>
-                </main>
-
-                <Footer />
+                        </section>
+                    </main>
+                    <Footer />
+                </BuyItemsContext.Provider>
             </>
         }
-        function DetailsForm(props) {
-            const { arrayName, indexNew, arrayNum, arraySize, arrayQuantity } = props
-            return <>
-                <tr class="DetailsForm">
-                    <th>{indexNew + 1}</th>
-                    <td>{arrayNum[indexNew] === "" ? "/" : arrayNum[indexNew]}</td>
-                    <td>{arrayName[indexNew] === "" ? "/" : arrayNum[arrayName]}</td>
-                    <td>{arraySize[indexNew]}</td>
-                    <td>{arrayQuantity[indexNew]}</td>
-                </tr>
-            </>
-        }
+        // 商品列
         function ContentDiv(props) {
-            const { buyItems, key, index, } = props
+            const { buyItems } = useContext(BuyItemsContext);
+
+            const { key, itemsIndex, } = props
             // 提取出buyItems的屬性陣列 => map()
             const name = buyItems.map(item => item.name);
-            const img = buyItems.map(item => item.img);
-            const size = buyItems.map(item => item.size);
-            const color = buyItems.map(item => item.color);
             const price = buyItems.map(item => item.price);
             const quantity = buyItems.map(item => item.quantity);
             const total = buyItems.map(item => item.total);
-            // 這裡有錯誤
             const arrayName = buyItems.map(item => item.arrayName);
             const arraySize = buyItems.map(item => item.arraySize);
             const arrayNum = buyItems.map(item => item.arrayNum);
             const arrayQuantity = buyItems.map(item => item.arrayQuantity);
-            console.log(arraySize[0]);
             const [windowDetails, setWindowDetails] = useState(false);
 
             const w_Details = function () {
                 setWindowDetails(true);
             }
-
             const closePopup = function () {
                 setWindowDetails(false);
-
             }
             return <>
                 <div id="checkOrder" className="orderContent">
-                    <div className="tableCaption">
-                        <div className="captionLeft">
-                            <figure className={`${img[index]}`}></figure>
-                            <div className="captionLefText">
-                                <p>{name[index]}</p>
-                                <p className="unitPrice">單件: NT${price[index]}</p>
-                            </div>
-                            <div className="captionLefTOP_Text">
-                                <p>此款訂購數 : {total[index]}件</p>
-                                <span className="arrow" onClick={w_Details}>訂單明細</span>
-                            </div>
-                        </div>
-                        <div className="captionRightTOP">
-                            <p>此款訂購數 : {total[index]}件</p>
-                            <span className="arrow" onClick={w_Details}>訂單明細</span>
-                        </div>
-                    </div>
-                    <div className="contentMoney">小計: NT$ <span>{price[index] * total[index]}</span></div>
+                    <BuyItems
+                        buyItems={buyItems}
+                        itemsIndex={itemsIndex}
+                        buyDetailNum={total[itemsIndex]}
+                        formSwitch={w_Details}
+                        title="訂單明細" />
+                    <div className="contentMoney" style={{ padding: "5px 20px" }}>小計: NT$ <span>{price[itemsIndex] * total[itemsIndex]}</span></div>
                 </div>
                 {windowDetails && (
                     <div id="sizeWindow" class="sizeWindow">
                         <div class="size-content">
                             <div id="tablebox">
-                                <p style={{ margin: "0 0 10px 0" }}>您購買的{name[index]}訂單明細如下</p>
+                                <p style={{ margin: "0 0 10px 0" }}>『 {name[itemsIndex]} 』 訂單明細</p>
                                 <table className="size">
                                     <tr className="trSize">
                                         <th className="detailsItem">排序</th>
@@ -276,14 +223,15 @@
                                         <td>數量</td>
 
                                     </tr>
-                                    {arrayName[index].map((_, indexNew) => (
+                                    {/* 依照陣列的長度決定行數 */}
+                                    {/* itemsIndex怕搞混改用itemsIndexNew */}
+                                    {arrayName[itemsIndex].map((item, indexNew) => (
                                         <DetailsForm
                                             key={indexNew}
-                                            buyItems={buyItems}
-                                            arrayName={arrayName[index]}
-                                            arrayNum={arrayNum[index]}
-                                            arraySize={arraySize[index]}
-                                            arrayQuantity={arrayQuantity[index]}
+                                            arrayName={arrayName[itemsIndex]}
+                                            arrayNum={arrayNum[itemsIndex]}
+                                            arraySize={arraySize[itemsIndex]}
+                                            arrayQuantity={arrayQuantity[itemsIndex]}
                                             indexNew={indexNew} />
                                     ))}
 
@@ -294,18 +242,35 @@
                     </div>)}
             </>
         }
-
+        // 尺寸表單行
+        function DetailsForm(props) {
+            const { arrayName, indexNew, arrayNum, arraySize, arrayQuantity } = props
+            return <>
+                <tr class="DetailsForm">
+                    <th>{indexNew + 1}</th>
+                    <td>{arrayNum[indexNew] === "" ? "/" : arrayNum[indexNew]}</td>
+                    <td>{arrayName[indexNew] === "" ? "/" : arrayName[indexNew]}</td>
+                    <td>{arraySize[indexNew]}</td>
+                    <td>{arrayQuantity[indexNew]}</td>
+                </tr>
+            </>
+        }
+        // 清單行
         function EachOrder(props) {
-            const { buyItems, key, index } = props
+            const { key, index } = props
+            const { buyItems } = useContext(BuyItemsContext);
             const name = buyItems.map(item => item.name);
             const price = buyItems.map(item => item.price);
             const total = buyItems.map(item => item.total);
             return <>
-                <div class="eachOrder">
+                <div class="eachOrder" >
                     <p>{name[index]}</p>
                     <div class="quantity"><p>x </p><p>{total[index]}</p></div>
                 </div></>
         }
+        // 下拉式選單
+        
+        
         ReactDOM
             .createRoot(document.getElementById('root'))
             .render(<App />);

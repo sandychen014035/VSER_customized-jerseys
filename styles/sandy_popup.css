@@ -90,7 +90,7 @@
   }
 
   .Sizeitem {
-    width: 100px;
+    width: 20%;
   }
 
   table,
@@ -208,13 +208,12 @@
   }
 
   @media (max-width:640px) {
-    .popup-content {
+    .popup-content,
+    .size-content  {
       width: 80%;
     }
 
-    th {
-      width: 40px;
-    }
+
 
     .smalltext {
       flex-direction: column;

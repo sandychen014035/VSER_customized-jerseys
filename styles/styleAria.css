@@ -1508,7 +1508,7 @@ td:nth-child(1) {
 
 /* 以下8/31 projectPage測試popup功能 */
 #popup {
-    display: none;
+
     /* 初始隱藏 */
     position: fixed;
     top: 0;
@@ -1703,10 +1703,9 @@ td:nth-child(1) {
 #doubleCheck #content {
     width: 100%;
     height: fit-content;
-    min-height: 80vh;
     display: flex;
     justify-content: center;
-    margin: 20px 0px;
+    margin: 20px 0px 0;
     letter-spacing: 0.08rem;
 }
 
@@ -1748,7 +1747,6 @@ td:nth-child(1) {
 .contentMoney {
     flex-grow: 1;
     text-align: end;
-    padding: 5px 20px;
 }
 
 .contentMoney span {
@@ -1769,18 +1767,26 @@ td:nth-child(1) {
     border-bottom: 2px solid white;
 }
 
-#personalForm div {
+#pageTwoForm div,
+#pageThreeForm .formText
+ {
     padding: 8px 0px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-#personalForm select {
+#pageTwoForm select{
+    flex-grow: 1;
+}
+.formDropDown select{
+    width: 22%;;
+}
+#pageTwoForm select ,
+.formText select {
     background-color: transparent;
     color: white;
     border: 1px solid white;
-    flex-grow: 1;
     height: 2rem;
     font-family: "Noto Sans TC", sans-serif;
     font-size: 16px;
@@ -1792,24 +1798,21 @@ td:nth-child(1) {
 }
 
 
-#personalForm option {
+
+#pageTwoForm option,
+#pageThreeForm option  {
     color: var(--Blue);
     background-color: white;
-
-
 }
 
 .eachOrder {
-    margin: 0px 0px 15px;
-    ;
+    margin: 10px 0px;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.eachOrder:last-of-type {
-    margin: 15px 0px 0px;
-}
 
 .eachOrder .quantity {
     border: 1px solid white;
@@ -1844,17 +1847,17 @@ td:nth-child(1) {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 80px 0px;
+    padding: 80px 80px;
 }
 
 #basicInformation .pageTitle {
-    width: 70%;
+    width: 100%;
     margin-bottom: 20px;
+
 }
 
 #basicInformation #userInfo {
-    width: 70%;
-    max-width: 927px;
+    width: 100%;
     height: fit-content;
     border-top-left-radius: 15px;
     border-bottom-right-radius: 15px;
@@ -2598,7 +2601,9 @@ footer div small {
     /* 隱藏垂直捲軸 (17px 是捲軸的寬度，依瀏覽器而定) */
     padding-right: 17px;
     /* 確保內容不被捲軸覆蓋 */
+    
 }
+
 
 .contentItem::-webkit-scrollbar {
     display: none;
@@ -2613,12 +2618,11 @@ footer div small {
     /* 防止被壓縮，保持固定高度 */
     height: auto;
     /* 保持內容高度 */
-    padding-top: 10px;
     /* 如果需要間距，可以設定適合的 padding */
 }
 
 .personal {
-    margin: 20px 0;
+    margin: 0px 0 40px;
     width: 100%;
     border: 1.5px solid white;
 }
@@ -2630,11 +2634,13 @@ article.personal p {
     border-bottom: 1.5px solid white;
 }
 
-#personalForm {
+#pageTwoForm,
+#pageThreeForm{
     padding: 15px 30px 15px 30px;
 }
 
-#personalForm input {
+#pageTwoForm input ,
+.formText  input {
     flex: 1;
     /* 填充剩餘空間 */
     height: 2rem;
@@ -2645,16 +2651,37 @@ article.personal p {
     color: white;
     ;
 }
+.formDropDown input{
+    border-radius: 0 5px 5px 0px;
+    height: 2rem;
+    padding: 0 10px;
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    border-left: none;
 
-#personalForm label {
+}
+
+#pageTwoForm label ,
+#pageThreeForm label
+{
     flex-shrink: 0;
     /* 防止被壓縮，保持固定高度 */
     height: auto;
     margin: 10px 10px 10px 0;
+    
+    letter-spacing: 0.08rem;
+}
+#pageTwoForm label{
+    width: 9%;
+}
+#pageThreeForm label{
+    width: 15%;
 }
 
 .form {
     display: flex;
+    letter-spacing: 0.08rem;
 }
 
 .emptyCartMessage {
@@ -2671,6 +2698,7 @@ article.personal p {
     position: relative;
     z-index: 1;
     width: fit-content;
+    margin: auto;
 
 }
 
@@ -2687,7 +2715,7 @@ article.personal p {
     /* 将背景置于文字下方 */
 }
 
-#projectInfo p {
+#projectPlace #projectInfo p,.itemText {
     margin: auto;
     line-height: 1;
 }
@@ -2710,6 +2738,61 @@ article.personal p {
 .captionRightTOP_Text {
     display: none;
 }
+.captionLefTOP_Text{
+    display: none;
+}
+.pagecontent{
+    width:100%;
+    display: flex;
+}
+.pagecontent .form{
+    width: 50%;
+}
+.pagecontent .form:nth-child(1){
+    margin-right: 30px;
+}
+.pagecontent.personal{
+    margin: 0px 0px;
+}
+.formText,
+.formDropDown{
+    display: flex;
+}
+.formText select
+.formDropDown select{
+    width: 30%;
+    
+}
+.formDropDown{
+    width: 85%;
+}
+.formDropDown div{
+    width: 15%;
+    border-radius: 5px 0 0 5px;
+    border:1px solid white;
+    height: 2rem;
+    border-right:none ;
+    padding: 3px 10px;
+    text-align: center;
+
+}
+.yearMonthDay{
+    display: flex;
+    width: 85%;
+}
+.yearMonthDay select{
+    width: 33%;
+    margin: 0 0 0 10px;
+    border-radius:5px ;
+}
+.yearMonthDay select:nth-child(1){
+    margin: 0 0 0 0px;
+}
+
+input[type="checkbox"] {
+    margin: 12px 10px 12px 0  ;
+}
+
 
 /* 購物車RWD */
 @media (width < 840px) {
@@ -2745,6 +2828,9 @@ article.personal p {
     .pageTitle {
         margin: 0 0 0 0;
     }
+    .projectItem .itemText{
+        display: none;
+    }
 
     /* 第二頁 */
     .paymentFixed {
@@ -2752,11 +2838,16 @@ article.personal p {
         right: 60px;
         top: 94vh;
         transition: top 0.3s ease, padding 0.3s ease;
-
     }
 
+    .contentItem{
+        display: none;
+    }
     .PDbtn a {
         margin: 0 20px;
+    }
+    .captionLefTOP_Text{
+        display: block;
     }
 
 }
@@ -2833,5 +2924,12 @@ article.personal p {
         margin: 0 0 50px;
 
         white-space: nowrap;
+    }
+    .paymentFixed{
+        top:91vh;
+        width: 55%;
+        right: 50%;
+        transform: translateX(50%);
+        max-height: 40%;
     }
 }

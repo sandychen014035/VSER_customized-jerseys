@@ -23,8 +23,9 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel" src="https://aria-hawa.github.io/customizeJersey/jsx/Header.jsx"></script>
     <script type="text/babel" src="https://aria-hawa.github.io/customizeJersey/jsx/Footer.jsx"></script>
-
-    <!-- <script type="text/babel" src="./jsx/Header.jsx"></script> -->
+    <!-- 元件 -->
+    <script type="text/babel" src="./js_e/BuyItems.js"></script>
+    <script type="text/babel" src="./js_e/OrderDetails.js"></script>
 
 </head>
 
@@ -32,7 +33,9 @@
     <!-- 以下React -->
     <div id="root"></div>
     <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+        const { useState, useEffect, useRef,createContext, useContext } = React;
+        // 用useContext進行全域管理
+        const BuyItemsContext=createContext();
         function App() {
             // 整筆訂單總金額,設定為0,經過useEffect後會有第一筆金額
             const [orderTotal, setOrderTotal] = useState(0);
@@ -43,7 +46,6 @@
                 // 一開始載入畫面就抓取localStorage的資訊
                 // localStorage為字串,轉JS物件=>JSON.parse()
                 const buyItems = JSON.parse(localStorage.getItem("BuyItems")) || [];
-
                 // 宣告新的屬性=>total,id
                 const newBuyItems = buyItems.map(
                     function (item, index) {
@@ -84,7 +86,6 @@
                     window.location.href = './doubleCheck.html'; // 跳轉
                 }
             }
-
             // 預計交貨日期
             const [date, setData] = useState(() => {
                 const today = new Date();
@@ -92,40 +93,8 @@
                 futureDate.setDate(today.getDate() + 14);
                 return futureDate;
             });
-
-            // 側邊金額框
-            // 是否點擊金額框
-            const [orderForm, setOrderForm] = useState(false);
-            // 抓取金額框
-            const orderDetailsRef = useRef(null);
-            const orderDetails = function () {
-                // 筆電與桌機不做任何指令,只有手機平板執行
-                if (window.innerWidth <= 1024 && window.innerWidth > 650) {
-                    setOrderForm(!orderForm);
-                    // 抓取最新結果
-                    if (!orderForm === true) {
-                        orderDetailsRef.current.style.top = "72.5vh";
-                        orderDetailsRef.current.style.padding = "20px 16px";
-                    }
-                    else {
-                        orderDetailsRef.current.style.top = "94vh";
-                        orderDetailsRef.current.style.padding = "15px 16px";
-                    }
-                } else if (window.innerWidth <= 640) {
-                    setOrderForm(!orderForm);
-                    // 抓取最新結果
-                    if (!orderForm === true) {
-                        orderDetailsRef.current.style.top = "45vh";
-                        orderDetailsRef.current.style.padding = "20px 16px";
-                    }
-                    else {
-                        orderDetailsRef.current.style.top = "91vh";
-                        orderDetailsRef.current.style.padding = "15px 16px";
-                    }
-                }
-            }
-
             return <>
+            <BuyItemsContext.Provider value={{buyItems, setBuyItems,orderTotal,setOrderTotal}}>
                 <Header />
                 <main>
                     <section id="projectPlace">
@@ -136,56 +105,47 @@
                         {/* 訂購框 */}
                         {/* 根據buyItems的陣列數量來新增.table */}
                         {/* item => buyItems物件中的陣列 [],[],[] */}
-                        {/* tableIndex => 陣列的索引值 */}
+                        {/* itemsIndex => 陣列的索引值 */}
                         {/* 檢查是否沒空陣列 */}
                         {buyItems.length === 0 ? (
                             <div className="emptyCartMessage">
                                 <p>你的購物車是空的</p>
                             </div>) :
-                            (buyItems.map((item, tableIndex) => (
+                            (buyItems.map((item, itemsIndex) => (
                                 <OrderBox
                                     key={item.id}
-                                    tableIndex={buyItems.findIndex((buyItem) => buyItem.id === item.id)}
-                                    // 傳下去購買明細給框
-                                    buyItems={buyItems}
-                                    setOrderTotal={setOrderTotal}
-                                    setBuyItems={setBuyItems}
+                                    itemsIndex={buyItems.findIndex((buyItem) => buyItem.id === item.id)}
                                 />)))}
                         <div className="pageBottom">
                             <button className="nextBtn" onClick={order}>下一步</button>
 
                         </div>
-                        <div id="projectInfo" onClick={orderDetails} ref={orderDetailsRef}>
-                            <div className='projectItem'>
-                                <div className='projectImg'>
-                                    <img src="./images/icon-amount.svg" alt="" />
-                                    <p>整筆總額</p>
-                                </div>
-                                <p className="itemText">NT${orderTotal}</p>
-                            </div>
-                            <hr />
-                            <div className='projectItem'>
+                        <OrderDetails
+                            contentOne={`NT${orderTotal}`}
+                            contentTwo={<>
                                 <div>
                                     <img src="./images/icon-truck.svg" alt="" />
                                     <p>預計交貨日期</p>
                                 </div>
                                 <p className="itemText">{date.toLocaleDateString()}</p>
-                                <p style={{ padding: "15px 0 0 0 " }}>(10個工作天後)</p>
-                            </div>
-                        </div>
+                                <p style={{ padding: "15px 0 0 0 " }}>(10個工作天後)</p></>}
+                            title="訂單總額"
+                            pagenum="pageOne"
+                            contentOneClass="itemText"/>
+                            
                     </section>
                 </main>
                 <Footer />
+                </BuyItemsContext.Provider>
             </>
         }
         // 訂購框
         function OrderBox(props) {
-            const { tableIndex, buyItems, setOrderTotal, setBuyItems } = props;
+            const { buyItems, setBuyItems,setOrderTotal} = useContext(BuyItemsContext);
+            const { itemsIndex} = props;
             // 提取出buyItems的屬性陣列 => map()
             const name = buyItems.map(item => item.name);
-            const img = buyItems.map(item => item.img);
             const size = buyItems.map(item => item.size);
-            const color = buyItems.map(item => item.color);
             const price = buyItems.map(item => item.price);
             const quantity = buyItems.map(item => item.quantity);
             const imgSvg = buyItems.map(item => item.imgSvg);
@@ -193,30 +153,22 @@
             const arrayName = buyItems.map(item => item.arrayName);
 
             const [detailsList, setDetailsList] = useState(
-                buyItems[tableIndex]?.arrayQuantity.map((quantity, index) => ({
-                    id: `${tableIndex}-${index}`,
-                    size: buyItems[tableIndex]?.arraySize[index] || "",
+                buyItems[itemsIndex]?.arrayQuantity.map((quantity, index) => ({
+                    id: `${itemsIndex}-${index}`,
+                    size: buyItems[itemsIndex]?.arraySize[index] || "",
                     quantity: quantity || 1,
-                    num: buyItems[tableIndex]?.arrayNum[index] || "",
-                    name: buyItems[tableIndex]?.arrayName[index] || "",
+                    num: buyItems[itemsIndex]?.arrayNum[index] || "",
+                    name: buyItems[itemsIndex]?.arrayName[index] || "",
                 })) || []
             );
-
+            // 訂購資訊行數量,將quantity[itemsIndex]作為第一行初始值的數量
+            // 後續用陣列長度來做<Orderdetails>新增依據
+            const [details, setDetails] = useState([quantity[itemsIndex]]);
+            // 單款總數量 => 起始值為quantity
+            const [buyDetailNum, setBuyDetailNum] = useState(quantity[itemsIndex]);
 
             // 訂購款式框 => 一進入就要有true
             const [form, setForm] = useState(true);
-            // 訂購資訊框 => 一開始關閉
-            const [detailsForm, setDetailsForm] = useState(false);
-            // 訂購資訊行數量,將quantity[tableIndex]作為第一行初始值的數量
-            // 後續用陣列長度來做<Orderdetails>新增依據
-            const [details, setDetails] = useState([quantity[tableIndex]]);
-            // 單款總數量 => 起始值為quantity
-            const [buyDetailNum, setBuyDetailNum] = useState(quantity[tableIndex]);
-
-            // 訂購資訊框函式
-            const formSwitch = function () {
-                setDetailsForm(!detailsForm);
-            }
 
             // 新增行數 點擊新增<Orderdetails>
             let addDetails = function () {
@@ -234,7 +186,7 @@
                         const newSize = "";
                         const newNum = '';
                         const nameNum = '';
-                        if (idx === tableIndex) {
+                        if (idx === itemsIndex) {
                             return {
                                 ...item,
                                 total: item.total + 1,
@@ -269,7 +221,7 @@
                 const newQuantity = value;
                 setBuyItems((prevItems) => {
                     return prevItems.map((item, idx) => {
-                        if (idx === tableIndex) {
+                        if (idx === itemsIndex) {
                             const newArrayQuantity = [...item.arrayQuantity];
                             newArrayQuantity[index] = newQuantity; // 將新尺寸更新到對應位置
                             return {
@@ -282,26 +234,27 @@
                 });
 
             };
-
             // 刪除訂購框視窗
             const deleteform = function () {
                 // 跳出提醒視窗 要回傳true或false =>confirm
-                let confirmAns = confirm(`您確定刪除${name[tableIndex]}款式?`);
+                let confirmAns = confirm(`您確定刪除${name[itemsIndex]}款式?`);
                 // 選擇刪除會影響到總額orderTotal 
                 if (confirmAns == true) {
                     // 計算刪除款式的總額
-                    const currentTotal = price[tableIndex] * buyDetailNum;
+                    const currentTotal = price[itemsIndex] * buyDetailNum;
                     // 更新總額
                     setOrderTotal(prevTotal => prevTotal - currentTotal);
                     // 連動localStorage
                     setBuyItems((prevItems) => {
-                        const updatedItems = prevItems.filter((_, idx) => idx !== tableIndex);
+                        const updatedItems = prevItems.filter((_, idx) => idx !== itemsIndex);
                         return updatedItems;
                     });
                     // 直接關閉訂購框
                     setForm(false)
                 }
             };
+
+
             // 以下為副作用
             // 原本是addDetails/changeQuantity都重複 改用useEffect處理
             // 只用details有變動,都須更新總金額或是單款數量
@@ -313,7 +266,7 @@
             // total更新
             useEffect(() => {
                 const newBuyItems = buyItems.map((item, index) => {
-                    if (index === tableIndex) {
+                    if (index === itemsIndex) {
                         return {
                             ...item,
                             total: buyDetailNum,
@@ -325,6 +278,12 @@
                 localStorage.setItem("BuyItems", JSON.stringify(newBuyItems));
             },
                 [buyDetailNum]);
+            const formSwitch = function () {
+                setDetailsForm(!detailsForm);
+            }
+
+            // 訂購資訊框 => 一開始關閉
+            const [detailsForm, setDetailsForm] = useState(false);
 
             useEffect(() => {
                 // 重新計算整筆訂單的總額
@@ -340,33 +299,16 @@
 
             return <>
                 <div className="table" style={{ display: form == false ? "none" : "block" }}>
-                    <div className="tableCaption">
-                        <div className="captionLeft">
-                            {/* 抓取name,img,size,color,price等陣列的對應次序 */}
-                            <figure className={`${img[tableIndex]}`}>
-                                <div className="imgSvg"
-                                    dangerouslySetInnerHTML={{
-                                        __html: imgSvg[tableIndex],
-                                    }}
-                                /></figure>
-                            <div className="captionLefText">
-                                <p className="text">{name[tableIndex]} - {color[tableIndex]}</p>
-                                <p className="unitPrice">單件: NT${price[tableIndex]}</p>
-
-                                <p className="captionRightTOP_Text">此款訂購數 : {buyDetailNum} 件</p>
-                                <span className="arrow captionRightTOP_Text" onClick={formSwitch}>詳細尺寸</span>
-
-                            </div>
-
-                        </div>
-                        <div className="captionRight">
-                            <div className="captionRightTOP">
-                                <p>此款訂購數 : {buyDetailNum} 件</p>
-                                <span className="arrow" onClick={formSwitch}>詳細尺寸</span>
-                            </div>
-                        </div>
-                        <div className="delete" onClick={deleteform}></div>
-                    </div>
+                    <BuyItems
+                        buyItems={buyItems}
+                        itemsIndex={itemsIndex}
+                        buyDetailNum={buyDetailNum}
+                        setForm={setForm}
+                        deleteform={deleteform}
+                        formSwitch={formSwitch}
+                        title="詳細尺寸"
+                        deleteButton={<div className="delete" onClick={deleteform}></div>}
+                    />
                     <table className="show" style={{ display: detailsForm == false ? "none" : "block" }}>
                         <thead>
                             <tr >
@@ -382,24 +324,20 @@
                             {details.map((num, index) => (
                                 // 用key值來代表項次,但項次從1開始, ,所以index+1
                                 <Orderdetails
-                                    key={`${tableIndex}-${index}`}
+                                    key={`${itemsIndex}-${index}`}
                                     num={index + 1}
-                                    setDetails={setDetails}
                                     index={index}
+                                    setDetails={setDetails}
                                     details={details}
-                                    size={size[tableIndex]}
-                                    quantity={quantity[tableIndex]}
-                                    tableIndex={tableIndex}
+                                    size={size[itemsIndex]}
+                                    quantity={quantity[itemsIndex]}
+                                    itemsIndex={itemsIndex}
                                     deleteform={deleteform}
                                     value={details[index]}
                                     setBuyDetailNum={setBuyDetailNum}
                                     onChange={(e) => changeQuantity(index, e.target.value)}
-                                    setBuyItems={setBuyItems}
-                                    setOrderTotal={setOrderTotal}
                                     buyDetailNum={buyDetailNum}
                                     price={price}
-                                    buyItems={buyItems}
-
                                 />))}
 
                         </tbody>
@@ -421,7 +359,8 @@
 
         // 訂購明細列 Box
         function Orderdetails(props) {
-            const { buyItems, setOrderTotal, price, buyDetailNum, num, details, setDetails, index, size, quantity, tableIndex, deleteform, onChange, value, setBuyDetailNum, setBuyItems } = props;
+            const { price, buyDetailNum, num, details, setDetails, index, size, quantity, itemsIndex, deleteform, onChange, value, setBuyDetailNum} = props;
+            const { buyItems, setBuyItems,setOrderTotal} = useContext(BuyItemsContext);
 
             // 行數刪除函式
             const deleteDetails = function () {
@@ -433,7 +372,7 @@
                     const updatedBuyDetailNum = updatedDetails.reduce((sum, value) => sum + value, 0);
 
                     const updatedBuyItems = buyItems.map((item, idx) => {
-                        if (idx === tableIndex) {
+                        if (idx === itemsIndex) {
                             const updatedArrayQuantity = [...item.arrayQuantity];
                             const updatedArraySize = [...item.arraySize];
                             const updatedArrayNum = [...item.arrayNum];
@@ -479,7 +418,7 @@
             //     const newSize = e.target.value;
             //     setBuyItems((prevItems) => {
             //         return prevItems.map((item, idx) => {
-            //             if (idx === tableIndex) {
+            //             if (idx === itemsIndex) {
             //                 const newArraySize = [...item.arraySize];
             //                 newArraySize[index] = newSize; // 將新尺寸更新到對應位置
             //                 return {
@@ -493,46 +432,14 @@
             // }
             // 球衣號碼
             const [jerseyNum, setJerseyNum] = useState("");
-            // let changeJerseyNum = function (e) {
-            //     setJerseyNum(e.target.value);
-            //     const newJerseyNum = e.target.value;
-            //     setBuyItems((prevItems) => {
-            //         return prevItems.map((item, idx) => {
-            //             if (idx === tableIndex) {
-            //                 const newArrayNum = [...item.arrayNum];
-            //                 newArrayNum[index] = newJerseyNum; // 將新尺寸更新到對應位置
-            //                 return {
-            //                     ...item,
-            //                     arrayNum: newArrayNum,
-            //                 };
-            //             }
-            //             return item;
-            //         });
-            //     });
-            // }
+
             // 背後名字
             const [jerseyName, setJerseyName] = useState("");
-            // let changeJerseyName = function (e) {
-            //     setJerseyName(e.target.value);
-            //     const newJerseyName = e.target.value;
-            //     setBuyItems((prevItems) => {
-            //         return prevItems.map((item, idx) => {
-            //             if (idx === tableIndex) {
-            //                 const newArrayName = [...item.arrayName];
-            //                 newArrayName[index] = newJerseyName; // 將新尺寸更新到對應位置
-            //                 return {
-            //                     ...item,
-            //                     arrayName: newArrayName,
-            //                 };
-            //             }
-            //             return item;
-            //         });
-            //     });
-            // }
+            
             useEffect(() => {
                 setBuyItems((prevItems) => {
                     return prevItems.map((item, idx) => {
-                        if (idx === tableIndex) {
+                        if (idx === itemsIndex) {
                             // 確保每個陣列屬性存在，如果不存在就初始化為空陣列
                             const newArraySize = [...(item.arraySize || [])];
                             newArraySize[index] = changeSize; // 更新尺寸
@@ -551,7 +458,7 @@
                         return item;
                     });
                 });
-            }, [changeSize, jerseyNum, jerseyName, index, tableIndex, setBuyItems]);
+            }, [changeSize, jerseyNum, jerseyName, index, itemsIndex, setBuyItems]);
             return <>
                 <tr>
                     <td className="itemNo">{num}</td>
@@ -579,7 +486,7 @@
                         <input
                             type="number"
                             name=""
-                            id={`quantity-${tableIndex}-${index}`}
+                            id={`quantity-${itemsIndex}-${index}`}
                             title="選擇數量列表"
                             value={value}
                             onChange={onChange}
@@ -593,7 +500,6 @@
                 </tr>
             </>
         }
-
         ReactDOM
             .createRoot(document.getElementById('root'))
             .render(<App />);

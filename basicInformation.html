@@ -8,154 +8,313 @@
     <link rel="icon" href="./favicon.ico">
     <link rel="stylesheet" href="./styles/styleAria.css">
     <link rel="stylesheet" href="./styles/headNfooter.css">
+    <link rel="stylesheet" href="./styles/sandy_popup.css">
+
     <!-- 載入React -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <!-- 載入babel -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!-- <script type="text/babel" src="https://aria-hawa.github.io/customizeJersey/jsx/Header.jsx"></script> -->
-    <script type="text/babel" src="./jsx/Header.jsx"></script>
+    <script type="text/babel" src="https://aria-hawa.github.io/customizeJersey/jsx/Header.jsx"></script>
+    <script type="text/babel" src="https://aria-hawa.github.io/customizeJersey/jsx/Footer.jsx"></script>
+    <script type="text/babel" src="./js_e/OrderForm.js"></script>
+    <script type="text/babel" src="./js_e/DropDown.js"></script>
+    <script type="text/babel" src="./js_e/OrderDetails.js"></script>
 </head>
 
 <body>
-    <!-- <header id="fixedTopbar">
-        <div class="topbar">
-            <h1><a href="./index.html"><img src="./images/logo.png" alt="VSER客製化球衣"></a></h1>
-            <div class="menuList">
-                <nav class="menuItem">
-                    <ul>
-                        <li><a href="./brandConcept.html">品牌理念</a></li>
-                        <li><a href="./pojectResults.html">專案成果</a></li>
-                        <li><a href="./productBrowsing.html">商品瀏覽</a></li>
-                        <li><a href="./Customization_process.html">訂購說明</a></li>
-                        <li><a href="#">會員專區</a></li>
-                    </ul>
-                </nav>
-                <div class="rightList">
-                    <div class="dropdown">
-                        <a href="#" id="RLbtn">訂製專區</a>
-                        <a href="./priceplan.html" id="pricePlanBtn">價格方案</a>
-                        <a href="./customize.html" id="customizeBtn">球衣模擬</a>
-                    </div>
-                    <a href="./chooseProject.html" class="cartBtn"></a>
-                </div>
-            </div>
-        </div>
-    </header> -->
     <!-- 以下React -->
     <div id="root"></div>
     <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
-        function App() {
-            return (<>
-                <Header classname='customizedPage' />
-</>
+        const { useState, useEffect, useRef, createContext, useContext } = React;
+        // 以下為可全域使用
+        const ThreeCodeContext = createContext();
+        function ThreeCodeProvider({ children }) {
+            const [threeCodes, setThreeCodes] = useState("TW");
+            return (
+                <ThreeCodeContext.Provider value={{ threeCodes, setThreeCodes }}>
+                    {children}
+                </ThreeCodeContext.Provider>
             );
         }
-        ReactDOM
-            .createRoot(document.getElementById('root'))
-            .render(<App />);
-    </script>
-    <main>
-        <section id="basicInformation">
-            <div class="pageTitle">
-                <h3>BASIC INFORMATION</h3>
-                <p>請填寫基本資料</p>
-            </div>
-            <form action="" method="post" name="userInfo" id="userInfo" title="基本資料填寫表單">
-                <label for="username">姓名<span></span></label>
-                <input type="text" name="username" id="username" title="姓名欄位" placeholder="必填" required autocomplete
-                    autofocus>
-                <br>
-                <label for="userphone">聯絡電話</label>
-                <input type="tel" name="userphone" id="userphone" title="聯絡電話欄位" placeholder="必填-09xxxxxxxx"
-                    pattern="09[0-9]{8}" required autocomplete>
-                <br>
-                <label for="useremail">電子信箱</label>
-                <input type="email" name="useremail" id="useremail" title="電子信箱欄位" autocomplete>
-                <br>
-                <label for="useraddress">送貨地址</label>
-                <input type="text" name="useraddress" id="useraddress" title="送貨地址欄位" placeholder="必填" required
-                    autocomplete>
-                <br>
-                <label for="userGUInumber">統一編號</label>
-                <input type="text" name="userGUInumber" id="userGUInumber" title="統一編號欄位" placeholder="" autocomplete
-                    maxlength="8">
 
-            </form>
-            <div class="PDbtn">
-                <a href="./doubleCheck.html" class="lastBtn">上一步</a>
-                <a href="#" class="nextBtn" id="congrat">下一步</a>
-            </div>
+        function App() {
+            // 勾選
+            // 訂購與寄件同步
+            const [checkBoxState, setCheckBoxState] = useState(false)
+            const [checkBoxNews, setCheckBoxNews] = useState(false)
+            // 輸入框
+            // 訂購
+            const [orderName, setOrderName] = useState("");
+            const [orderPhone, setOrderPhone] = useState("");
+            const [orderNum, steOrderNum] = useState("");
+            // 寄件
+            const [senderName, setSenderName] = useState("");
+            const [senderPhone, setSenderPhone] = useState("");
+            const [senderNum, setSenderNum] = useState("");
+            const [senderAddress, setSenderAddress] = useState("");
+            // 更改顏色 抓取框
+            const orderNameRef = useRef(null);
+            const orderPhoneRef = useRef(null);
+            const senderNameRef = useRef(null);
+            const senderPhoneRef = useRef(null);
+            const senderAddressRef = useRef(null);
+            // 使用全域中的變數
+            const { threeCodes, setThreeCodes } = useContext(ThreeCodeContext);
+            // 勾選
+            const checkNews = function () {
+                setCheckBoxNews(!checkBoxNews);
+            }
+            // 是否同步
+            const checkState = function () {
+                setCheckBoxState(!checkBoxState);
+                // 打勾資料同步
+                if (!checkBoxState) {
+                    setSenderName(orderName);
+                    setSenderPhone(orderPhone);
+                    setSenderNum(orderNum);
+                    setThreeCodes(threeCodes);
+                }
+            }
+            // 送出表單的視窗
+            const [windowSuccess, setWindowSuccess] = useState(false)
+            const [windowFail, setWindowFail] = useState(false)
+            // 送出訂單前的檢查
+            const WindowOpen = function () {
+                // 檢查是否有空白
+                if (orderName == "" || orderPhone == "" || senderName == "" || senderPhone == "" || senderAddress == "") {
+                    // 將空白的改變框線
+                    if (orderName == "") {
+                        if (orderNameRef.current) { orderNameRef.current.style.border = "1px solid red" }
+                    };
+                    if (orderPhone == "") {
+                        if (orderPhoneRef.current) {
+                            orderPhoneRef.current.style.border = "1px solid red"
+                        }
+                    };
+                    if (senderName == "") {
+                        if (senderNameRef.current) {
+                            senderNameRef.current.style.border = "1px solid red"
+                        }
+                    };
+                    if (senderPhone == "") {
+                        if (senderPhoneRef.current) {
+                            senderPhoneRef.current.style.border = "1px solid red"
+                        }
+                    };
+                    if (senderAddress == "") {
+                        if (senderAddressRef.current) {
+                            senderAddressRef.current.style.border = "1px solid red"
+                        }
+                    };
+                    setWindowFail(true);
+                } else {
+                    setWindowSuccess(true);
+                }
+            }
 
-            <div id="popup">
-                <div id="popup-content">
-                    <div id="popup-title">
-                        <h3>ORDER COMPLETED</h3>
-                        <button id="closePopup" class="chooseProjectBtn">X</button>
-                    </div>
-                    <div id="innerContent">
-                        <p>您的訂單已訂購成功，我們核對完付款資料後，將會開始進行出貨流程，並通過電子信箱告知您最新的訂單狀態。</p>
-                        <a href="./index.html" id="chekBtn" class="chooseProjectBtn">回到首頁</a>
+            return (<>
+                <main>
+                    <Header classname='customizedPage' />
+                    <section id="basicInformation" >
+                        <div className="pageTitle">
+                            <h3>BASIC INFORMATION</h3>
+                            <p>請填寫基本資料</p>
+                        </div>
+                        <div className="pagecontent">
+                            <OrderForm
+                                formName="pageThreeForm"
+                                title="填寫顧客資料"
+                                content={<>
+                                    <TextBox title="顧客姓名" titleName="username" remindText="必填" styleRef={orderNameRef}
+                                        value={orderName} onChange={(value) => setOrderName(value)} />
+                                    <DropTextBox title="顧客電話"
+                                        value={orderPhone} onChange={(value) => setOrderPhone(value)}
+                                        valueNum={orderNum} onChange2={(value) => steOrderNum(value)}
+                                        styleRef={orderPhoneRef} />
+                                    <TextBox title="電子信箱" titleName="userphone" />
+                                    <ThreeDrop title="生日日期" titleName="userphone" />
+                                </>} />
+                            <OrderForm
+                                formName="pageThreeForm"
+                                title="填寫送貨資料"
+                                content={<>
+                                    <div style={{ margin: "12px 10px 12px 0" }}>已選擇的送貨方式:</div>
+                                    <input type="checkbox" name="" id="" checked={checkBoxState} onChange={checkState} />收件人的購買資料與購買人相同
+                                    <TextBox title="收件姓名" titleName="username" remindText="必填" value={senderName}
+                                        // 如果有勾選 才會同步
+                                        onChange={(value) => checkBoxState ? null : setSenderName(value)}
+                                        styleRef={senderNameRef} />
+                                    <DropTextBox title="收件電話" value={senderPhone}
+                                        onChange={(value) => checkBoxState ? null : setSenderPhone(value)} styleRef={senderPhoneRef}
+                                        value2={senderNum} onChange2={(value) => checkBoxState ? null : setSenderNum(value)} />
+                                    <TextBox title="收件地址" titleName="useradd" remindText="必填" styleRef={senderAddressRef}
+                                        value={senderAddress} onChange={(value) => setSenderAddress(value)} />
+                                    <OneDrop title="收件時間" />
+                                    <input type="checkbox" name="" id="" checked={checkBoxNews} onChange={checkNews} />我願意收到VSER的最新消息、優惠及服務推廣相關資訊
+                                </>} />
+                        </div>
+                        <div class="PDbtn">
+                            <a href="./doubleCheck.html" className="lastBtn">上一步</a>
+                            <a href="#" className="nextBtn" id="congrat" onClick={WindowOpen}>下一步</a>
+                        </div>
+                        {windowSuccess && (<Window title="ORDER COMPLETED"
+                            setWindowSuccess={setWindowSuccess}
+                            result="success"
+                            content={<><p>您的訂單已訂購成功，我們核對完付款資料後，將會開始進行出貨流程，並通過電子信箱告知您最新的訂單狀態。</p>
+                                <a href="./index.html" id="chekBtn" class="chooseProjectBtn">回到首頁</a></>} />)}
+                        {windowFail && (<Window title="ORDER COMPLETED"
+                            result="fail"
+                            setWindowFail={setWindowFail}
+                            content={<><p>您訂單尚未填寫完畢</p>
+                            </>} />)}
+                    </section >
+                    <Footer />
+                </main>
+            </>
+            );
+        }
+        function TextBox(props) {
+            const { title, titleName, value, onChange, remindText, styleRef } = props;
+            return <>
+                <div className="formText">
+                    <label for={titleName} >{title}</label>
+                    <input type="text" name={titleName} id={titleName} title={title} placeholder={remindText}
+                        value={value}
+                        onChange={(e) => onChange(e.target.value)}
+                        required autofocus
+                        ref={styleRef}
+                    />
+                </div>
+            </>
+        }
+        function DropTextBox(props) {
+            // 使用全域中的變數
+            const { threeCodes, setThreeCodes, } = useContext(ThreeCodeContext);
+            const { title, value, onChange, onChange2, value2, styleRef } = props
+            const [textBox, setTextBox] = useState("")
+            return <><div className="formText">
+                <label >{title}</label>
+                <div className="formDropDown" ref={styleRef} >
+                    <div>{threeCodes}</div>
+                    <select name="" id="" title="選擇尺寸列表"
+                        style={{ color: "white" }} value={value2}
+                        onChange={(e) => {
+                            onChange2(e.target.value);
+                            setThreeCodes(e.target.value)
+                        }}>
+                        <option value="TW">+886</option>
+                        <option value="HK">+852</option>
+                        <option value="MAC">+853</option>
+                    </select>
+                    <input type="text"
+                        pattern="09[0-9]{8}"
+                        value={value}
+                        placeholder="請輸入電話號碼"
+                        onChange={(e) => {
+                            const onlyNumbers = e.target.value.replace(/\D/g, ""); // 移除非數字字符
+                            if (onlyNumbers.length > 9) {
+                                onlyNumbers = onlyNumbers.slice(0, 9); // 限制最大長度為9
+                            }
+                            onChange(onlyNumbers);
+                        }} />
+                </div>
+            </div></>
+        }
+        function ThreeDrop(props) {
+            const { titleName, title } = props;
+            // 追蹤月
+            const [month, setMonth] = useState("1");
+            const monthDays = (month) => {
+                return new Date(2024, month, 0).getDate(); // 使用閏年處理2月
+            };
+            const endDays = monthDays(month);
+            return <>
+                <div className="formText">
+                    <label for={titleName}>{title}</label>
+                    <div className="yearMonthDay">
+                        <DropDown
+                            title="年" OneNum="1944" TwoNum={new Date().getFullYear()} unit="年" />
+                        <DropDown
+                            title="月" OneNum="1" TwoNum="12" unit="月"
+                            onChange={(value) => setMonth(Number(value))} />
+                        <DropDown
+                            title="日" OneNum="1" TwoNum={endDays} unit="日" />
                     </div>
                 </div>
-            </div>
-        </section>
+            </>
+        }
+        function OneDrop(props) {
+            const { titleName, title } = props;
+            return <>
+                <div className="formText">
+                    <label for={titleName}>{title}</label>
+                    <select name="" id="" title="請選擇"
+                        style={{ width: "100%", borderRadius: "5px " }}>
+                        <option value="任何時段">任何時段</option>
+                        <option value="9:00~13:00">9:00~13:00</option>
+                        <option value="13:00~17:00">13:00~17:00</option>
+                        <option value="17:00~20:00">17:00~20:00</option>
+                    </select>
+                </div>
+            </>
+        }
+        function DropDown(props) {
+            const { title, OneNum, TwoNum, unit, onChange } = props;
+            // 下拉選單數量
+            let dropMenu = [];
+            for (let i = OneNum; i <= TwoNum; i++) {
+                dropMenu.push(i);
+            }
+            return <>
+                <select name="" id="" title={title}
+                    style={{ color: "white" }}
+                    onChange={(e) => onChange && onChange(e.target.value)}>
+                    {dropMenu.map((num) => (
+                        <option key={num} value={num}>
+                            {num}{unit}
+                        </option>
+                    ))}
+                </select></>
+        }
+        function Window(props) {
+            const { title, content, setWindowSuccess, setWindowFail, result } = props
+            const WindowPopup = function (result) {
+                if (result == "fail") {
+                    setWindowFail(false);
+                } else {
+                    setWindowSuccess(false);
+                    window.location.href = './index.html'; // 跳轉
+                }
+            }
+            return <>
+                <div id="popup" className="popup">
+                    <div id="popup-content">
+                        <div id="popup-title">
+                            <h3>{title}</h3>
+                            <button id="closePopup" class="chooseProjectBtn" onClick={() => WindowPopup(result)}></button>
+                        </div>
+                        <div id="innerContent">
+                            {content}
+                        </div>
+                    </div>
+                </div>
+            </>
+        }
 
-    </main>
-    <footer>
-        <ul class="footerList">
-            <li class="footerItem">About
-                <ul>
-                    <li>關於VSER</li>
-                </ul>
-            </li>
-            <li class="footerItem">SERVICE
-                <ul>
-                    <li>條款與細則</li>
-                    <li>隱私權政策</li>
-                    <li>客製化政策</li>
-                </ul>
-            </li>
-            <li class="footerItem">CONTACT
-                <ul>
-                    <li>新北市汐止區新台五路二段77號15樓之3</li>
-                    <li>vser.tw@gmail.com</li>
-                    <li>02-86482203</li>
-                </ul>
-            </li>
-        </ul>
-        <div>
-            <figure><img src="./images/logo-2.svg" alt=""/></figure>
-            <small>&copy;2024 VSER, Inc. 版權所有</small>
-        </div>
-    </footer>
+        ReactDOM
+            .createRoot(document.getElementById('root'))
+            .render(
+                <ThreeCodeProvider>
+                    <App />
+                </ThreeCodeProvider>);
+    </script>
 
     <!-- 設定jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script>
-        $(function () {
-            // fixedTopbar 訂製專區下拉選單
-            $('#RLbtn').click(function () {
-                $('#pricePlanBtn').toggleClass('show');
-                $('#customizeBtn').toggleClass('show');
-                $('#RLbtn').toggleClass('show');
-            });
 
-            // popup彈出視窗
-            $('#congrat').on('click', function () {
-                $('#popup').fadeIn();
-            });
-
-            // 當需要關閉彈出視窗時
-            $('#closePopup').on('click', function () {
-                $('#popup').fadeOut();
-            });
-        });
-
-
-    </script>
 </body>
 
 </html>

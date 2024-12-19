@@ -83,6 +83,7 @@ a {
     /* 透明色 */
     --Lightblue_04: rgb(85, 201, 234, .4);
     --Darkblue_05: rgb(0, 14, 41, .5);
+    --White_05:rgb(255, 255, 255, .5)
 
     /* 漸層色 */
     --White-White: rgba(255, 255, 255, .4) 0%, rgba(255, 255, 255, .1) 30%, rgba(255, 255, 255, .4) 100%;
@@ -102,7 +103,19 @@ a {
     --Blue-Darkblue: #287DA2 0%, var(--Blue) 40%, var(--Darkblue) 80%;
     --Blue-Darkblue-Blue: var(--Blue) 5%, var(--Darkblue) 55%, var(--Blue) 85%;
     --Darkblue-Blue: var(--Darkblue) 38%, var(--Blue) 100%;
-
+}
+input {
+    color: #ffffff;
+    font-size: 1.25vw;
+    letter-spacing: 0.08rem;
+}
+input::placeholder{
+    color:rgb(255, 255, 255, .5);
+}
+@media (width < 840px) {
+    p {
+        font-size: 18px;
+    }
 }
   /* 滾動條 */
   /* 滾動條底 */
@@ -642,4 +655,7 @@ footer div img {
 
 .svcC-3-1 {
     background-image: url(../images/productBrowsing_pbShapeC_3_1.png);
+}
+.page-exit {
+    animation: fadeOut 0.5s forwards;
 }
