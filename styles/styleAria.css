@@ -2849,6 +2849,13 @@ input[type="checkbox"] {
     .captionLefTOP_Text{
         display: block;
     }
+    /* 第三頁 */
+    .pagecontent {
+        flex-direction: column;
+    }
+    .pagecontent .form{
+        width: 100%;
+    }
 
 }
 
@@ -2931,5 +2938,8 @@ input[type="checkbox"] {
         right: 50%;
         transform: translateX(50%);
         max-height: 40%;
+    }
+    #basicInformation {
+        padding: 50px 10%;
     }
 }
