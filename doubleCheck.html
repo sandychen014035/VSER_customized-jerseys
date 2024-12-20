@@ -88,28 +88,39 @@
             // 運費
             const [freight, setFreight] = useState(100)
             // 送貨方式
+            localStorage.setItem("sendWay", "宅配");
             let changeFreight = (event) => {
                 const selectedMethod = event.target.value;
                 if (selectedMethod === "自取") {
                     setFreight(0);
-                    setLock(true);
                 } else if (selectedMethod === "宅配") {
                     setFreight(100);
-                    setLock(false);
                 }
+                // 無法同步 
+                // localStorage.setItem("sendWay", selectedMethod);
             };
+            useEffect(() => {
+                const selectedMethod = freight === 0 ? "自取" : "宅配";
+                localStorage.setItem("sendWay", selectedMethod);
+            }, [freight]);
+
             // 送貨地點
             let changePlace = (event) => {
                 const selectedPlace = event.target.value;
                 if (selectedPlace === "港澳") {
                     setPickUp(true)
                     setFreight(250);
+                    localStorage.setItem("sendLocation", "(港澳)");
                 }
                 else if (selectedPlace === "外島") {
                     setPickUp(true)
                     setFreight(200);
+                    localStorage.setItem("sendLocation", "(外島)");
                 }
-                else { setPickUp(false) }
+                else {
+                    localStorage.setItem("sendLocation", "");
+                    setPickUp(false)
+                }
             }
 
             return <>
@@ -132,8 +143,8 @@
                                         />)}
                                     <div>
                                         <OrderForm
-                                        formName="pageTwoForm"
-                                        title="選擇送貨及付款方式"
+                                            formName="pageTwoForm"
+                                            title="選擇送貨及付款方式"
                                             content={<><DropDown title="送貨地點" titleName="destination" order={changePlace}
                                                 content={<>
                                                     <option value="台灣">台灣</option>
@@ -268,12 +279,11 @@
                     <div className="quantity"><p>x </p><p>{total[index]}</p></div>
                 </div></>
         }
-        // 下拉式選單
-        
-        
+
         ReactDOM
             .createRoot(document.getElementById('root'))
-            .render(<App />);
+            .render(
+                <App />);
     </script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

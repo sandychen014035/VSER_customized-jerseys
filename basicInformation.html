@@ -105,13 +105,41 @@
                     };
                     if (senderAddress == "") {
                         if (senderAddressRef.current) {
-                            senderAddressRef.current.style.border = "1px solid red"
+                            if (send !== "自取") {
+                                senderAddressRef.current.style.border = "1px solid red"
+                            }
+
                         }
                     };
                     setWindowFail(true);
                 } else {
                     setWindowSuccess(true);
                 }
+            }
+            let send = localStorage.getItem("sendWay");
+            let sendLocation = localStorage.getItem("sendLocation");
+
+            const [start, setStart] = useState();
+            useEffect(() => {
+                const startOpen = function () {
+                    if (send === "自取") { // 确保使用严格等于 ===
+                        setStart(true);
+                    } else {
+                        setStart(false); // 设置默认值
+                    }
+                };
+
+                startOpen(); // 页面加载时立即执行
+            }, []);
+            useEffect(() => {
+                if (send === "自取") {
+                    setSenderAddress("訂購者自取");
+                }
+            }, [send]);
+            const address = function () {
+                if (send === "自取") {
+                    return "自取不用填寫"
+                } else { return "必填" }
             }
 
             return (<>
@@ -140,7 +168,7 @@
                                 formName="pageThreeForm"
                                 title="填寫送貨資料"
                                 content={<>
-                                    <div style={{ margin: "12px 10px 12px 0" }}>已選擇的送貨方式:</div>
+                                    <div style={{ margin: "12px 10px 12px 0" }}>已選擇的送貨方式:{send}{sendLocation}</div>
                                     <input type="checkbox" name="" id="" checked={checkBoxState} onChange={checkState} />收件人的購買資料與購買人相同
                                     <TextBox title="收件姓名" titleName="username" remindText="必填" value={senderName}
                                         // 如果有勾選 才會同步
@@ -149,8 +177,9 @@
                                     <DropTextBox title="收件電話" value={senderPhone}
                                         onChange={(value) => checkBoxState ? null : setSenderPhone(value)} styleRef={senderPhoneRef}
                                         value2={senderNum} onChange2={(value) => checkBoxState ? null : setSenderNum(value)} />
-                                    <TextBox title="收件地址" titleName="useradd" remindText="必填" styleRef={senderAddressRef}
-                                        value={senderAddress} onChange={(value) => setSenderAddress(value)} />
+                                    <TextBox title="收件地址" titleName="useradd"
+                                        remindText={address()} styleRef={senderAddressRef}
+                                        value={senderAddress} onChange={(value) => setSenderAddress(value)} disabled={start} />
                                     <OneDrop title="收件時間" />
                                     <input type="checkbox" name="" id="" checked={checkBoxNews} onChange={checkNews} />我願意收到VSER的最新消息、優惠及服務推廣相關資訊
                                 </>} />
@@ -176,7 +205,7 @@
             );
         }
         function TextBox(props) {
-            const { title, titleName, value, onChange, remindText, styleRef } = props;
+            const { title, titleName, value, onChange, remindText, styleRef, disabled } = props;
             return <>
                 <div className="formText">
                     <label for={titleName} >{title}</label>
@@ -185,6 +214,7 @@
                         onChange={(e) => onChange(e.target.value)}
                         required autofocus
                         ref={styleRef}
+                        disabled={disabled}
                     />
                 </div>
             </>
@@ -308,7 +338,7 @@
             .render(
                 <ThreeCodeProvider>
                     <App />
-                </ThreeCodeProvider>);
+                </ThreeCodeProvider>)
     </script>
 
     <!-- 設定jQuery -->
