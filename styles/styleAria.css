@@ -1389,8 +1389,8 @@ td:nth-child(1) {
 
 .PDbtn {
     display: flex;
-    width: 40%;
-    justify-content: space-around;
+    width: 100%;
+    justify-content: center;
     white-space: nowrap;
 }
 
@@ -1407,18 +1407,18 @@ td:nth-child(1) {
     color: var(--Blue);
     white-space: nowrap;
     border: transparent;
+    margin: 0 20px ;
 }
 
 
-.pageBottom #addStyle:hover
- {
+.pageBottom #addStyle:hover {
     transition: all .3s;
     color: var(--Orange);
     border: 2px solid var(--Orange);
 }
 
-.nextBtn:hover ,
-.lastBtn:hover  {
+.nextBtn:hover,
+.lastBtn:hover {
     /* animation: shake .7s both; */
     transition: all .3s;
     background-color: var(--Orange);
@@ -1429,7 +1429,7 @@ td:nth-child(1) {
     border: 1.5px solid var(--Darkorange);
 }
 
-.nextBtn:active ,
+.nextBtn:active,
 .lastBtn:active {
     color: var(--Blue);
     background-color: var(--Darkorange);
@@ -1537,14 +1537,14 @@ td:nth-child(1) {
 #popup-content #popup-title {
     width: 100%;
     height: 85px;
-    padding: 36px 0 0 0 ;
+    padding: 36px 0 0 0;
     background-color: #f3f3f3;
     position: fixed;
     top: 0;
     right: 0;
     background-color: var(--Blue);
     color: white;
-    border-radius: 8px 8px 0 0 ;
+    border-radius: 8px 8px 0 0;
 }
 
 #popup-content h3 {
@@ -1560,7 +1560,8 @@ td:nth-child(1) {
     align-items: center;
     margin-top: 58px;
     overflow: auto;
-   padding: 0 0 25px;;
+    padding: 0 0 25px;
+    ;
 }
 
 #basicInformation #popup-content {
@@ -1572,7 +1573,7 @@ td:nth-child(1) {
 }
 
 #basicInformation #innerContent p {
-    padding: 25px 0 0 0 ;
+    padding: 25px 0 0 0;
     letter-spacing: 0.08rem;
 }
 
@@ -1648,7 +1649,8 @@ td:nth-child(1) {
 }
 
 #chekBtn {
-    letter-spacing: 0.08rem;;
+    letter-spacing: 0.08rem;
+    ;
     text-indent: 3px;
     border-radius: 5px;
     padding: 8px 16px;
@@ -1736,7 +1738,7 @@ td:nth-child(1) {
 .contentMoney {
     flex-grow: 1;
     text-align: end;
-    margin: 10px 0 0 0 ;
+    margin: 10px 0 0 0;
 }
 
 .contentMoney span {
@@ -1758,21 +1760,23 @@ td:nth-child(1) {
 }
 
 #pageTwoForm div,
-#pageThreeForm .formText
- {
+#pageThreeForm .formText {
     padding: 8px 0px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-#pageTwoForm select{
+#pageTwoForm select {
     flex-grow: 1;
 }
-.formDropDown select{
-    width: 22%;;
+
+.formDropDown select {
+    width: 22%;
+    ;
 }
-#pageTwoForm select ,
+
+#pageTwoForm select,
 .formText select {
     background-color: var(--Blue);
     color: white;
@@ -1790,7 +1794,7 @@ td:nth-child(1) {
 
 
 #pageTwoForm option,
-#pageThreeForm option  {
+#pageThreeForm option {
     color: var(--Blue);
     background-color: white;
 }
@@ -2591,7 +2595,7 @@ footer div small {
     /* 隱藏垂直捲軸 (17px 是捲軸的寬度，依瀏覽器而定) */
     padding-right: 17px;
     /* 確保內容不被捲軸覆蓋 */
-    
+
 }
 
 
@@ -2625,12 +2629,12 @@ article.personal p {
 }
 
 #pageTwoForm,
-#pageThreeForm{
+#pageThreeForm {
     padding: 15px 30px 15px 30px;
 }
 
-#pageTwoForm input ,
-.formText  input {
+#pageTwoForm input,
+.formText input {
     flex: 1;
     /* 填充剩餘空間 */
     height: 2rem;
@@ -2641,33 +2645,36 @@ article.personal p {
     color: white;
     ;
 }
-.formDropDown select{
+
+.formDropDown select {
     border: none;
 }
-.formDropDown input{
+
+.formDropDown input {
     border-radius: 0 5px 5px 0px;
     height: 2rem;
     padding: 0 10px;
     background-color: transparent;
     border: none;
-    border-left:1px solid ;
+    border-left: 1px solid;
     color: white;
 }
 
-#pageTwoForm label ,
-#pageThreeForm label
-{
+#pageTwoForm label,
+#pageThreeForm label {
     flex-shrink: 0;
     /* 防止被壓縮，保持固定高度 */
     height: auto;
     margin: 10px 10px 10px 0;
-    
+
     letter-spacing: 0.08rem;
 }
-#pageTwoForm label{
+
+#pageTwoForm label {
     width: 9%;
 }
-#pageThreeForm label{
+
+#pageThreeForm label {
     width: 15%;
 }
 
@@ -2707,7 +2714,8 @@ article.personal p {
     /* 将背景置于文字下方 */
 }
 
-#projectPlace #projectInfo p,.itemText {
+#projectPlace #projectInfo p,
+.itemText {
     margin: auto;
     line-height: 1;
 }
@@ -2730,61 +2738,74 @@ article.personal p {
 .captionRightTOP_Text {
     display: none;
 }
-.captionLefTOP_Text{
+
+.captionLefTOP_Text {
     display: none;
 }
-.pagecontent{
-    width:100%;
+
+.pagecontent {
+    width: 100%;
     display: flex;
 }
-.pagecontent .form{
+
+.pagecontent .form {
     width: 50%;
 }
-.pagecontent .form:nth-child(1){
+
+.pagecontent .form:nth-child(1) {
     margin-right: 30px;
 }
-.pagecontent.personal{
+
+.pagecontent.personal {
     margin: 0px 0px;
 }
+
 .formText,
-.formDropDown{
+.formDropDown {
     display: flex;
 }
-.formText select
-.formDropDown select{
+
+.formText select .formDropDown select {
     width: 30%;
-    
+
 }
-.formDropDown{
+
+.formDropDown {
     width: 85%;
-    border:1px solid white;
+    border: 1px solid white;
     border-radius: 5px;
 }
-.formDropDown div{
+
+.formDropDown div {
     width: 15%;
     height: 2rem;
-    border-right: 1px solid;;
+    border-right: 1px solid;
+    ;
     padding: 3px 10px;
     text-align: center;
 
 }
-.yearMonthDay{
+
+.yearMonthDay {
     display: flex;
     width: 85%;
 }
-.yearMonthDay select{
+
+.yearMonthDay select {
     width: 33%;
     margin: 0 0 0 10px;
-    border-radius:5px ;
+    border-radius: 5px;
 }
-.yearMonthDay select:nth-child(1){
+
+.yearMonthDay select:nth-child(1) {
     margin: 0 0 0 0px;
 }
 
 input[type="checkbox"] {
-    margin: 12px 10px 12px 0  ;
+    margin: 12px 10px 12px 0;
 }
-input#username::placeholder{
+
+input#username::placeholder {
     line-height: 2rem;
 }
 
@@ -2820,9 +2841,11 @@ input#username::placeholder{
     .pageTitle {
         margin: 0 0 0 0;
     }
-    .projectItem .itemText{
+
+    .projectItem .itemText {
         display: none;
     }
+
     .itemText {
         display: none;
     }
@@ -2835,28 +2858,47 @@ input#username::placeholder{
         transition: top 0.3s ease, padding 0.3s ease;
     }
 
-    .contentItem{
+    .contentItem {
         display: none;
     }
+
     .PDbtn a {
         margin: 0 20px;
     }
-    .captionLefTOP_Text{
+
+    .captionLefTOP_Text {
         display: block;
     }
+
     /* 第三頁 */
     .pagecontent {
         flex-direction: column;
     }
-    .pagecontent .form{
+
+    .pagecontent .form {
         width: 100%;
     }
-#pageTwoForm label {
-    width: 13%;
-}
-#pageThreeForm label {
-    width: 13%;
-}
+
+    #pageTwoForm label {
+        width: 13%;
+    }
+
+    #pageThreeForm label {
+        width: 13%;
+    }
+
+    .nextBtn,
+    .lastBtn {
+        width: 200px;
+        height: 80px;
+        font-size: 18px;
+        display: flex;
+                justify-content: center;
+                align-items: center;
+    }
+    #popup-content {
+        width: 55%;
+    }
 
 }
 
@@ -2933,29 +2975,36 @@ input#username::placeholder{
 
         white-space: nowrap;
     }
-    .paymentFixed{
-        top:91vh;
+
+    .paymentFixed {
+        top: 91vh;
         width: 55%;
         right: 50%;
         transform: translateX(50%);
         max-height: 40%;
     }
+
     #basicInformation {
         padding: 50px 10%;
     }
+
     #pageTwoForm label,
     #pageThreeForm label {
         width: 26%;
         white-space: nowrap;
     }
-    .formDropDown{
+
+    .formDropDown {
         width: 74%;
     }
+
     .formDropDown div,
     .formText select {
         width: 26%;
     }
-    #pageTwoForm, #pageThreeForm {
-        padding: 10px 20px ;
+
+    #pageTwoForm,
+    #pageThreeForm {
+        padding: 10px 20px;
     }
 }
