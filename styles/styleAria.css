@@ -1787,7 +1787,7 @@ td:nth-child(1) {
     letter-spacing: 0.08rem;
     padding: 0 10px;
     outline: none;
-    /* 去掉默認的外框 */
+    border-radius: 5px;
 
 }
 
@@ -2411,7 +2411,7 @@ footer div small {
 
     #preview .preJersey #showStep img {
         width: 100px;
-        margin: 20px;
+        margin: 10px;
     }
 
     #preview .preOption {
@@ -2490,7 +2490,6 @@ footer div small {
 
     #operate .productInfo {
         margin-top: 20px;
-        display: none;
     }
 }
 
@@ -3027,6 +3026,7 @@ article.personal p{
 }
 #popup-content h3{
     line-height: 1;
+    font-size: 28px;
 }
 #popup-content #popup-title{
     padding: 15px 0 0 0;
