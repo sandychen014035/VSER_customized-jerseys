@@ -191,6 +191,10 @@
             const [windowSize, setWindowSize] = React.useState(false);
             const [windowSuccess, setWindowSuccess] = React.useState(false);
             const [windowfail, setWindowfail] = React.useState(false);
+
+            function closePopup(){
+                setWindowSize(false)
+            }
             let w_Size = function () {
                 setWindowSize((prev) => !prev);
             };
@@ -405,6 +409,7 @@
                     windowSize={windowSize}
                     windowSuccess={windowSuccess}
                     windowfail={windowfail}
+                    closePopup={closePopup}
                 />
                 <Footer />
             </>
