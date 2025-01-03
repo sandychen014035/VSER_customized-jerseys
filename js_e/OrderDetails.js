@@ -54,7 +54,7 @@ function OrderDetails(props) {
                     <p>{title}</p>
                 </div>
             </div>
-            <div ref={contentItemRef} className={contentOneClass}
+            <div ref={contentItemRef} className={contentOneClass} 
                 >{contentOne}</div>
             {contentFreight}
             <hr />

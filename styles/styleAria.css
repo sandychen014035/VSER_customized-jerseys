@@ -2698,7 +2698,10 @@ article.personal p {
     z-index: 1;
     width: fit-content;
     margin: auto;
+}
+.itemText2 {
 
+    display: none;
 }
 
 .itemText::before {
@@ -2842,13 +2845,13 @@ input#username::placeholder {
         margin: 0 0 0 0;
     }
 
-    .projectItem .itemText {
+    /* .projectItem .itemText {
         display: none;
     }
 
     .itemText {
         display: none;
-    }
+    } */
 
     /* 第二頁 */
     .paymentFixed {
@@ -2890,7 +2893,7 @@ input#username::placeholder {
     .nextBtn,
     .lastBtn {
         width: 200px;
-        height: 80px;
+        height: 60px;
         font-size: 18px;
         display: flex;
                 justify-content: center;
@@ -2949,6 +2952,7 @@ input#username::placeholder {
         top: 91vh;
         right: 50%;
         transform: translateX(50%);
+        width: 45%;
     }
 
     #projectPlace,
@@ -2990,21 +2994,41 @@ input#username::placeholder {
 
     #pageTwoForm label,
     #pageThreeForm label {
-        width: 26%;
-        white-space: nowrap;
+        width: 13%;
     }
 
     .formDropDown {
-        width: 74%;
+        width: 87%;
     }
 
     .formDropDown div,
     .formText select {
-        width: 26%;
+        width: 31%;
     }
 
     #pageTwoForm,
     #pageThreeForm {
         padding: 10px 20px;
     }
+    .nextBtn, .lastBtn{
+        width: 140px;
+    }
+    .PDbtn a {
+        margin: 0 10px;
+    }
+    #pageTwoForm input, .formText input {
+        width: 80%;
+    }
+article.personal p{
+    padding: 12px 0 12px 20px;
+}
+#popup-content{
+    width: 70%;
+}
+#popup-content h3{
+    line-height: 1;
+}
+#popup-content #popup-title{
+    padding: 15px 0 0 0;
+}
 }
