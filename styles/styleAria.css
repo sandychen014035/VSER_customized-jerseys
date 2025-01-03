@@ -2651,15 +2651,17 @@ article.personal p {
     color: white;
     ;
 }
+.formDropDown select{
+    border: none;
+}
 .formDropDown input{
     border-radius: 0 5px 5px 0px;
     height: 2rem;
     padding: 0 10px;
     background-color: transparent;
-    border: 1px solid white;
+    border: none;
+    border-left:1px solid ;
     color: white;
-    border-left: none;
-
 }
 
 #pageTwoForm label ,
@@ -2765,13 +2767,13 @@ article.personal p {
 }
 .formDropDown{
     width: 85%;
+    border:1px solid white;
+    border-radius: 5px;
 }
 .formDropDown div{
     width: 15%;
-    border-radius: 5px 0 0 5px;
-    border:1px solid white;
     height: 2rem;
-    border-right:none ;
+    border-right: 1px solid;;
     padding: 3px 10px;
     text-align: center;
 

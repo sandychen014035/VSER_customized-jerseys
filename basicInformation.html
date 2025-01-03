@@ -28,16 +28,7 @@
     <div id="root"></div>
     <script type="text/babel">
         const { useState, useEffect, useRef, createContext, useContext } = React;
-        // 以下為可全域使用
-        const ThreeCodeContext = createContext();
-        function ThreeCodeProvider({ children }) {
-            const [threeCodes, setThreeCodes] = useState("TW");
-            return (
-                <ThreeCodeContext.Provider value={{ threeCodes, setThreeCodes }}>
-                    {children}
-                </ThreeCodeContext.Provider>
-            );
-        }
+
 
         function App() {
             // 勾選
@@ -49,10 +40,12 @@
             const [orderName, setOrderName] = useState("");
             const [orderPhone, setOrderPhone] = useState("");
             const [orderNum, steOrderNum] = useState("");
+            const [orderThreeCodes, setOrderThreeCodes] = useState("TW");
             // 寄件
             const [senderName, setSenderName] = useState("");
             const [senderPhone, setSenderPhone] = useState("");
             const [senderNum, setSenderNum] = useState("");
+            const [senderThreeCodes, setSenderThreeCodes] = useState("TW");
             const [senderAddress, setSenderAddress] = useState("");
             // 更改顏色 抓取框
             const orderNameRef = useRef(null);
@@ -60,8 +53,7 @@
             const senderNameRef = useRef(null);
             const senderPhoneRef = useRef(null);
             const senderAddressRef = useRef(null);
-            // 使用全域中的變數
-            const { threeCodes, setThreeCodes } = useContext(ThreeCodeContext);
+
             // 勾選
             const checkNews = function () {
                 setCheckBoxNews(!checkBoxNews);
@@ -74,7 +66,7 @@
                     setSenderName(orderName);
                     setSenderPhone(orderPhone);
                     setSenderNum(orderNum);
-                    setThreeCodes(threeCodes);
+                    setSenderThreeCodes(orderThreeCodes)
                 }
             }
             // 送出表單的視窗
@@ -116,6 +108,36 @@
                     setWindowSuccess(true);
                 }
             }
+            // 當外框變紅色時,重新輸入文字後變成白框
+
+            useEffect(() => {
+                // 建立陣列存放所有Ref變數
+                if (orderNameRef.current) {
+                    if (orderName !== "") {
+                        orderNameRef.current.style.border = "1px solid white";
+                    }
+                };
+                if (orderPhoneRef.current) {
+                    if (orderPhone !== "") {
+                        orderPhoneRef.current.style.border = "1px solid white";
+                    }
+                };
+                if (senderNameRef.current) {
+                    if (senderName !== "") {
+                        senderNameRef.current.style.border = "1px solid white";
+                    }
+                };
+                if (senderPhoneRef.current) {
+                    if (senderPhone !== "") {
+                        senderPhoneRef.current.style.border = "1px solid white";
+                    }
+                };
+                if (senderAddressRef.current) {
+                    if (senderAddress !== "") {
+                        senderAddressRef.current.style.border = "1px solid white";
+                    }
+                };
+            }, [orderName, orderPhone, senderName, senderPhone, senderAddress])
             let send = localStorage.getItem("sendWay");
             let sendLocation = localStorage.getItem("sendLocation");
 
@@ -160,7 +182,10 @@
                                     <DropTextBox title="顧客電話"
                                         value={orderPhone} onChange={(value) => setOrderPhone(value)}
                                         valueNum={orderNum} onChange2={(value) => steOrderNum(value)}
-                                        styleRef={orderPhoneRef} />
+                                        styleRef={orderPhoneRef}
+                                        orderThreeCodes={orderThreeCodes} setOrderThreeCodes={setOrderThreeCodes}
+                                        ThreeCodes={true}
+                                    />
                                     <TextBox title="電子信箱" titleName="userphone" />
                                     <ThreeDrop title="生日日期" titleName="userphone" />
                                 </>} />
@@ -176,7 +201,9 @@
                                         styleRef={senderNameRef} />
                                     <DropTextBox title="收件電話" value={senderPhone}
                                         onChange={(value) => checkBoxState ? null : setSenderPhone(value)} styleRef={senderPhoneRef}
-                                        value2={senderNum} onChange2={(value) => checkBoxState ? null : setSenderNum(value)} />
+                                        value2={senderNum} onChange2={(value) => checkBoxState ? null : setSenderNum(value)}
+                                        senderThreeCodes={senderThreeCodes} setSenderThreeCodes={setSenderThreeCodes}
+                                        ThreeCodes={false} />
                                     <TextBox title="收件地址" titleName="useradd"
                                         remindText={address()} styleRef={senderAddressRef}
                                         value={senderAddress} onChange={(value) => setSenderAddress(value)} disabled={start} />
@@ -220,19 +247,20 @@
             </>
         }
         function DropTextBox(props) {
-            // 使用全域中的變數
-            const { threeCodes, setThreeCodes, } = useContext(ThreeCodeContext);
-            const { title, value, onChange, onChange2, value2, styleRef } = props
+            // 原本使用Context為全域值,但會互相影響而更改
+            const { title, value, onChange, onChange2, value2, styleRef, checkBoxState, senderThreeCodes, setSenderThreeCodes, orderThreeCodes, setOrderThreeCodes, ThreeCodes } = props
             const [textBox, setTextBox] = useState("")
             return <><div className="formText">
                 <label >{title}</label>
                 <div className="formDropDown" ref={styleRef} >
-                    <div>{threeCodes}</div>
-                    <select name="" id="" title="選擇尺寸列表"
+                    <div>{orderThreeCodes}{senderThreeCodes}</div>
+                    <select name="" id="" title="地區選擇"
                         style={{ color: "white" }} value={value2}
                         onChange={(e) => {
                             onChange2(e.target.value);
-                            setThreeCodes(e.target.value)
+                            if (ThreeCodes === true) {
+                                setOrderThreeCodes(e.target.value);
+                            } else { setSenderThreeCodes(e.target.value); }
                         }}>
                         <option value="TW">+886</option>
                         <option value="HK">+852</option>
@@ -244,8 +272,8 @@
                         placeholder="請輸入電話號碼"
                         onChange={(e) => {
                             const onlyNumbers = e.target.value.replace(/\D/g, ""); // 移除非數字字符
-                            if (onlyNumbers.length > 9) {
-                                onlyNumbers = onlyNumbers.slice(0, 9); // 限制最大長度為9
+                            if (onlyNumbers.length > 10) {
+                                onlyNumbers = onlyNumbers.slice(0, 10); // 限制最大長度為9
                             }
                             onChange(onlyNumbers);
                         }} />
@@ -335,10 +363,7 @@
 
         ReactDOM
             .createRoot(document.getElementById('root'))
-            .render(
-                <ThreeCodeProvider>
-                    <App />
-                </ThreeCodeProvider>)
+            .render(<App />)
     </script>
 
     <!-- 設定jQuery -->
