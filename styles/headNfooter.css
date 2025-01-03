@@ -106,16 +106,14 @@ a {
 }
 input {
     color: #ffffff;
-    font-size: 1.25vw;
+    font-size: 16px;;
     letter-spacing: 0.08rem;
 }
 input::placeholder{
     color:rgb(255, 255, 255, .5);
 }
 @media (width < 840px) {
-    input::placeholder{
-        font-size: 18px;
-    }
+
 }
   /* 滾動條 */
   /* 滾動條底 */

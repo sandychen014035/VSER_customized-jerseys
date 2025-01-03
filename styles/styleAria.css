@@ -2794,6 +2794,9 @@ article.personal p {
 input[type="checkbox"] {
     margin: 12px 10px 12px 0  ;
 }
+input#username::placeholder{
+    line-height: 2rem;
+}
 
 
 /* 購物車RWD */
