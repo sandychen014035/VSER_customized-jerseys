@@ -1747,6 +1747,7 @@ td:nth-child(1) {
 .contentMoney {
     flex-grow: 1;
     text-align: end;
+    margin: 10px 0 0 0 ;
 }
 
 .contentMoney span {
@@ -2804,7 +2805,7 @@ input#username::placeholder{
     #projectInfo {
         top: 94vh;
         right: 60px;
-        width: fit-content;
+        width: 25%;
         background-color: var(--Blue);
         z-index: 2;
         padding: 15px 16px;
@@ -2822,9 +2823,6 @@ input#username::placeholder{
 
     }
 
-    #projectInfo p {
-        margin: 0;
-    }
 
     #projectInfo .delete {
         right: 15px;
@@ -2834,6 +2832,9 @@ input#username::placeholder{
         margin: 0 0 0 0;
     }
     .projectItem .itemText{
+        display: none;
+    }
+    .itemText {
         display: none;
     }
 
