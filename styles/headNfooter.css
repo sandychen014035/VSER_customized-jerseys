@@ -112,9 +112,7 @@ input {
 input::placeholder{
     color:rgb(255, 255, 255, .5);
 }
-@media (width < 840px) {
 
-}
   /* 滾動條 */
   /* 滾動條底 */
   ::-webkit-scrollbar {
@@ -128,6 +126,12 @@ input::placeholder{
   ::-webkit-scrollbar-thumb{
     background-color:#FFFFFF
   }
+
+  /* 下拉式選單 */
+  select option:hover {
+    background-color: #ad1d1d; /* 暗灰色背景 */
+    color: white; /* 保持文字白色 */
+}
 
 
 /* fixed header區 */

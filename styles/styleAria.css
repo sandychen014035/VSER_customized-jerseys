@@ -1784,7 +1784,7 @@ td:nth-child(1) {
 }
 #pageTwoForm select ,
 .formText select {
-    background-color: transparent;
+    background-color: var(--Blue);
     color: white;
     border: 1px solid white;
     height: 2rem;
@@ -2861,6 +2861,12 @@ input#username::placeholder{
     .pagecontent .form{
         width: 100%;
     }
+#pageTwoForm label {
+    width: 13%;
+}
+#pageThreeForm label {
+    width: 13%;
+}
 
 }
 
