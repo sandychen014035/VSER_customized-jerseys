@@ -618,7 +618,6 @@
                     let pictureURL = URL.createObjectURL(getPictureUrl);
                     document.getElementById('showPicture').src = pictureURL;
                     document.getElementById('showPicture').style.display = 'block';
-
                     document.getElementById('uploadPictureBtn').addEventListener('click', () => {
                         document.getElementById('showPicture').style.display = 'none';
                         let getShowImgOnJersy = document.getElementsByClassName('showImgOnJersy');
@@ -630,7 +629,6 @@
                         }
                     })
                 });
-
                 // useEffect結束
             }, []);
 
@@ -1274,12 +1272,6 @@
             .createRoot(document.getElementById('root'))
             .render(<App />);
     </script>
-
-
-
-
-
-
 
     <!-- 設定jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
