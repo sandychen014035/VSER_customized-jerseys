@@ -283,136 +283,138 @@
             }, [])
             return <>
                 <Header />
-                <section id="introduction">
-                    <Picture bigPicture={bigPicture} imgs={imgs} setBigPicture={setBigPicture} />
-                    <div className="productCopywriting">
-                        <div className="productTitle">
-                            <div className="productBox">
-                                <h2 id="productName">{shape}</h2>
-                                <h4 id="productPrice">NT${price}</h4>
-                            </div>
-                            <p id="productIntroduction">{introduce}</p>
-                            <hr />
-                        </div>
-                        <div className="productContent">
-                            <ul className="contentDetails">
-                                <div className="detailsText">
-                                    <p>尺寸</p>
-                                    <small id="showPopup" onClick={w_Size}>尺寸表</small>
+                <main>
+                    <section id="introduction">
+                        <Picture bigPicture={bigPicture} imgs={imgs} setBigPicture={setBigPicture} />
+                        <div className="productCopywriting">
+                            <div className="productTitle">
+                                <div className="productBox">
+                                    <h2 id="productName">{shape}</h2>
+                                    <h4 id="productPrice">NT${price}</h4>
                                 </div>
-                                <li className="detailsSize">
-                                    <ul className="sizeBox">
-                                        {prodectSize.map((size, index) =>
-                                            <li key={index} className="size"
-                                                // 點選改變顏色(尺寸)
-                                                onClick={() => changeSize(size)}
-                                                style={{
-                                                    // 如果被選中,就改變顏色
-                                                    color: size === select ? "var(--Blue)" : "white",
-                                                    backgroundColor: size === select ? "var(--Orange)" : "var(--Blue)",
-                                                    border: size === select ? "1px solid var(--Orange)" : "1px solid white",
-                                                }}>{size}</li>)}
-                                    </ul>
-                                    <ul className="sizeBox">
-                                        {prodectSize2.map((size, index) =>
-                                            <li key={index} className="size"
-                                                onClick={() => changeSize(size)}
-                                                style={{
-                                                    color: size === select ? "var(--Blue)" : "white",
-                                                    backgroundColor: size === select ? "var(--Orange)" : "var(--Blue)",
-                                                    border: size === select ? "1px solid var(--Orange)" : "1px solid white",
-                                                }}>{size}</li>)}
-                                    </ul>
-                                </li>
-                            </ul>
-                            <div className="contentDetails">
-                                <p>顏色</p>
-                                <ul className="sizeBox">
-                                    {/* colors為陣列的型態,逐一抓取陣列中的文字 放入<li></li> */}
-                                    {colors.map((color, index) => (
-                                        // color=綠黃 color=丈青橘 color=淺藍粉 ....
-                                        // css更改,如果color=display:none => 隱藏該框
-                                        <li key={index}
-                                            // 點選改變顏色(顏色)
-                                            onClick={() => changeColor(color, index)}
-                                            className="color"
-                                            style={{
-                                                color: color === selectColor ? "var(--Blue)" : "white",
-                                                backgroundColor: color === selectColor ? "var(--Orange)" : "var(--Blue)",
-                                                border: color === selectColor ? "1px solid var(--Orange)" : "1px solid white",
-                                                display: color === "display:none" ? "none" : "block",
-                                            }}>
-                                            {/* 顯示顏色文字 */}
-                                            {color !== "display:none" && color}</li>
-                                    ))}
+                                <p id="productIntroduction">{introduce}</p>
+                                <hr />
+                            </div>
+                            <div className="productContent">
+                                <ul className="contentDetails">
+                                    <div className="detailsText">
+                                        <p>尺寸</p>
+                                        <small id="showPopup" onClick={w_Size}>尺寸表</small>
+                                    </div>
+                                    <li className="detailsSize">
+                                        <ul className="sizeBox">
+                                            {prodectSize.map((size, index) =>
+                                                <li key={index} className="size"
+                                                    // 點選改變顏色(尺寸)
+                                                    onClick={() => changeSize(size)}
+                                                    style={{
+                                                        // 如果被選中,就改變顏色
+                                                        color: size === select ? "var(--Blue)" : "white",
+                                                        backgroundColor: size === select ? "var(--Orange)" : "var(--Blue)",
+                                                        border: size === select ? "1px solid var(--Orange)" : "1px solid white",
+                                                    }}>{size}</li>)}
+                                        </ul>
+                                        <ul className="sizeBox">
+                                            {prodectSize2.map((size, index) =>
+                                                <li key={index} className="size"
+                                                    onClick={() => changeSize(size)}
+                                                    style={{
+                                                        color: size === select ? "var(--Blue)" : "white",
+                                                        backgroundColor: size === select ? "var(--Orange)" : "var(--Blue)",
+                                                        border: size === select ? "1px solid var(--Orange)" : "1px solid white",
+                                                    }}>{size}</li>)}
+                                        </ul>
+                                    </li>
                                 </ul>
-                            </div>
-                            <div className="contentDetails">
-                                <p>數量</p>
-                                <div className="quantity">
-                                    <button onClick={() => changeNum("reduce")} id="btn_1" className="quantityBtn"></button>
-                                    <span id="quantityNum" >{num}</span>
-                                    <button onClick={() => changeNum("add")} id="btn1" className="quantityBtn"></button>
+                                <div className="contentDetails">
+                                    <p>顏色</p>
+                                    <ul className="sizeBox">
+                                        {/* colors為陣列的型態,逐一抓取陣列中的文字 放入<li></li> */}
+                                        {colors.map((color, index) => (
+                                            // color=綠黃 color=丈青橘 color=淺藍粉 ....
+                                            // css更改,如果color=display:none => 隱藏該框
+                                            <li key={index}
+                                                // 點選改變顏色(顏色)
+                                                onClick={() => changeColor(color, index)}
+                                                className="color"
+                                                style={{
+                                                    color: color === selectColor ? "var(--Blue)" : "white",
+                                                    backgroundColor: color === selectColor ? "var(--Orange)" : "var(--Blue)",
+                                                    border: color === selectColor ? "1px solid var(--Orange)" : "1px solid white",
+                                                    display: color === "display:none" ? "none" : "block",
+                                                }}>
+                                                {/* 顯示顏色文字 */}
+                                                {color !== "display:none" && color}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div className="contentDetails">
+                                    <p>數量</p>
+                                    <div className="quantity">
+                                        <button onClick={() => changeNum("reduce")} id="btn_1" className="quantityBtn"></button>
+                                        <span id="quantityNum" >{num}</span>
+                                        <button onClick={() => changeNum("add")} id="btn1" className="quantityBtn"></button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="productButtom">
-                            <button id="shoppingCart" className="buttomitem" onClick={w_Shopping}>
-                                <p>加入購物車</p>
-                            </button>
-                            <button id="buyNowBtn" className="buttomitem" onClick={checkout}>
-                                <p>直接購買</p>
-                            </button>
-                            <hr />
-                        </div>
-                        <div className="productRemark">
-                            <div className="noteBox">
-                                <div className="noteTitle">購買須知</div>
+                            <div className="productButtom">
+                                <button id="shoppingCart" className="buttomitem" onClick={w_Shopping}>
+                                    <p>加入購物車</p>
+                                </button>
+                                <button id="buyNowBtn" className="buttomitem" onClick={checkout}>
+                                    <p>直接購買</p>
+                                </button>
+                                <hr />
+                            </div>
+                            <div className="productRemark">
+                                <div className="noteBox">
+                                    <div className="noteTitle">購買須知</div>
+                                    <div className="notetext">
+                                        該商品為客製化商品，下單後不可取消。敬請於下單前確認。<br />
+                                        待付費確認完成後，系統才會開始處理您的訂單，約7個工作天內出貨。
+                                    </div>
+                                </div>
+                                <div className="noteBox"></div>
+                                <div className="noteTitle">洗滌方式</div>
                                 <div className="notetext">
-                                    該商品為客製化商品，下單後不可取消。敬請於下單前確認。<br />
-                                    待付費確認完成後，系統才會開始處理您的訂單，約7個工作天內出貨。
+                                    通風處陰乾即可.不可烘乾與燙熨。<br />
+                                    放入洗衣袋中清洗，深淺色需分開，以避免染色問題。<br />
                                 </div>
                             </div>
-                            <div className="noteBox"></div>
-                            <div className="noteTitle">洗滌方式</div>
-                            <div className="notetext">
-                                通風處陰乾即可.不可烘乾與燙熨。<br />
-                                放入洗衣袋中清洗，深淺色需分開，以避免染色問題。<br />
-                            </div>
                         </div>
-                    </div>
-                </section>
-                <section id="otherProducts">
-                    <hr />
-                    <div className="word">
-                        <p>其他人也看了...</p>
-                    </div>
-                    <ul id="templates" className="templatesA" >
-                        {currentProducts.map((item, index) => (
-                            <PbShape
-                                // key 必須在 React 列表渲染時唯一。
-                                key={index}
-                                svcA={item.svcA}
-                                svcB={item.svcB}
-                                shape={item.shape}
-                                price={item.price}
-                                introduce={item.introduce}
-                                star={item.star}
-                                pbNum={item.pbNum}
-                                dataNum={item.dataNum}
-                            />
-                        ))}
-                    </ul>
+                    </section>
+                    <section id="otherProducts">
+                        <hr />
+                        <div className="word">
+                            <p>其他人也看了...</p>
+                        </div>
+                        <ul id="templates" className="templatesA" >
+                            {currentProducts.map((item, index) => (
+                                <PbShape
+                                    // key 必須在 React 列表渲染時唯一。
+                                    key={index}
+                                    svcA={item.svcA}
+                                    svcB={item.svcB}
+                                    shape={item.shape}
+                                    price={item.price}
+                                    introduce={item.introduce}
+                                    star={item.star}
+                                    pbNum={item.pbNum}
+                                    dataNum={item.dataNum}
+                                />
+                            ))}
+                        </ul>
 
 
-                </section>
+                    </section>
+                </main>
                 <Windows
                     windowSize={windowSize}
                     windowSuccess={windowSuccess}
                     windowfail={windowfail}
                     closePopup={closePopup}
                 />
-                <Footer backgroundColor="var(--Blue)" borderTop="1px solid"/>
+                <Footer backgroundColor="var(--Blue)" borderTop="1px solid" />
             </>
         }
         // 切割

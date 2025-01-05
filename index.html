@@ -24,18 +24,8 @@
 
     <script type="text/babel">
         const { useEffect } = React;
-
-        // 元件化Img標籤
-        function GetImg(props) {
-            return (<>
-                <img src={props.imgUrl} alt="" />
-
-            </>)
-        }
-
         function App() {
             useEffect(() => {
-
                 // 輪播動畫設定
                 let count = 0;
                 let frontCarouselImgs = ['url(./images/carousel-img-1.png)', 'url(./images/carousel-img-2.png)'];
@@ -106,56 +96,16 @@
                     // 切換 navbar 的背景顏色
                     $('.navbar').toggleClass('fillColor');
                 });
-
             }, []);
-
 
             return (<>
                 <main>
                     <section id="home">
                         <header>
-                            {/* 三條槓漢堡按鈕 */}
-                            <div className="navbar">
-                                <div className="navbarBtn">
-                                    <a href="./chooseProject.html" className="cartBtn"></a>
-                                    <button className="hamburger">
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                    </button>
-                                </div>
-                                {/* 選單列 */}
-                                <nav className="navigation">
-                                    <ul>
-                                        <li><a href="./brandConcept.html">品牌理念</a></li>
-                                        <li><a href="./pojectResults.html">專案成果</a></li>
-                                        <li><a href="./productBrowsing.html">商品瀏覽</a></li>
-                                        <li><a href="./Customization_process.html">訂購說明</a></li>
-                                    </ul>
-
-                                    <ul className="bottomIcon inNavbar">
-                                        <li><a href=""><GetImg imgUrl="./images/icon-fb.png" alt="" /></a></li>
-                                        <li><a href=""><GetImg imgUrl="./images/icon-ig.png" alt="" /></a></li>
-                                        <li><a href=""><GetImg imgUrl="./images/icon-line.png" alt="" /></a></li>
-                                    </ul>
-                                    <div className="HLogo"><a href="./index.html"><img src="./images/logo.png" alt="VSER客製化球衣" /></a></div>
-                                </nav>
-                            </div>
+                            {/* 因為人物照圖層需置頂,故不使用共同Header */}
+                            <Hamburger />
+                            <LaptopMenu />
                         </header>
-                        <div className="bar">
-                            <h1><a href="./index.html"><GetImg imgUrl="./images/logo.png" alt="VSER客製化球衣" /></a></h1>
-                            <div className="menuList">
-                                <nav className="menuItem">
-                                    <ul>
-                                        <li><a href="./brandConcept.html">品牌理念</a></li>
-                                        <li><a href="./pojectResults.html">專案成果</a></li>
-                                        <li><a href="./productBrowsing.html">商品瀏覽</a></li>
-                                        <li><a href="./Customization_process.html">訂購說明</a></li>
-                                    </ul>
-                                </nav>
-                                <a href="./chooseProject.html" className="cartBtn"></a>
-                            </div>
-                        </div>
                         <figure className="frontCarousel"></figure>
                         <figure className="backgroundCarousel"></figure>
                         <figure className="backgroundLogo"></figure>
@@ -164,23 +114,82 @@
                                 <h1>vser</h1>
                             </div>
                             <div className="sloganNbtn">
-                                <h3>Your Vanguard <br/>in Sports Culture</h3>
+                                <h3>Your Vanguard <br />in Sports Culture</h3>
                                 <a href="./customize-React.html">客製專屬球衣</a>
                             </div>
                         </div>
                         <nav className="bottomIcon">
                             <ul>
-                                <li><a href=""><GetImg imgUrl="./images/icon-fb.png" alt="" /></a></li>
-                                <li><a href=""><GetImg imgUrl="./images/icon-ig.png" alt="" /></a></li>
-                                <li><a href=""><GetImg imgUrl="./images/icon-line.png" alt="" /></a></li>
+                                <BottomIcon />
                             </ul>
                         </nav>
-
                     </section>
                 </main>
                 <Footer />
             </>)
+        }
 
+        // Img
+        function GetImg(props) {
+            return (<>
+                <img src={props.imgUrl} alt="" />
+            </>)
+        }
+        // 社群icon
+        function BottomIcon() {
+            return <>
+                <li><a href=""><GetImg imgUrl="./images/icon-fb.png" alt="" /></a></li>
+                <li><a href=""><GetImg imgUrl="./images/icon-ig.png" alt="" /></a></li>
+                <li><a href=""><GetImg imgUrl="./images/icon-line.png" alt="" /></a></li>
+            </>
+        }
+        // 主選單
+        function MainMenu() {
+            return <>
+                <li><a href="./brandConcept.html">品牌理念</a></li>
+                <li><a href="./pojectResults.html">專案成果</a></li>
+                <li><a href="./productBrowsing.html">商品瀏覽</a></li>
+                <li><a href="./Customization_process.html">訂購說明</a></li>
+            </>
+        }
+        // 漢堡選單
+        function Hamburger() {
+            return <>
+                <div className="navbar">
+                    <div className="navbarBtn">
+                        <a href="./chooseProject.html" className="cartBtn"></a>
+                        <button className="hamburger">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                    </div>
+                    {/* 選單列 */}
+                    <nav className="navigation">
+                        <ul>
+                            <MainMenu />
+                            <li><a href="./priceplan.html">價格方案</a></li>
+                        </ul>
+                        <ul className="bottomIcon inNavbar">
+                            <BottomIcon />
+                        </ul>
+                        <div className="HLogo"><a href="./index.html"><img src="./images/logo.png" alt="VSER客製化球衣" /></a></div>
+                    </nav>
+                </div>
+            </>
+        }
+        function LaptopMenu() {
+            return <><div className="bar">
+                <h1><a href="./index.html"><GetImg imgUrl="./images/logo.png" alt="VSER客製化球衣" /></a></h1>
+                <div className="menuList">
+                    <nav className="menuItem">
+                        <ul>
+                            <MainMenu />
+                        </ul>
+                    </nav>
+                    <a href="./chooseProject.html" className="cartBtn"></a>
+                </div>
+            </div></>
         }
 
         ReactDOM

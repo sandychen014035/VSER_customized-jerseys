@@ -105,6 +105,7 @@ a {
     --Blue-Darkblue: #287DA2 0%, var(--Blue) 40%, var(--Darkblue) 80%;
     --Blue-Darkblue-Blue: var(--Blue) 5%, var(--Darkblue) 55%, var(--Blue) 85%;
     --Darkblue-Blue: var(--Darkblue) 38%, var(--Blue) 100%;
+    --White-White: rgba(255, 255, 255, .4) 0%, rgba(255, 255, 255, .1) 30%, rgba(255, 255, 255, .4) 100%;
 }
 input {
     color: #ffffff;
