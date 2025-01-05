@@ -60,9 +60,11 @@ a {
     color: #ffffff;
     font-family: "Noto Sans TC", sans-serif;
 }
-@media (max-width:640px) and (height > 0px), (width < 1025px) and (height > 769px) {
+@media (max-width:640px), (width < 1025px) and (height > 769px) {
     a{font-size: 18px;
         letter-spacing: 0.08rem;}
+
+        
 }
 
 :root {
@@ -343,6 +345,9 @@ footer div img {
 /* 10/1 sandy更改平板以下為漢堡選單 */
 @media (max-width: 640px),  (width < 1025px) and (height > 769px) {
 
+    .cartBtn{
+        width: 32px;
+    }
     .HLogo{
         width: 100%;
         margin: 30px 0 110px 0;
@@ -370,6 +375,7 @@ footer div img {
 
     #fixedTopbar #burger {
         display: block;
+        height: 100vh;
     }
 
     .navbar {
@@ -381,14 +387,16 @@ footer div img {
 
     .navbar.fillColor {
         background-color: var(--Darkblue);
+        height: 100vh;
     }
 
     .navbar .navbarBtn {
         width: 100%;
-        height: 80px;
+        height: 60px;
         display: flex;
         justify-content: end;
         padding-right: 30px;
+        align-items: center;
     }
 
     .navbar .hamburger {

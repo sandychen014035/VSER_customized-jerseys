@@ -6,19 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>VSER</title>
     <link rel="icon" href="./favicon.ico">
+    <!-- css -->
     <link rel="stylesheet" href="./styles/sandy_brandConcept.css">
     <link rel="stylesheet" href="./styles/sandy_Button.css">
     <link rel="stylesheet" href="./styles/sandy.css">
     <link rel="stylesheet" href="./styles/headNfooter.css">
-
-
     <!-- 載入React -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <!-- 載入babel -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <!-- <script type="text/babel" src="https://aria-hawa.github.io/customizeJersey/jsx/Header.jsx"></script> -->
-    <script type="text/babel" src="https://aria-hawa.github.io/customizeJersey/jsx/Header.jsx"></script>
+    <!-- 共用元件 -->
+    <script type="text/babel" src="./js_e/Header.js"></script>
 </head>
 
 <body>
@@ -30,7 +28,7 @@
         function App() {
             return (
                 <>
-                <Header classname='darkblue' />
+                    <Header classname='darkblue' />
                 </>
             );
         }
@@ -171,7 +169,7 @@
             </li>
         </ul>
         <div>
-            <figure><img src="./images/logo-2.svg" alt=""/></figure>
+            <figure><img src="./images/logo-2.svg" alt="" /></figure>
             <small>&copy;2024 VSER, Inc. 版權所有</small>
         </div>
     </footer>

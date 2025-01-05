@@ -2435,6 +2435,7 @@ footer div small {
     /* 客製化選單區域 */
     #customizePlace #operate {
         min-width: 100%;
+        border-right: none;
     }
 
     #operate .style {
@@ -2466,7 +2467,8 @@ footer div small {
         /* bottom: -236px; */
         bottom: 0px;
         display: none;
-        border: 1px solid red;
+        border-top: 1px solid white;
+        border-left: none;
     }
 
     #closeStyleInfo {
@@ -2511,13 +2513,29 @@ footer div small {
         flex-direction: row;
         align-items: center
     }
-    #operate .productInfo{
+
+    #operate .productInfo {
         height: 80px;
     }
 
-#preview .preJersey #showStep h2{
-    margin-bottom: 10px;
-}
+    #preview .preJersey #showStep h2 {
+        margin-bottom: 10px;
+    }
+
+    #customizePlace #popup-content {
+        width: 70%;
+
+    }
+
+    #customizePlace #popup-content #innerContent {
+        flex-direction: column;
+    }
+
+    #showSvg {
+        width: 80%;
+        padding: 10px 0px;
+    }
+
 }
 
 /* sandy */
@@ -3002,7 +3020,7 @@ input#username::placeholder {
     }
 
     .PDbtn {
-        width: 80%;
+        width: 100%;
         margin: 0 0 50px;
 
         white-space: nowrap;
@@ -3068,5 +3086,9 @@ input#username::placeholder {
 
     #popup-content #popup-title {
         padding: 15px 0 0 0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        padding: 0 0 10px
     }
 }

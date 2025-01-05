@@ -6,18 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VSER</title>
   <link rel="icon" href="./favicon.ico">
-
+  <!-- css -->
+  <link rel="stylesheet" href="./styles/jiun.css">
+  <link rel="stylesheet" href="./styles/headNfooter.css">
   <!-- 載入React -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <!-- 載入babel -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <!-- <script type="text/babel" src="https://aria-hawa.github.io/customizeJersey/jsx/Header.jsx"></script> -->
+  <!-- 共用元件 -->
   <script type="text/babel" src="./jsx/Header.jsx"></script>
   <!-- JQ ui -->
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="./styles/jiun.css">
-  <link rel="stylesheet" href="./styles/headNfooter.css">
+
 </head>
 
 <body>
@@ -213,21 +213,21 @@ process -->
             </tr>
           </table>
         </article>
-        <article class="size-2_RWD" >
+        <article class="size-2_RWD">
           <div class="sizeMune">
-            <p class="Mune_T" onclick="sizeMune_T()" >球衣尺寸表</p>
-            <p class="Mune_S" onclick="sizeMune_S()" >短褲尺寸表</p>
+            <p class="Mune_T" onclick="sizeMune_T()">球衣尺寸表</p>
+            <p class="Mune_S" onclick="sizeMune_S()">短褲尺寸表</p>
           </div>
           <div class="sizeMune_Timg">
-<span class="t_width_RWD">衣寬</span>
-<span class="t_height_RWD">衣長</span>
+            <span class="t_width_RWD">衣寬</span>
+            <span class="t_height_RWD">衣長</span>
           </div>
           <div class="sizeMune_Simg" style="display: none;">
             <span class="s_width_RWD">腰圍</span>
             <span class="s_height_RWD">褲長</span>
           </div>
           <table class="sizeMune_T">
-           
+
             <tr class="tr1">
               <th>SIZE</th>
               <td>120</td>
@@ -450,7 +450,7 @@ process -->
                     <p class="numbered-paragraph">長期懸掛可能會導致球衣變形。</p>
                   </div>
                 </div>
-                
+
               </div>
             </div>
             <div id="tabs-4">
@@ -523,7 +523,7 @@ process -->
         $('#RLbtn').toggleClass('show');
       });
     });
-    
+
   </script>
   <!-- JQ 原生碼 -->
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>

@@ -14,16 +14,16 @@
         }
     </style>
     <link rel="icon" href="./favicon.ico">
+    <!-- css -->
     <link rel="stylesheet" href="./styles/styleAria.css">
     <link rel="stylesheet" href="./styles/headNfooter.css">
     <!-- 載入React -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <!-- 載入babel -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script type="text/babel" src="https://aria-hawa.github.io/customizeJersey/jsx/Header.jsx"></script>
-    <script type="text/babel" src="https://aria-hawa.github.io/customizeJersey/jsx/Footer.jsx"></script>
     <!-- 元件 -->
+    <script type="text/babel" src="./js_e/Header.js"></script>
+    <script type="text/babel" src="./js_e/Footer.js"></script>
     <script type="text/babel" src="./js_e/BuyItems.js"></script>
     <script type="text/babel" src="./js_e/OrderDetails.js"></script>
 
@@ -33,9 +33,9 @@
     <!-- 以下React -->
     <div id="root"></div>
     <script type="text/babel">
-        const { useState, useEffect, useRef,createContext, useContext } = React;
+        const { useState, useEffect, useRef, createContext, useContext } = React;
         // 用useContext進行全域管理
-        const BuyItemsContext=createContext();
+        const BuyItemsContext = createContext();
         function App() {
             // 整筆訂單總金額,設定為0,經過useEffect後會有第一筆金額
             const [orderTotal, setOrderTotal] = useState(0);
@@ -94,55 +94,55 @@
                 return futureDate;
             });
             return <>
-            <BuyItemsContext.Provider value={{buyItems, setBuyItems,orderTotal,setOrderTotal}}>
-                <Header />
-                <main>
-                    <section id="projectPlace">
-                        <div className="pageTitle">
-                            <h3>PROJECT</h3>
-                            <p>請點選您的球衣樣式,並填寫尺寸、號碼、姓名（如不需要請點選無）</p>
-                        </div>
-                        {/* 訂購框 */}
-                        {/* 根據buyItems的陣列數量來新增.table */}
-                        {/* item => buyItems物件中的陣列 [],[],[] */}
-                        {/* itemsIndex => 陣列的索引值 */}
-                        {/* 檢查是否沒空陣列 */}
-                        {buyItems.length === 0 ? (
-                            <div className="emptyCartMessage">
-                                <p>你的購物車是空的</p>
-                            </div>) :
-                            (buyItems.map((item, itemsIndex) => (
-                                <OrderBox
-                                    key={item.id}
-                                    itemsIndex={buyItems.findIndex((buyItem) => buyItem.id === item.id)}
-                                />)))}
-                        <div className="pageBottom">
-                            <button className="nextBtn" onClick={order}>下一步</button>
+                <BuyItemsContext.Provider value={{ buyItems, setBuyItems, orderTotal, setOrderTotal }}>
+                    <Header />
+                    <main>
+                        <section id="projectPlace">
+                            <div className="pageTitle">
+                                <h3>PROJECT</h3>
+                                <p>請點選您的球衣樣式,並填寫尺寸、號碼、姓名（如不需要請點選無）</p>
+                            </div>
+                            {/* 訂購框 */}
+                            {/* 根據buyItems的陣列數量來新增.table */}
+                            {/* item => buyItems物件中的陣列 [],[],[] */}
+                            {/* itemsIndex => 陣列的索引值 */}
+                            {/* 檢查是否沒空陣列 */}
+                            {buyItems.length === 0 ? (
+                                <div className="emptyCartMessage">
+                                    <p>你的購物車是空的</p>
+                                </div>) :
+                                (buyItems.map((item, itemsIndex) => (
+                                    <OrderBox
+                                        key={item.id}
+                                        itemsIndex={buyItems.findIndex((buyItem) => buyItem.id === item.id)}
+                                    />)))}
+                            <div className="pageBottom">
+                                <button className="nextBtn" onClick={order}>下一步</button>
 
-                        </div>
-                        <OrderDetails
-                            contentOne={`NT${orderTotal}`}
-                            contentTwo={<>
-                                <div>
-                                    <img src="./images/icon-truck.svg" alt="" />
-                                    <p>預計交貨日期</p>
-                                </div>
-                                <p className="itemText">{date.toLocaleDateString()}</p>
-                                <p style={{ padding: "15px 0 0 0 " }}>(10個工作天後)</p></>}
-                            title="訂單總額"
-                            pagenum="pageOne"
-                            contentOneClass="itemText itemText2"/>
-                            
-                    </section>
-                </main>
-                <Footer />
+                            </div>
+                            <OrderDetails
+                                contentOne={`NT${orderTotal}`}
+                                contentTwo={<>
+                                    <div>
+                                        <img src="./images/icon-truck.svg" alt="" />
+                                        <p>預計交貨日期</p>
+                                    </div>
+                                    <p className="itemText">{date.toLocaleDateString()}</p>
+                                    <p style={{ padding: "15px 0 0 0 " }}>(10個工作天後)</p></>}
+                                title="訂單總額"
+                                pagenum="pageOne"
+                                contentOneClass="itemText itemText2" />
+
+                        </section>
+                    </main>
+                    <Footer />
                 </BuyItemsContext.Provider>
             </>
         }
         // 訂購框
         function OrderBox(props) {
-            const { buyItems, setBuyItems,setOrderTotal} = useContext(BuyItemsContext);
-            const { itemsIndex} = props;
+            const { buyItems, setBuyItems, setOrderTotal } = useContext(BuyItemsContext);
+            const { itemsIndex } = props;
             // 提取出buyItems的屬性陣列 => map()
             const name = buyItems.map(item => item.name);
             const size = buyItems.map(item => item.size);
@@ -359,8 +359,8 @@
 
         // 訂購明細列 Box
         function Orderdetails(props) {
-            const { price, buyDetailNum, num, details, setDetails, index, size, quantity, itemsIndex, deleteform, onChange, value, setBuyDetailNum} = props;
-            const { buyItems, setBuyItems,setOrderTotal} = useContext(BuyItemsContext);
+            const { price, buyDetailNum, num, details, setDetails, index, size, quantity, itemsIndex, deleteform, onChange, value, setBuyDetailNum } = props;
+            const { buyItems, setBuyItems, setOrderTotal } = useContext(BuyItemsContext);
 
             // 行數刪除函式
             const deleteDetails = function () {
@@ -435,7 +435,7 @@
 
             // 背後名字
             const [jerseyName, setJerseyName] = useState("");
-            
+
             useEffect(() => {
                 setBuyItems((prevItems) => {
                     return prevItems.map((item, idx) => {

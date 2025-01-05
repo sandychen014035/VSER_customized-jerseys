@@ -6,17 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VSER</title>
     <link rel="icon" href="./favicon.ico">
+    <!-- css -->
     <link rel="stylesheet" href="./styles/sandy.css">
     <link rel="stylesheet" href="./styles/pbCarousel.css">
     <link rel="stylesheet" href="./styles/sandy_popup.css">
     <link rel="stylesheet" href="./styles/headNfooter.css">
-
+    <!-- 載入React -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <!-- 載入babel -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script type="text/babel" src="https://aria-hawa.github.io/customizeJersey/jsx/Header.jsx"></script>
-    <script type="text/babel" src="https://aria-hawa.github.io/customizeJersey/jsx/Footer.jsx"></script>
+    <!-- 共用元件 -->
+    <script type="text/babel" src="./js_e/Header.js"></script>
+    <script type="text/babel" src="./js_e/Footer.js"></script>
     <script type="text/babel" src="./js_e/PbShape.js"></script>
 </head>
 
@@ -192,27 +193,27 @@
             const [windowSuccess, setWindowSuccess] = React.useState(false);
             const [windowfail, setWindowfail] = React.useState(false);
 
-            function closePopup(){
+            function closePopup() {
                 setWindowSize(false)
             }
             let w_Size = function () {
                 setWindowSize((prev) => !prev);
             };
             // 儲存訂購
-            let PurchaseHistory=function(){
+            let PurchaseHistory = function () {
                 // 新增一個全域的key來重複儲存
                 // JSON.parse()=>轉變成JS物件
                 let BuyBox = JSON.parse(localStorage.getItem("BuyItems")) || [];
-                    let BuyText = {
-                        name:shape,
-                        img:bigPicture,
-                        size: select,
-                        color: selectColor,
-                        quantity:num,
-                        price:price,
-                    }
-                    BuyBox.push(BuyText);
-                    localStorage.setItem("BuyItems", JSON.stringify(BuyBox));
+                let BuyText = {
+                    name: shape,
+                    img: bigPicture,
+                    size: select,
+                    color: selectColor,
+                    quantity: num,
+                    price: price,
+                }
+                BuyBox.push(BuyText);
+                localStorage.setItem("BuyItems", JSON.stringify(BuyBox));
             }
             let w_Shopping = function () {
                 if (shoppingSize && shoppingColor) {
