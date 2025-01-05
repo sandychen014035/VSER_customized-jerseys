@@ -1900,50 +1900,6 @@ td:nth-child(1) {
     border: none;
 }
 
-footer {
-    background-color: var(--Blue);
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0px 80px;
-    width: 100%;
-    height: 170px;
-    border-top: 1px solid white;
-}
-
-.footerList {
-    display: flex;
-
-}
-
-.footerItem {
-    padding-right: 80px;
-    font-size: 18px;
-}
-
-.footerItem li {
-    padding-top: 8px;
-    font-size: 12px;
-}
-
-.footerItem li:first-child {
-    padding-top: 24px;
-}
-
-footer div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-footer div small {
-    padding-top: 12px;
-}
-
-
-
-
 /* 動畫設定 */
 @keyframes hide {
     from {
@@ -2068,37 +2024,6 @@ footer div small {
 
     .bottomIcon ul li:last-child {
         padding-right: 0px;
-    }
-}
-
-/* footer區 */
-@media (max-width:820px) {
-    footer {
-        padding: 0px 56px;
-    }
-
-    .footerItem {
-        padding-right: 40px;
-    }
-
-    .footerItem li:first-child {
-        padding-top: 16px;
-    }
-}
-
-@media (width < 840px) {
-    .footerList li {
-        font-size: 20px;
-        letter-spacing: 0.06rem;
-    }
-
-    .footerItem li {
-        font-size: 16px;
-        letter-spacing: 0.06rem;
-    }
-
-    footer div figure img {
-        width: 100%;
     }
 }
 
@@ -2232,43 +2157,6 @@ footer div small {
 
     .bottomIcon {
         display: none;
-    }
-
-    /* footer */
-    .homePage {
-        padding: 20px;
-        flex-direction: column;
-        height: fit-content;
-    }
-
-    .homePage .footerList {
-        width: 100%;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .homePage .footerList .footerItem {
-        font-weight: 600;
-        margin: 10px 0px;
-        text-align: center;
-        padding: 0;
-    }
-
-    .homePage .footerList .footerItem ul {
-        font-weight: 300;
-        text-align: center;
-    }
-
-    .homePage .footerList .footerItem li:first-child {
-        padding-top: 8px;
-    }
-
-    .homePage div figure {
-        width: 150px;
-    }
-
-    .homePage div figure img {
-        width: 100%;
     }
 }
 

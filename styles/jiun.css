@@ -2,72 +2,8 @@
 /* 9/4 add my Aria */
 main {
   overflow: hidden;
-  border: 1px solid;
 }
 
-/* footer區 */
-footer {
-  background-color: var(--Darkblue);
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 80px;
-  width: 100%;
-  height: 170px;
-  /* position: fixed;
-  z-index: 999; */
-}
-
-.pricePlaneFooter {
-  background-color: var(--Blue);
-}
-
-
-.footerList {
-  display: flex;
-
-}
-
-.footerItem {
-  padding-right: 80px;
-  font-size: 18px;
-}
-
-.footerItem li {
-  padding-top: 8px;
-  font-size: 12px;
-}
-
-.footerItem li:first-child {
-  padding-top: 24px;
-}
-
-footer div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-footer div small {
-  padding-top: 12px;
-}
-
-/* footer區 */
-
-@media (max-width:820px) {
-  footer {
-    padding: 0px 56px;
-  }
-
-  .footerItem {
-    padding-right: 40px;
-  }
-
-  .footerItem li:first-child {
-    padding-top: 16px;
-  }
-}
 
 @media (max-width:820px) {
   #pricepage .box_list {

@@ -13,6 +13,8 @@
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel" src="./jsx/Footer.jsx"></script>
 </head>
 
 <body>
@@ -115,6 +117,7 @@
                             {/* 三條槓漢堡按鈕 */}
                             <div className="navbar">
                                 <div className="navbarBtn">
+                                    <a href="./chooseProject.html" className="cartBtn"></a>
                                     <button className="hamburger">
                                         <span></span>
                                         <span></span>
@@ -150,7 +153,7 @@
                                         <li><a href="./Customization_process.html">訂購說明</a></li>
                                     </ul>
                                 </nav>
-                                <a href="./chooseProject_NEW.html" className="cartBtn"></a>
+                                <a href="./chooseProject.html" className="cartBtn"></a>
                             </div>
                         </div>
                         <figure className="frontCarousel"></figure>
@@ -175,33 +178,7 @@
 
                     </section>
                 </main>
-                <footer className='homePage'>
-                    <ul className="footerList">
-                        <li className="footerItem">About
-                            <ul>
-                                <li>關於VSER</li>
-                            </ul>
-                        </li>
-                        <li className="footerItem">SERVICE
-                            <ul>
-                                <li>條款與細則</li>
-                                <li>隱私權政策</li>
-                                <li>客製化政策</li>
-                            </ul>
-                        </li>
-                        <li className="footerItem">CONTACT
-                            <ul>
-                                <li>新北市汐止區新台五路二段77號15樓之3</li>
-                                <li>vser.tw@gmail.com</li>
-                                <li>02-86482203</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <div>
-                        <figure><GetImg imgUrl="./images/logo-2.svg" alt="" /></figure>
-                        <small>&copy;2024 VSER, Inc. 版權所有</small>
-                    </div>
-                </footer>
+                <Footer />
             </>)
 
         }

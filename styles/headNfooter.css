@@ -299,6 +299,54 @@ input::placeholder{
 
 /* 以上fixedTopbar區 */
 
+/* footer */
+
+footer {
+    background-color: var(--Darkblue);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 80px;
+    width: 100%;
+    height: 170px;
+}
+
+.footerList {
+    display: flex;
+
+}
+
+.footerItem {
+    padding-right: 80px;
+    font-size: 18px;
+}
+
+.footerItem li {
+    padding-top: 8px;
+    font-size: 12px;
+}
+
+.footerItem li:first-child {
+    padding-top: 24px;
+}
+
+footer div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+footer div img {
+    width: 217px;
+}
+
+footer div small {
+    padding-top: 12px;
+    width: fit-content;
+}
+
+
 @media (max-width: 640px),  (width < 1025px) and (height > 769px){
     .menuItem ul li a {
         font-size: 18px;

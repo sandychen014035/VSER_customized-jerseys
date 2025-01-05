@@ -1,6 +1,7 @@
-function Footer() {
+function Footer(props) {
+    const {backgroundColor,borderTop}=props
     return(
-        <footer>
+        <footer style={{backgroundColor:backgroundColor ,borderTop:borderTop}}>
         <ul className="footerList">
             <li className="footerItem">About
                 <ul>

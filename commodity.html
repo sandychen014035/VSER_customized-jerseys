@@ -16,9 +16,9 @@
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!-- 共用元件 -->
-    <script type="text/babel" src="./js_e/Header.js"></script>
-    <script type="text/babel" src="./js_e/Footer.js"></script>
-    <script type="text/babel" src="./js_e/PbShape.js"></script>
+    <script type="text/babel" src="./jsx/Header.jsx"></script>
+    <script type="text/babel" src="./jsx/Footer.jsx"></script>
+    <script type="text/babel" src="./jsx/PbShape.jsx"></script>
 </head>
 
 <body>
@@ -282,7 +282,7 @@
 
             }, [])
             return <>
-                <Header classname='darkblue' />
+                <Header />
                 <section id="introduction">
                     <Picture bigPicture={bigPicture} imgs={imgs} setBigPicture={setBigPicture} />
                     <div className="productCopywriting">
@@ -412,7 +412,7 @@
                     windowfail={windowfail}
                     closePopup={closePopup}
                 />
-                <Footer />
+                <Footer backgroundColor="var(--Blue)" borderTop="1px solid"/>
             </>
         }
         // 切割
