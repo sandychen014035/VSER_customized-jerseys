@@ -170,7 +170,7 @@
                                 </div>
                                 <OrderDetails
                                     contentOne={<>{buyItems.map((item, index) =>
-                                        <EachOrder key={index} index={index} buyItems={buyItems.reverse()} />)}</>}
+                                        <EachOrder key={index} index={index} buyItems={buyItems} />)}</>}
                                     contentFreight={<p className="contentMoney" style={{ lineHeight: "1" }}>運費: {freight}</p>}
                                     contentTwo={<p className="itemText">NT${orderTotal}</p>}
                                     title="訂單明細"

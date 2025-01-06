@@ -267,12 +267,12 @@
     padding: 10px;
     background-color: transparent;
     border: 1px solid white;
-    border-radius: 10px;
+    border-radius: 5px;
     color: white;
     letter-spacing: 2px;
     font-size: 18px;
     /* 8/23 RWD測試 */
-    width: 96%;
+    width: 100%;
 }
 
 #customizePlace input::placeholder {
@@ -335,6 +335,9 @@
     background-size: 50%;
     background-position: center;
     background-repeat: no-repeat;
+}
+.stylePreview hr{
+    border: 0.5px solid;
 }
 
 .styleItem li #shapeItem {
@@ -446,8 +449,9 @@
     flex-wrap: wrap;
     align-content: flex-start;
     flex-grow: 0.8;
-    margin: 10px auto;
+    margin: 10px auto 30px;
     overflow: auto;
+    padding: 10px 15px 20px 0;
 }
 
 .styleInfo .stylePreview figure {
@@ -456,7 +460,7 @@
 }
 
 .styleInfo form {
-    width: 96%;
+    width: 100%;
 }
 
 .stylePreview figure a {
@@ -514,7 +518,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 32px;
+    margin-top:10px;
     margin-bottom: 20px;
 }
 
@@ -669,7 +673,7 @@ hr {
 }
 
 #textStyleValue {
-    width: 96%;
+    width: 100%;
     margin-bottom: 10px;
 }
 
@@ -731,9 +735,10 @@ hr {
     height: 8px;
     padding: 0px;
     margin-right: 10px;
-    background-image: linear-gradient(to right, var(--Orange) 20%, rgba(255, 255, 255, .5) 20%);
+    background-image: linear-gradient(to right, var(--Orange) 50%, rgba(255, 255, 255, .5) 50%);
     /* 8/24 RWD測試 */
-    width: 75%;
+    width: 100%;
+    
 }
 
 #customizePlace .rangeSet::-webkit-slider-thumb {
@@ -769,8 +774,8 @@ hr {
 
 .frontColor,
 .backColor {
-    border-bottom: 2px solid white;
-    padding: 8px 0px;
+    border-bottom: 1px solid white;
+    padding: 16px 0px;
 }
 
 .frontColor div a,
@@ -801,18 +806,16 @@ hr {
 .stylePreview .whichFace {
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
 }
 
 .whichFace a {
     text-align: center;
-    padding-bottom: 12px;
+    padding: 12px;
     border-bottom: 1px solid white;
-    margin-bottom: 16px;
     /* 8/25 RWD測試 */
     /* width: 165px; */
-    width: 45%;
-    min-width: 135px;
+    width: 50%;
 }
 
 .whichFace a:hover {
@@ -2632,10 +2635,7 @@ article.personal p {
     margin: auto;
 }
 
-.itemText2 {
 
-    display: none;
-}
 
 .itemText::before {
     content: '';
@@ -2757,7 +2757,10 @@ input#username::placeholder {
         padding: 15px 16px;
         transition: top 0.3s ease, padding 0.3s ease;
     }
-
+    .itemText2 {
+        display: none;
+    }
+    
     .table,
     #content .inContentDiv:nth-child(1) {
         padding: 0 80px 0 80px;
