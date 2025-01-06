@@ -2,6 +2,6 @@
 [![VSER](images/indexImg.png)](https://sandychen014035.github.io/VSER_customized-jerseys/)
 
 ## Customize Jersey Demo
-[![VSER](images/indexGif.gif)](https://sandychen014035.github.io/VSER_customized-jerseys/customize-React.html)
+[![VSER](images/gif/Customization.gif)](https://sandychen014035.github.io/VSER_customized-jerseys/customize-React.html)
 
 
