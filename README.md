@@ -10,5 +10,5 @@
 
 ## Shopping Cart
 包含商品總覽與商品內頁，還有後續的客製化訂購表單，可以單一款式填寫多筆訂購表。
-[![VSER](images/gif/ShoppingCart.gif)](https://sandychen014035.github.io/VSER_customized-jerseys/customize-React.html)
+[![VSER](images/gif/ShoppingCart.gif)](https://sandychen014035.github.io/VSER_customized-jerseys/productBrowsing.html)
 
